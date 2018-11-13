@@ -53,7 +53,8 @@ class grpMberWizard extends Component {
     }
 
     handleGroupChange=(value)=>{
-        value.length>1?alert('You may only select 1'):this.setState({groupVal: value})        
+        // value.length>1?alert('You may only select 1'):this.setState({groupVal: value})      
+        this.setState({groupVal: value})   
         console.log(value)
     }   
     
@@ -67,13 +68,14 @@ class grpMberWizard extends Component {
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {stakehSel} = this.props.stakeholderlistType
         const {groupVal}= this.state
-        const test = groupVal.map(itm=>itm.value )         
-        console.log(test)
+        const test = groupVal.map(itm=>itm.value )    
+        const my = test.toString()     
+        console.log(my)
 
         const groupObj={
             action: "ADD_CHILD_ITEM",
             bio_access_id: idAccess,
-            parent_id: test.toString(),  
+            parent_id: JSON.stringify(my),  
             child_id: stakehSel,
             def_organization: false,
             def_group: false,
