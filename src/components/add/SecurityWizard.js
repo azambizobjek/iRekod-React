@@ -15,8 +15,10 @@ class securityWizard extends Component {
     constructor(){
         super()
         this.state={              
-            role_list:[],            
-            secList:[],                 
+            role_list:[], 
+            roleVal:null,             
+            secList:[],
+            secVal:null,                 
             internal: null,
             is_blocked: null,
             can_login: null,
@@ -28,7 +30,8 @@ class securityWizard extends Component {
             security_level_id: null,
             active: null,
             date_active_from: null,
-            date_active_to: null,            
+            date_active_to: null,     
+              
         }
     }       
     
@@ -48,35 +51,37 @@ class securityWizard extends Component {
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderUpdate.role_Store!==this.props.stakeholderUpdate.role_Store){
             const {role_Store}=this.props.stakeholderUpdate                        
-            const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))
+            const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))             
+            const roleValue = ({value: null, label:null})
                 // console.log(roleOptions)
             this.setState({ 
-                role_list:roleOptions               
+                role_list:roleOptions,
+                roleVal:roleValue
             })
         }
         if(prevProps.stakeholderUpdate.securityLevel!==this.props.stakeholderUpdate.securityLevel){
             const {securityLevel} = this.props.stakeholderUpdate                           
             // console.log(securityLevel)   
             const secLevel = securityLevel.map(itm=>({ value: itm.security_level_id, label: itm.title }))
+            const secVal = ({value: null, label:null})
             // console.log(secLevel)  
             this.setState({
-                secList:secLevel                
+                secList:secLevel,
+                secVal:secVal       
             })
         }   
            
     }    
 
     handleRoleChange=(value)=>{
-        // const inputName = e.target.getAttribute('name')
-        this.setState({roleVal:value})
         // console.log(value)
+        this.setState({roleVal:value})  
+        console.log(value)
     }
 
     handleSecLevelChange=(value)=>{       
-    this.setState({            
-        secVal:value
-    })  
-    console.log(value)
+        this.setState({secVal:value})  
+        // console.log(value)
     }
 
     formSubmit=(e)=>{
@@ -123,10 +128,7 @@ class securityWizard extends Component {
         // if (formObj[propName] === "" || formObj[propName] === undefined ){
         //     formObj[propName] = null
            
-        // }
-      
-
-
+        // }   
 
         alert("Successful Created")
     }
@@ -137,7 +139,7 @@ class securityWizard extends Component {
     // const item = this.props.item
    
     const active1 = this.props.active    
-    const {role_list, secList,can_login}=this.state
+    const {role_list,roleVal,secList,secVal,can_login}=this.state
     // console.log(secVal)  
     
     return (
@@ -157,7 +159,7 @@ class securityWizard extends Component {
                                 <Select 
                                     options={role_list}
                                     onChange={this.handleRoleChange}
-                                
+                                    value={roleVal}                               
                                     placeholder="Role"/> 
                             </div>
                             <div className="form-group col-sm-6">
@@ -165,7 +167,7 @@ class securityWizard extends Component {
                                 <Select 
                                     options={secList}
                                     onChange={this.handleSecLevelChange}
-                                    defaultValue={secList[1]}
+                                    value={secVal} 
                                     placeholder="Security Level" /> 
                             </div>                                                 
                         </div>
