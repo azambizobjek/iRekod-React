@@ -9,7 +9,7 @@
     "rc-checkbox": "^2.1.5",
     "rc-pagination": "^1.17.3",
     "rc-tooltip": "^3.7.3",
-    "react": "^16.5.2",
+    "react": "^16.6.3",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
     "react-scripts": "2.0.5",
