@@ -97,7 +97,7 @@ class accessWizard extends Component {
             const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), remove: true}))
             //  console.log(accView)
 
-            const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name)}))
+            const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), modify_access: true}))
             //  console.log(accView)
             
             this.setState({ 
