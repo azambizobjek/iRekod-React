@@ -1,4 +1,4 @@
-import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM} from './types'
+import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP} from './types'
 import {biorisUrl} from '../appConfig'
 
 //Select stakeholder
@@ -118,4 +118,34 @@ export const setGroup = (param) => dispatch =>{
                 type:ADD_GROUP_ITEM,payload:res.results
             })
         })
+}
+
+//Remove Group
+export const setRmvGroup = (remove) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(remove)}`
+        fetch(url,{method:'POST'})
+        .then(res=>res.json())
+        .then(res=>{ 
+            console.log(res)
+            // dispatch({
+            //     type:ADD_GROUP_ITEM,payload:res.results
+            // })
+        })   
+}
+
+//Call group
+export const updListGroup = (param) => dispatch => {
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{
+        console.log(res.results)
+        if(res.results!==undefined){
+            dispatch({
+                type:STAKEHOLDER_GROUP,payload:res.results
+            })
+        }
+        
+    })
 }
