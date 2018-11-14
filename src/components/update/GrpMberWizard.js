@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
-import {setGroup} from '../../actions/stakehUpdateAction' 
+import {setGroup,setRmvGroup,updListGroup} from '../../actions/stakehUpdateAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -34,7 +34,7 @@ class grpMberWizard extends Component {
             this.setState({ 
                 listItemMember:descendant
             })
-        } 
+        }     
     }
 
     componentWillMount(){
@@ -55,7 +55,7 @@ class grpMberWizard extends Component {
     handleGroupChange=(value)=>{
         // value.length>1?alert('You may only select 1'):this.setState({groupVal: value})      
         this.setState({groupVal: value})   
-        console.log(value)
+        // console.log(value)
     }   
     
     handleMemberChange=(value)=>{
@@ -66,24 +66,66 @@ class grpMberWizard extends Component {
     formSubmit=(e)=>{
         e.preventDefault()
         const {user:{bio_access_id:idAccess}} = this.props.session
+        const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
         const {stakehSel} = this.props.stakeholderlistType
         const {groupVal}= this.state
-        const test = groupVal.map(itm=>itm.value )    
-        const my = test.toString()     
-        console.log(my)
+        const hi = stakeholder_Group.map(itm=>itm.stakeholder_id)
+        const test = groupVal.map(itm=>itm.value   )    
+        //const test = groupVal.map((groupVal) =>  groupVal.value  )
+        // console.log(test)               
+       
 
-        const groupObj={
-            action: "ADD_CHILD_ITEM",
-            bio_access_id: idAccess,
-            parent_id: JSON.stringify(my),  
-            child_id: stakehSel,
-            def_organization: false,
-            def_group: false,
-            def_department: false,
-            def_designation: false           
+        // const groupObj={
+        //     action: "ADD_CHILD_ITEM",
+        //     bio_access_id: idAccess,
+        //     parent_id: my,  
+        //     child_id: stakehSel,
+        //     def_organization: false,
+        //     def_group: false,
+        //     def_department: false,
+        //     def_designation: false           
+        // }
+        // this.props.setGroup(groupObj)
+        // console.log(groupVal.length)
+        // console.log(stakeholder_Group.length)
+
+        if(groupVal.length >= stakeholder_Group.length ) {
+
+            // console.log('save')
+            const groupObj={
+                action: "ADD_CHILD_ITEM",
+                bio_access_id: idAccess,
+                parent_id: test.toString(),  
+                child_id: stakehSel,
+                def_organization: false,
+                def_group: false,
+                def_department: false,
+                def_designation: false           
+            }
+            this.props.setGroup(groupObj)
+
         }
-        this.props.setGroup(groupObj)
-        console.log(groupObj)
+        
+        if(groupVal.length < stakeholder_Group.length ) {
+
+            // console.log('remove')
+            const RemoveGroupObj={
+                action: "REMOVE_CHILD_ITEM",
+                bio_access_id: idAccess,
+                parent_id: hi.toString(),
+                child_id: stakehSel
+            }          
+            this.props.setRmvGroup(RemoveGroupObj)
+
+            const stakehGroup={
+                stakeholder_id:stakehSel,
+                bio_access_id:idAccess,
+                action:'ITEM_LIST_GROUP',             
+            }
+            this.props.updListGroup(stakehGroup)
+
+        }
+
         
 
     }
@@ -149,6 +191,9 @@ grpMberWizard.propTypes={
     stakeholderUpdate: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,
     setGroup: PropTypes.func.isRequired,
+    setRmvGroup: PropTypes.func.isRequired,
+    updListGroup: PropTypes.func.isRequired,
+     
 
    
     
@@ -168,6 +213,7 @@ const mapStateToProps= state =>({
     
 export default connect(mapStateToProps,{
     setGroup,
-
+    setRmvGroup,
+    updListGroup,
     
 })(grpMberWizard)
