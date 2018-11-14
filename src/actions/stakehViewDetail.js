@@ -1,6 +1,7 @@
 import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC,DELETE_STAKEHOLDER} from './types'
 import {biorisUrl} from '../appConfig'
 
+//Call stkh Detail
 export const setStakeholderItemDetail = (param) => dispatch =>{
     // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
@@ -13,6 +14,8 @@ export const setStakeholderItemDetail = (param) => dispatch =>{
             })
         })
 }
+
+//Call member 
 export const viewStakehMember = (param) => dispatch =>{
     // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
@@ -26,6 +29,7 @@ export const viewStakehMember = (param) => dispatch =>{
         })
 }
 
+//Call group
 export const viewStakehGroup = (param) => dispatch => {
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
     fetch(url)
