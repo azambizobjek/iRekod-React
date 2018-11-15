@@ -95,7 +95,7 @@ class index extends Component {
       
        
         this.props.setActivePage(FabRec)  //direct page to viewDetail
-        // console.log(FabRec)
+        console.log(FabRec)
 
         //stkh Detail
         const stakehDet={
