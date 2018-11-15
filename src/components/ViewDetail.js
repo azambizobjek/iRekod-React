@@ -7,6 +7,8 @@ import AccessView from '../components/AccessView'
 import {setActivePage} from '../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../actions/stakehViewDetail'
 import {setStakehType,setStakehSel,setStakehNumb} from '../actions/stakehTypeAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../actions/stakehUpdateAction'
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -19,7 +21,7 @@ class ViewDetail extends Component {
   constructor(){
       super()
       this.state={
-        aclEntries:[]
+        aclEntries:[]       
       }
   }
 
@@ -41,29 +43,29 @@ class ViewDetail extends Component {
     }
     this.props.setStakeholderItemDetail(stakehDet)    
 
-     //Member
-     const stakehMember={
-        stakeholder_id:stkhId,
-        bio_access_id:idAccess,
-        action:'ITEM_LIST_MEMBER',             
-   }
-   this.props.viewStakehMember(stakehMember)
+//      //Member
+//      const stakehMember={
+//         stakeholder_id:stkhId,
+//         bio_access_id:idAccess,
+//         action:'ITEM_LIST_MEMBER',             
+//    }
+//    this.props.viewStakehMember(stakehMember)
 
-    //Group
-    const stakehGroup={
-            stakeholder_id:stkhId,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_GROUP',             
-    }
-    this.props.viewStakehGroup(stakehGroup)
+//     //Group
+//     const stakehGroup={
+//             stakeholder_id:stkhId,
+//             bio_access_id:idAccess,
+//             action:'ITEM_LIST_GROUP',             
+//     }
+//     this.props.viewStakehGroup(stakehGroup)
   }  
 
   componentDidUpdate(prevProps){
       if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
-        const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView
-        this.setState({aclEntries:acl_entries})
+            const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView
+            this.setState({aclEntries:acl_entries})
+        }        
     }
-  }
 
   setActivePage=(e)=>{
     e.preventDefault()     
@@ -87,6 +89,74 @@ class ViewDetail extends Component {
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       //console.log(('data-pagename'))
+
+      const {user:{bio_access_id:idAccess}} = this.props.session
+      const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+      // console.log(stakehNumb)     
+            
+      //Role List
+      const RoleObj={
+          action: "ITEM_LIST",
+          bio_access_id: idAccess      
+      }
+      this.props.setRoleStore(RoleObj)
+      
+        //Stakeholder List
+      const stakehList={
+          action:"ITEM_LIST",
+          bio_access_id:idAccess
+      }
+      this.props.setStakehList(stakehList)
+
+        //stkh Detail
+      const stakehDet={
+          stakeholder_id:stakehSel,
+          bio_access_id:idAccess,
+          action:'ITEM_DETAIL',            
+      }
+      this.props.setStkhAccDetail(stakehDet)   
+
+      //Ancestor Group
+      const listAncestor={
+          bio_access_id: idAccess,
+          stakeholder_id: stakehSel,
+          action: "ITEM_LIST_ANCESTOR",
+          stakeh_type: parseInt(stakehNumb)      
+      }
+      this.props.setAncestor(listAncestor)
+
+      //Descendant Member
+      const listDescendant={
+          bio_access_id: idAccess,
+          stakeholder_id: stakehSel,
+          action: "ITEM_LIST_DESCENDANT",
+          stakeh_type: parseInt(stakehNumb)      
+      }
+      this.props.setDescendant(listDescendant)
+
+      //Security Level
+       const SecurityObj={
+          action: "ITEM_LIST",
+          bio_access_id: idAccess      
+      }
+      this.props.setSecLevel(SecurityObj)
+
+      //List Group
+      const stakehGroup={
+        stakeholder_id:stakehSel,
+        bio_access_id:idAccess,
+        action:'ITEM_LIST_GROUP',             
+    }
+    this.props.viewStakehGroup(stakehGroup)
+
+    //Member
+     const stakehMember={
+        stakeholder_id:stakehSel,
+        bio_access_id:idAccess,
+        action:'ITEM_LIST_MEMBER',             
+    }
+    this.props.viewStakehMember(stakehMember)
+
     }
 
   render() {
@@ -94,6 +164,7 @@ class ViewDetail extends Component {
     const {pageTitle}=this.props.layout
     const {stakeholder_Detail,stakeholder_Member,stakeholder_Group} = this.props.stakeholderView
     const {aclEntries}=this.state
+    // console.log(stakeholder_Group)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(aclEntries)    
       
@@ -183,13 +254,13 @@ class ViewDetail extends Component {
                                      <div className="card-body">
                                         <div className='col-lg-12 col-md-12 col-sm-12'>
                                             <div className="row">
-                                                {stakeholder_Group.map((item,idx)=><GroupView 
+                                            {stakeholder_Group.map((item,idx)=><GroupView 
                                                     key={idx} 
                                                     stkhId={item.stakeholder_id}                                       
                                                     fullName={item.full_name}
                                                     typeName={item.stakeh_type_name}
                                                     stakehType={item.stakeh_type}  
-                                                    setActivePage={this.setPageView} />)} 
+                                                    setActivePage={this.setPageView}/>)} 
                                             </div>
                                         </div>
                                      </div>
@@ -238,6 +309,12 @@ ViewDetail.propTypes={
   setStakehType: PropTypes.func.isRequired,
   setStakehSel: PropTypes.func.isRequired,
   setStakehNumb: PropTypes.func.isRequired,
+  setRoleStore: PropTypes.func.isRequired,
+  setStakehList: PropTypes.func.isRequired,
+  setStkhAccDetail: PropTypes.func.isRequired,
+  setAncestor: PropTypes.func.isRequired,
+  setDescendant: PropTypes.func.isRequired,
+  setSecLevel: PropTypes.func.isRequired,
   
   
 }
@@ -258,6 +335,12 @@ export default connect(mapStateToProps,{
     setStakehType,
     setStakehSel,
     setStakehNumb,
+    setRoleStore,
+    setStakehList,
+    setStkhAccDetail,
+    setAncestor,
+    setDescendant,
+    setSecLevel,
     
 
 })(ViewDetail)
