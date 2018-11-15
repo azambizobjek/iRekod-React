@@ -113,7 +113,7 @@ export const setGroup = (param) => dispatch =>{
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            // console.log(res)
+            console.log(res)
             dispatch({
                 type:ADD_GROUP_ITEM,payload:res.results
             })
