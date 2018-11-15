@@ -1,13 +1,32 @@
 import React from 'react' 
+import posed from 'react-pose'
  
 
 
 export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
     const sendStakehId=()=>{
-        markOnSel(stakehId) 
-       
-        
+        markOnSel(stakehId)       
     }
+
+    const Card = posed.div({
+        hoverable: true,
+        pressable: false,
+        init: {
+          scale: 1,
+          boxShadow: '0px 0px 0px rgba(0,0,0,0)'
+        },
+        hover: {
+          scale: 1.2,
+          boxShadow: '0px 5px 10px rgba(0,0,0,0.2)'
+        },
+        press: {
+          scale: 1.2,
+          boxShadow: '0px 2px 5px rgba(0,0,0,0.1)'         
+        }
+      });
+ 
+
+    
     
     // const iconType = is_container ? 'container' : (record_type_icon==='document' ? (haveParent!=='' ? 'hasParent':record_type_icon) : record_type_icon),
        
@@ -19,9 +38,10 @@ export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
         //         <p className={isSel?"ml-2 text-truncate text-light":"ml-2 text-truncate"}>{name}</p>                                        
         //     </div>
         // </div>      
-
+         
         <div className="col-6 col-md-4 col-lg-2 col-xl-2">
-            <div className={isSel?"card bg-primary":"card"} onClick={sendStakehId}>           
+        <Card>
+            <div className={isSel?"card bg-primary":"card"} onClick={sendStakehId}>        
                 <div className="text-center">
                      <img src={require('../img/StakeType/'+typeName+'.svg')} alt={typeName} className="img-card mt-4"/>
                 </div>
@@ -33,7 +53,9 @@ export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
                     <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../img/telephone.svg')} alt="email"/>Telephone Number: {decodeURIComponent(stakehId)}</small></p>                     */}
                 </div>
             </div>
+            </Card>
         </div>
+         
   )
 }
 
