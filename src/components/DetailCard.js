@@ -1,17 +1,35 @@
 import React from 'react'
+import posed from 'react-pose'
  
 
 export default function DetailCard({stakehId,name,typeName,isSel,markOnSel,email}) {
     const sendStakehId=()=>{
         markOnSel(stakehId)
-
     }
+
+    const Card = posed.div({
+        hoverable: true,
+        pressable: false,
+        init: {
+          scale: 1,
+          boxShadow: '0px 0px 0px rgba(0,0,0,0)'
+        },
+        hover: {
+        //   scale: 1,
+          boxShadow: '0px 5px 10px rgba(0,0,0,0.2)'
+        },
+        press: {
+          scale: 1.2,
+          boxShadow: '0px 2px 5px rgba(0,0,0,0.1)'
+        }
+      });
 
     // const iconType = is_container ? 'container' : (record_type_icon==='document' ? (haveParent!=='' ? 'hasParent':record_type_icon) : record_type_icon),
    
    
 return (
     <div className="col-12">
+    <Card>
         <div className={isSel?"card mb-3 bg-primary":"card mb-3"} onClick={sendStakehId}>
             <div className="p-2 d-flex justify-content-between align-items-center">
                 <img src={require('../img/StakeType/'+typeName+'.svg')} alt={typeName} className="p-2 img-fluid img-scale" />
@@ -24,6 +42,7 @@ return (
                     </div>
             </div>
         </div>
+        </Card>
     </div>
 )
 }
