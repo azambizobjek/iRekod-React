@@ -92,7 +92,11 @@ class grpMberWizard extends Component {
         //Group
         const storeGroupId = stakeholder_Group.map(itm=>itm.stakeholder_id)
         const groupId = groupVal.map(itm=>itm.value)
+        // const my = 
          //const test = groupVal.map((groupVal) =>  groupVal.value  )
+       
+            console.log(groupId)
+         
         
         
         if(groupVal.length >= stakeholder_Group.length ) {
@@ -101,13 +105,14 @@ class grpMberWizard extends Component {
             const groupObj={
                 action: "ADD_CHILD_ITEM",
                 bio_access_id: idAccess,
-                parent_id: groupId.toString(),  
+                parent_id: groupId.join(','),  
                 child_id: stakehSel,
                 def_organization: false,
                 def_group: false,
                 def_department: false,
                 def_designation: false           
             }
+            console.log(groupObj)
             this.props.setGroup(groupObj)
 
              
