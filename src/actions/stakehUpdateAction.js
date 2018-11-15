@@ -1,4 +1,4 @@
-import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP} from './types'
+import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP,STAKEHOLDER_MEMBER} from './types'
 import {biorisUrl} from '../appConfig'
 
 //Select stakeholder
@@ -99,7 +99,7 @@ export const updStkh = (param) => dispatch =>{
         fetch(url,{method:'PUT'})
         .then(res=>res.json())
         .then(res=>{ 
-            console.log(res)
+            // console.log(res)
             dispatch({
                 type:STORE_DETAIL,payload:res.results
             })
@@ -108,12 +108,12 @@ export const updStkh = (param) => dispatch =>{
 
 //Add Group
 export const setGroup = (param) => dispatch =>{
-    console.log(param)
+    // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            console.log(res)
+            // console.log(res)
             dispatch({
                 type:ADD_GROUP_ITEM,payload:res.results
             })
@@ -121,29 +121,87 @@ export const setGroup = (param) => dispatch =>{
 }
 
 //Remove Group
-export const setRmvGroup = (remove) => dispatch =>{
+export const setRmvGroup = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(remove)}`
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            console.log(res)
+            // console.log(res)
             // dispatch({
             //     type:ADD_GROUP_ITEM,payload:res.results
             // })
         })   
 }
 
-//Call group
+//UPD List Group
 export const updListGroup = (param) => dispatch => {
+    // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
     fetch(url)
     .then(res=>res.json())
     .then(res=>{
-        console.log(res.results)
+        // console.log(res.results)
         if(res.results!==undefined){
             dispatch({
                 type:STAKEHOLDER_GROUP,payload:res.results
+            })
+        }
+        else{
+            // console.log('send empty')
+            dispatch({
+                type:STAKEHOLDER_GROUP,payload:[]
+            })
+        }
+        
+    })
+}
+
+//Add Member
+export const setMember = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+        fetch(url,{method:'POST'})
+        .then(res=>res.json())
+        .then(res=>{ 
+            // console.log(res)
+            // dispatch({
+            //     type:ADD_GROUP_ITEM,payload:res.results
+            // })
+        })
+}
+
+//Remove Member
+export const setRmvMember = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+        fetch(url,{method:'POST'})
+        .then(res=>res.json())
+        .then(res=>{ 
+            // console.log(res)
+            // dispatch({
+            //     type:ADD_GROUP_ITEM,payload:res.results
+            // })
+        })   
+}
+
+//UPD List Member
+export const updListMember = (param) => dispatch => {
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{
+        // console.log(res.results)
+        if(res.results!==undefined){
+            dispatch({
+                type:STAKEHOLDER_GROUP,payload:res.results
+            })
+        }
+        else{
+            // console.log('send empty')
+            dispatch({
+                type:STAKEHOLDER_MEMBER,payload:[]
             })
         }
         
