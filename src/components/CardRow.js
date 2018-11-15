@@ -21,8 +21,7 @@ export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
         // </div>      
 
         <div className="col-6 col-md-4 col-lg-2 col-xl-2">
-            <div className={isSel?"card bg-primary":"card"} onClick={sendStakehId}>
-           
+            <div className={isSel?"card bg-primary":"card"} onClick={sendStakehId}>           
                 <div className="text-center">
                      <img src={require('../img/StakeType/'+typeName+'.svg')} alt={typeName} className="img-card mt-4"/>
                 </div>
