@@ -8,6 +8,8 @@ import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,se
 import {setWizardPage} from '../../actions/stakehUpdateAction'
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakehType} from '../../actions/stakehTypeAction'
+import {viewStakehGroup,viewStakehMember} from '../../actions/stakehViewDetail'
+
  
 
 import {connect} from 'react-redux'
@@ -70,7 +72,25 @@ class UpdateDetail extends Component {
         }
         this.props.setSecLevel(SecurityObj)
 
+        //List Group
+        const stakehGroup={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_GROUP',             
+        }
+        this.props.viewStakehGroup(stakehGroup)
+
+         //Member
+        const stakehMember={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_MEMBER',             
+        }
+        this.props.viewStakehMember(stakehMember)
+
     }
+
+    
 
     nextPage=(param)=>{
         // console.log(param)
@@ -129,6 +149,7 @@ class UpdateDetail extends Component {
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
+                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="view" onClick={this.setActivePage}>Details</a></div>
                     <div className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>
                 </div>
             </div>
@@ -180,12 +201,9 @@ UpdateDetail.propTypes={
     setActivePage: PropTypes.func.isRequired,
     setStakehType: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,
-    
+    viewStakehGroup:  PropTypes.func.isRequired,
+    viewStakehMember:  PropTypes.func.isRequired, 
  
-    
-     
-    
-    
   }
   
   const mapStateToProps= state =>({
@@ -206,7 +224,8 @@ UpdateDetail.propTypes={
     setActivePage,
     setStakehType,
     setSecLevel,
-   
+    viewStakehGroup,
+    viewStakehMember,
        
   
   })(UpdateDetail)
