@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
-import {setGroup,setRmvGroup,updListGroup} from '../../actions/stakehUpdateAction' 
+import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,updListMember} from '../../actions/stakehUpdateAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -11,8 +11,9 @@ class grpMberWizard extends Component {
         this.state={
             listItemGroup:[],
             listItemMember:[],
-            groupVal:null,  
-            memberVal:[],           
+            groupVal:[],  
+            memberVal:[],  
+                    
         }
     }
     
@@ -20,7 +21,7 @@ class grpMberWizard extends Component {
         if(prevProps.stakeholderUpdate.listAncestor!==this.props.stakeholderUpdate.listAncestor){
             const {listAncestor}=this.props.stakeholderUpdate      
                 // console.log(listAncestor)                     
-                const ancestor = listAncestor!==undefined?listAncestor.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name) })):listAncestor
+                const ancestor = listAncestor!==undefined?listAncestor.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name) })):"Cannot Select"
                 // console.log(stakehOptions)
             this.setState({ 
                 listItemGroup:ancestor
@@ -34,29 +35,47 @@ class grpMberWizard extends Component {
             this.setState({ 
                 listItemMember:descendant
             })
-        }     
+        }
+        if(prevProps.stakeholderView.stakeholder_Group!==this.props.stakeholderView.stakeholder_Group){
+            const {stakeholder_Group} = this.props.stakeholderView
+
+            const group = stakeholder_Group.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)} ))
+
+            this.setState({
+                groupVal: group                
+            })
+        }
+        if(prevProps.stakeholderView.stakeholder_Member!==this.props.stakeholderView.stakeholder_Member){
+        const {stakeholder_Member} = this.props.stakeholderView
+
+            const member = stakeholder_Member.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)}))
+
+            this.setState({
+                memberVal: member
+            })
+        }      
     }
 
-    componentWillMount(){
-        const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
-        // console.log(stakeholder_Group)
+    // componentWillMount(){
+    //     const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
+    //     // console.log(stakeholder_Group)
 
-        const group = stakeholder_Group.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)} ))
-        // console.log(group)
-        const member = stakeholder_Member.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)}))
+    //     const group = stakeholder_Group.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)} ))
+    //     // console.log(group)
+    //     const member = stakeholder_Member.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)}))
 
-        this.setState({
-            groupVal: group,
-            memberVal: member
-        })
+    //     this.setState({
+    //         groupVal: group,
+    //         memberVal: member
+    //     })
 
-    }
+    // }
 
     handleGroupChange=(value)=>{
-        // value.length>1?alert('You may only select 1'):this.setState({groupVal: value})      
+        // value.length>1?alert('You may only select 1'):this.setState({groupVal: value}) 
         this.setState({groupVal: value})   
         // console.log(value)
-    }   
+    } 
     
     handleMemberChange=(value)=>{
         this.setState({memberVal:value})
@@ -67,35 +86,22 @@ class grpMberWizard extends Component {
         e.preventDefault()
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
-        const {stakehSel} = this.props.stakeholderlistType
-        const {groupVal}= this.state
-        const hi = stakeholder_Group.map(itm=>itm.stakeholder_id)
-        const test = groupVal.map(itm=>itm.value   )    
-        //const test = groupVal.map((groupVal) =>  groupVal.value  )
-        // console.log(test)               
-       
-
-        // const groupObj={
-        //     action: "ADD_CHILD_ITEM",
-        //     bio_access_id: idAccess,
-        //     parent_id: my,  
-        //     child_id: stakehSel,
-        //     def_organization: false,
-        //     def_group: false,
-        //     def_department: false,
-        //     def_designation: false           
-        // }
-        // this.props.setGroup(groupObj)
-        // console.log(groupVal.length)
-        // console.log(stakeholder_Group.length)
-
+        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
+        const {groupVal,memberVal}= this.state     
+           
+        //Group
+        const storeGroupId = stakeholder_Group.map(itm=>itm.stakeholder_id)
+        const groupId = groupVal.map(itm=>itm.value)
+         //const test = groupVal.map((groupVal) =>  groupVal.value  )
+        
+        
         if(groupVal.length >= stakeholder_Group.length ) {
 
             // console.log('save')
             const groupObj={
                 action: "ADD_CHILD_ITEM",
                 bio_access_id: idAccess,
-                parent_id: test.toString(),  
+                parent_id: groupId.toString(),  
                 child_id: stakehSel,
                 def_organization: false,
                 def_group: false,
@@ -104,6 +110,9 @@ class grpMberWizard extends Component {
             }
             this.props.setGroup(groupObj)
 
+             
+                alert('Successful Add Group')
+             
         }
         
         if(groupVal.length < stakeholder_Group.length ) {
@@ -112,7 +121,7 @@ class grpMberWizard extends Component {
             const RemoveGroupObj={
                 action: "REMOVE_CHILD_ITEM",
                 bio_access_id: idAccess,
-                parent_id: hi.toString(),
+                parent_id: storeGroupId.toString(),
                 child_id: stakehSel
             }          
             this.props.setRmvGroup(RemoveGroupObj)
@@ -124,6 +133,65 @@ class grpMberWizard extends Component {
             }
             this.props.updListGroup(stakehGroup)
 
+            // const listAncestor={
+            //     bio_access_id: idAccess,
+            //     stakeholder_id: stakehSel,
+            //     action: "ITEM_LIST_ANCESTOR",
+            //     stakeh_type: parseInt(stakehNumb)      
+            // }
+            // this.props.setAncestor(listAncestor)
+
+            // alert('Successful Delete Group')
+        }
+
+        //Member
+        const memberId = memberVal.map(itm=>itm.value)   
+        const storeMemberId = stakeholder_Member.map(itm=>itm.stakeholder_id)
+        if(memberVal.length >= stakeholder_Member.length ) {
+
+            // console.log('save')
+            const MemberObj={
+                action: "ADD_CHILD_ITEM",
+                bio_access_id: idAccess,
+                parent_id:  stakehSel,  
+                child_id: memberId.toString(),
+                def_organization: false,
+                def_group: false,
+                def_department: false,
+                def_designation: false           
+            }
+            this.props.setMember(MemberObj)
+
+            alert('Successful Add Member')
+        }
+
+        if(memberVal.length < stakeholder_Member.length ) {
+
+            // console.log('remove')
+            const RemoveGroupObj={
+                action: "REMOVE_CHILD_ITEM",
+                bio_access_id: idAccess,
+                parent_id: stakehSel,
+                child_id: storeMemberId.toString(),
+            }          
+            this.props.setRmvMember(RemoveGroupObj)
+
+            const stakehGroup={
+                stakeholder_id:stakehSel,
+                bio_access_id:idAccess,
+                action:'ITEM_LIST_GROUP',             
+            }
+            this.props.updListMember(stakehGroup)
+
+            // const listAncestor={
+            //     bio_access_id: idAccess,
+            //     stakeholder_id: stakehSel,
+            //     action: "ITEM_LIST_ANCESTOR",
+            //     stakeh_type: parseInt(stakehNumb)      
+            // }
+            // this.props.setAncestor(listAncestor)
+
+            // alert('Successful Delete Member')
         }
 
         
@@ -193,6 +261,10 @@ grpMberWizard.propTypes={
     setGroup: PropTypes.func.isRequired,
     setRmvGroup: PropTypes.func.isRequired,
     updListGroup: PropTypes.func.isRequired,
+    setAncestor: PropTypes.func.isRequired,
+    setMember: PropTypes.func.isRequired,
+    setRmvMember: PropTypes.func.isRequired,
+    updListMember: PropTypes.func.isRequired,
      
 
    
@@ -215,5 +287,9 @@ export default connect(mapStateToProps,{
     setGroup,
     setRmvGroup,
     updListGroup,
+    setAncestor,
+    setMember,
+    setRmvMember,
+    updListMember
     
 })(grpMberWizard)
