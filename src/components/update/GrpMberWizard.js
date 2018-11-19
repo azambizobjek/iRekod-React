@@ -57,21 +57,6 @@ class grpMberWizard extends Component {
         }      
     }
 
-    // componentWillMount(){
-    //     const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
-    //     // console.log(stakeholder_Group)
-
-    //     const group = stakeholder_Group.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)} ))
-    //     // console.log(group)
-    //     const member = stakeholder_Member.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)}))
-
-    //     this.setState({
-    //         groupVal: group,
-    //         memberVal: member
-    //     })
-
-    // }
-
     handleGroupChange=(value)=>{
         // value.length>1?alert('You may only select 1'):this.setState({groupVal: value}) 
         this.setState({groupVal: value})   
