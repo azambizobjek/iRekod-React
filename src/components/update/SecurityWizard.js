@@ -19,29 +19,30 @@ class securityWizard extends Component {
             roleVal:[],  
             secList:[],  
             secVal:[],       
-            internal: null,
-            is_blocked: null,
-            can_login: null,
+            internal: false,
+            is_blocked: false,
+            can_login: false,
             login_username: null,
             password: null,
             role_value: null,
             role_id: null,
             security_level_value: null,
             security_level_id: null,
-            active: null,
+            active: false,
             date_active_from: null,
-            date_active_to: null,            
+            date_active_to: null,    
+             
         }
     }    
     
-    handleChange=(e)=>{
-        e.preventDefault()
-        const target = e.target
-        const value =  e.target.type==='checkbox'?target.checked:target.value 
-        const input = e.target.name      
+    handleChange=(event)=>{
+        // e.preventDefault()
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;     
                 
         this.setState({
-            [input]:value
+            [name]:value
         })  
         // console.log(input)  
         // console.log(value)
@@ -72,7 +73,7 @@ class securityWizard extends Component {
             })
         } 
         if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
-            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password} = this.props.item
             this.setState({
                 stakeh_type_name: stakeh_type_name,            
                 initials: initials,
@@ -81,7 +82,13 @@ class securityWizard extends Component {
                 full_name: full_name,
                 email: email,
                 date_of_birth: date_of_birth,
-                stakeh_type: parseInt(stakeh_type),           
+                stakeh_type: parseInt(stakeh_type),     
+                active: active,
+                internal: internal,
+                is_blocked: is_blocked,
+                can_login: can_login,
+                login_username:login_username,
+                password:password,
             })      
         }         
     }
@@ -104,7 +111,7 @@ class securityWizard extends Component {
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {date_active_from,date_active_to,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
-        // console.log(role_id)
+        console.log(password)
 
         const formObj={                       
             stakeh_type_name: stakeh_type_name,
@@ -137,7 +144,7 @@ class securityWizard extends Component {
             // custom_field:custom_field,          
         }
         this.props.updStkh(formObj)
-        // console.log(formObj)
+        console.log(formObj)
 
         alert("Succesful")
     }
@@ -216,7 +223,7 @@ class securityWizard extends Component {
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Password</label>
-                                <input name="" type="password" onChange={this.handleChange} className="form-control" />
+                                <input name="password" type="password" onChange={this.handleChange} className="form-control" />
                             </div>
                         </div>  
                     </div>
