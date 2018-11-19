@@ -89,18 +89,7 @@ class UpdateDetail extends Component {
         this.props.viewStakehMember(stakehMember)
 
     }
-
-    
-
-    nextPage=(param)=>{
-        // console.log(param)
-        this.props.setWizardPage(param)
-    }
-
-    prevPage=(param)=>{
-        this.props.setWizardPage(param)
-    }
-
+ 
     components={
         basic:BasicWizard,
         security:SecurityWizard,        
@@ -116,17 +105,17 @@ class UpdateDetail extends Component {
         e.preventDefault()     
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
         const {stakehNumb} = this.props.stakeholderlistType
-        // console.log(stakehNumb)
-    
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-    
+        // console.log(stakehNumb)   
+       
         const stakehObj={
             stakeholder_id:bId,
             bio_access_id:idAccess,
             action:'ITEM_LIST_TYPE',
             stakeh_type: parseInt(stakehNumb),
-          }
-          this.props.setStakehType(stakehObj) 
+        }
+        this.props.setStakehType(stakehObj) 
+        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+        this.handleWizard()
     }
 
   render() {
@@ -173,10 +162,8 @@ class UpdateDetail extends Component {
                         </div>
                             <div className="card-body">
                                <Body                                     
-                                    item={item}   
-                                    nextPage={this.nextPage}  
-                                    active={wzdPage} 
-                                    prevPage={this.prevPage}/>                                   
+                                    item={item}                                     
+                                    active={wzdPage}/>                                   
                            </div>
                        </div>
                    </div>
