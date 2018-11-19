@@ -33,10 +33,8 @@ class Home extends Component {
         'addStakeholder' : addStakeholder,                
         'index' : index,
         'view': ViewDetail,
-        'edit': UpdateDetail,
+        'edit': UpdateDetail,       
         
-        
-
     }
      
 
