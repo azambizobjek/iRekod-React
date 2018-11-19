@@ -139,12 +139,13 @@ class index extends Component {
 
         const stakehObj={
             bio_access_id:idAccess,
-            stakeholder_ids:[stakehSelect]
-        
+            stakeholder_ids:[stakehSelect]        
         }
         this.props.setDelBtn(stakehObj)
 
         alert("Successful Deleted")
+        
+
 
         
     }
