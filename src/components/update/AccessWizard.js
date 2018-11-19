@@ -15,17 +15,15 @@ class accessWizard extends Component {
              accUpdVal:[],
              accRmvVal:[],
              accModVal:[],             
-             stakehList:[],
-             viewEntries :[],
-             updateSource:[],
-             removeSource:[]             
+             stakehList:[],  
+             acl_id:null,                
              
         }
     }       
     
     handleViewChange=(value)=>{
         this.setState({accViewVal:value})
-        // console.log(value)
+        console.log(value)
     }
 
     handleUpdChange=(value)=>{
@@ -53,6 +51,12 @@ class accessWizard extends Component {
             this.setState({ 
                 stakehList:stakehOptions
             })
+        }
+        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+            const {acl_id} = this.props.item
+            this.setState({
+                acl_id:acl_id          
+            })      
         }
         if(prevProps.stakeholderUpdate.stkhDetail!==this.props.stakeholderUpdate.stkhDetail){
             const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView  
@@ -112,10 +116,11 @@ class accessWizard extends Component {
     }       
 
     formSubmit=(e)=>{
-        e.preventDefault()
+        e.preventDefault()        
         const {stakehSel} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to,acl_id} = this.props.item
+        const {acl_id} = this.state
+        const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
       
         const formObj={
             stakeh_type_name: stakeh_type_name,
@@ -143,8 +148,8 @@ class accessWizard extends Component {
             version: 0,           
             stakeholder_id: stakehSel,
             bio_access_id: idAccess,
-            acl_id:acl_id,
-            acl_entries:  this. Aclselected(),
+            acl_id: acl_id,
+            acl_entries: this.Aclselected(),
             // custom_field:custom_field,     
         }        
         this.props.updStkh(formObj)
@@ -154,7 +159,9 @@ class accessWizard extends Component {
     }
 
     Aclselected=()=>{
-        const {viewEntries,accViewVal, accUpdVal, accRmvVal, accModVal, stakehList,updateSource,removeSource,modifySource} = this.state      
+        const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
+        console.log(accViewVal)
+        
        
         // console.log(accViewVal)
         const viewSource = accViewVal.map(item =>({
@@ -201,9 +208,12 @@ class accessWizard extends Component {
         const modAcl = this.acl_builder(accModVal, remove, 'modify_access')
         // console.log(modAcl)                        
 
-        if (modAcl.length === 0)
+        if (modAcl === undefined)
         {
-            modAcl = null;
+            modAcl = null  
+            this.setState({
+                acl_id:null
+            })           
         }
 
         // console.log(modAcl) 
@@ -257,7 +267,7 @@ class accessWizard extends Component {
                         qtitle: null,
                         qshowDelay: 0,
                         children: null
-                    };
+                    }
             aclObj.stakeholder_id= item.value  
             aclObj.stakeholder_name=  item.label  
             aclObj.stakeholder_type_id= item.type  
