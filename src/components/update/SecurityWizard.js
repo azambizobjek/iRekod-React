@@ -32,22 +32,7 @@ class securityWizard extends Component {
             date_active_from: null,
             date_active_to: null,            
         }
-    }   
-
-    componentWillMount(){
-        const {internal,is_blocked,can_login,login_username,password,active,date_active_from,date_active_to} = this.props.item
-         
-        this.setState({          
-            internal: internal,
-            is_blocked: is_blocked,
-            can_login: can_login,
-            login_username: login_username,
-            password: password,            
-            active: active,
-            date_active_from: date_active_from,
-            date_active_to: date_active_to,         
-        })
-    }
+    }    
     
     handleChange=(e)=>{
         e.preventDefault()
@@ -85,7 +70,20 @@ class securityWizard extends Component {
                 secList:secLevel,
                 secVal: security
             })
-        }          
+        } 
+        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+            this.setState({
+                stakeh_type_name: stakeh_type_name,            
+                initials: initials,
+                first_name: first_name,
+                last_name: last_name,
+                full_name: full_name,
+                email: email,
+                date_of_birth: date_of_birth,
+                stakeh_type: parseInt(stakeh_type),           
+            })      
+        }         
     }
 
     handleRoleChange=(value)=>{
@@ -105,7 +103,7 @@ class securityWizard extends Component {
         const {stakehSel} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {date_active_from,date_active_to,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
-        const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+        const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
         // console.log(role_id)
 
         const formObj={                       
@@ -134,8 +132,8 @@ class securityWizard extends Component {
             version: 0,           
             stakeholder_id: stakehSel,
             bio_access_id: idAccess,
-            // acl_id:acl_id,
-            // acl_entries:acl_entries,
+            acl_id:acl_id,
+            acl_entries:acl_entries,
             // custom_field:custom_field,          
         }
         this.props.updStkh(formObj)
