@@ -104,7 +104,7 @@ class UpdateDetail extends Component {
     setActivePage=(e)=>{
         e.preventDefault()     
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehNumb} = this.props.stakeholderlistType
+        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
         // console.log(stakehNumb)   
        
         const stakehObj={
@@ -115,7 +115,50 @@ class UpdateDetail extends Component {
         }
         this.props.setStakehType(stakehObj) 
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
-        this.handleWizard()
+
+        const stakehDet={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_DETAIL',            
+        }
+        this.props.setStkhAccDetail(stakehDet)  
+        
+         //Ancestor Group
+         const listAncestor={
+            bio_access_id: idAccess,
+            stakeholder_id: stakehSel,
+            action: "ITEM_LIST_ANCESTOR",
+            stakeh_type: parseInt(stakehNumb)      
+        }
+        this.props.setAncestor(listAncestor)
+
+        //Descendant Member
+        const listDescendant={
+            bio_access_id: idAccess,
+            stakeholder_id: stakehSel,
+            action: "ITEM_LIST_DESCENDANT",
+            stakeh_type: parseInt(stakehNumb)      
+        }
+        this.props.setDescendant(listDescendant)
+
+        //Member
+        const stakehMember={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_MEMBER',             
+        }
+        this.props.viewStakehMember(stakehMember)
+
+         //List Group
+         const stakehGroup={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_GROUP',             
+        }
+        this.props.viewStakehGroup(stakehGroup)
+
+        // this.handleWizard()
+         
     }
 
   render() {
