@@ -18,21 +18,21 @@ class basicWizard extends Component {
             date_of_birth: null,             
         }        
     }  
-
-    componentWillMount(){
-        const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
-        // console.log(email)
-
-        this.setState({
-            stakeh_type_name: stakeh_type_name,            
-            initials: initials,
-            first_name: first_name,
-            last_name: last_name,
-            full_name: full_name,
-            email: email,
-            date_of_birth: date_of_birth,
-            stakeh_type: parseInt(stakeh_type),           
-        })      
+    
+    componentDidUpdate(prevProps){
+        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+            this.setState({
+                stakeh_type_name: stakeh_type_name,            
+                initials: initials,
+                first_name: first_name,
+                last_name: last_name,
+                full_name: full_name,
+                email: email,
+                date_of_birth: date_of_birth,
+                stakeh_type: parseInt(stakeh_type),           
+            })      
+        }
     }
      
     handleChange=(e)=>{
@@ -50,8 +50,9 @@ class basicWizard extends Component {
     formSubmit=(e)=>{
         const {stakehSel} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
+        const {internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to,acl_id,acl_entries} = this.props.item
         const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.state
+        
         e.preventDefault()
 
         const formObj={
@@ -80,8 +81,8 @@ class basicWizard extends Component {
             version: 0,           
             stakeholder_id: stakehSel,
             bio_access_id: idAccess,
-            // acl_id:acl_id,
-            // acl_entries:acl_entries,
+            acl_id:acl_id,
+            acl_entries:acl_entries,
             // custom_field:custom_field,     
 
         }        
