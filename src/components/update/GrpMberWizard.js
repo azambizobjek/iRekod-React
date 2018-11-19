@@ -79,10 +79,10 @@ class grpMberWizard extends Component {
         const storeGroupId = stakeholder_Group.map(itm=>itm.stakeholder_id)
         console.log(groupVal)
         const i = groupVal.map(itm=>itm.value)
-        // const my = 
+        const test = i.join() 
          //const test = groupVal.map((groupVal) =>  groupVal.value  )
        
-            // console.log(parse)
+            // console.log(i.join())
              
         
         
@@ -92,7 +92,7 @@ class grpMberWizard extends Component {
             const groupObj={
                 action: "ADD_CHILD_ITEM",
                 bio_access_id: idAccess,
-                parent_id: JSON.stringify(i),  
+                parent_id: JSON.stringify(test),  
                 child_id: stakehSel,
                 def_organization: false,
                 def_group: false,
