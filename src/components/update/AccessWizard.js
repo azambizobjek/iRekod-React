@@ -1,5 +1,6 @@
 import React,{ Component,Fragment } from 'react' 
 import Select from 'react-select'
+import {updStkh} from '../../actions/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -17,8 +18,7 @@ class accessWizard extends Component {
              stakehList:[],
              viewEntries :[],
              updateSource:[],
-             removeSource:[]
-             
+             removeSource:[]             
              
         }
     }       
@@ -88,16 +88,16 @@ class accessWizard extends Component {
                 let { view, update, remove, modify_access: aclMod } = acl_multi(acl_entries) // returns object. Push to array if so desired 
                 //  console.log(acl_entries)
                 
-                const accView = view.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), view: true}))
+                const accView = view.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
                 //  console.log(view)
     
-                const accUpd = update.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), update: true}))
+                const accUpd = update.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
                 //  console.log(accView)
     
-                const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), remove: true}))
+                const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
                 //  console.log(accView)
     
-                const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), modify_access: true}))
+                const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
                 //  console.log(accView)
                 
                 this.setState({ 
@@ -109,104 +109,53 @@ class accessWizard extends Component {
             }
           
         }      
-    }  
-
-    // componentWillMount(){
-    //     const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView  
-              
-    //     if(acl_entries!==undefined){
-    //         function acl_multi(array) {
-
-    //             const res = {
-    //                 view: [],
-    //                 update: [],
-    //                 remove: [],
-    //                 modify_access: []
-    //             }
-            
-    //             const keys = Object.keys(array[0])
-            
-    //             for (let i = 0; i < array.length; i++) {
-    //                 keys.forEach(function (key) {
-    //                     if (key !== 'stakeholder_name' && key !== 'stakeholder_id' && key !== 'stakeholder_type_id') {
-    //                         if (array[i][key]) {
-    //                             res[key].push({
-    //                                 stakeholder_name: array[i].stakeholder_name,
-    //                                 stakeholder_id: array[i].stakeholder_id,
-    //                                 stakeholder_type_id: array[i].stakeholder_type_id                                       
-    //                             })
-    //                         }
-    //                     }
-    //                 })
-    //             }
-    //             return res
-    //         }   
-
-    //         let { view, update, remove, modify_access: aclMod } = acl_multi(acl_entries) // returns object. Push to array if so desired 
-    //         //  console.log(acl_entries)
-            
-    //         const accView = view.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), view: true}))
-    //         //  console.log(view)
-
-    //         const accUpd = update.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), update: true}))
-    //         //  console.log(accView)
-
-    //         const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), remove: true}))
-    //         //  console.log(accView)
-
-    //         const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), modify_access: true}))
-    //         //  console.log(accView)
-            
-    //         this.setState({ 
-    //             accViewVal:accView,
-    //             accUpdVal:accUpd,
-    //             accRmvVal:accRmv,
-    //             accModVal:accMod,
-    //         })       
-    //     }         
-    // }
+    }       
 
     formSubmit=(e)=>{
         e.preventDefault()
+        const {stakehSel} = this.props.stakeholderlistType  
+        const {user:{bio_access_id:idAccess}} = this.props.session
+        const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to,acl_id} = this.props.item
+      
+        const formObj={
+            stakeh_type_name: stakeh_type_name,
+            stakeh_type: stakeh_type,
+            initials: initials,
+            first_name: first_name,
+            last_name: last_name,
+            full_name: full_name,
+            email: email,
+            date_of_birth: date_of_birth,
 
-        const aclObj ={
-            stakeholder_id: null,
-            stakeholder_name: null,
-            stakeholder_type_id: null,
-            attach: false,
-            modify_access: false,
-            remove: false,
-            remove_child: false,
-            update: false,
-            update_child: false,
-            view: false,
-            view_child: false,
-            parentId: null,
-            index: -1,
-            depth: 0,
-            expanded: false,
-            expandable: true,
-            checked: null,
-            leaf: false,
-            cls: null,
-            iconCls: null,
-            icon: null,
-            root: false,
-            isLast: false,
-            isFirst: false,
-            allowDrop: true,
-            allowDrag: true,
-            loaded: false,
-            loading: false,
-            href: null,
-            hrefTarget: null,
-            qtip: null,
-            qtitle: null,
-            qshowDelay: 0,
-            children: null            
-        }
+            internal: internal,
+            is_blocked: is_blocked,
+            can_login: can_login,
+            login_username: login_username,
+            password: password,
+            role_value: role_value,
+            role_id: role_id,
+            security_level_value: security_level_value,
+            security_level_id: security_level_id,
+            active: active,
+            date_active_from: date_active_from,
+            date_active_to: date_active_to,  
 
-        const {viewEntries,accViewVal, accUpdVal, accRmvVal, accModVal, stakehList,updateSource} = this.state
+            version: 0,           
+            stakeholder_id: stakehSel,
+            bio_access_id: idAccess,
+            acl_id:acl_id,
+            acl_entries:  this. Aclselected(),
+            // custom_field:custom_field,     
+        }        
+        this.props.updStkh(formObj)
+        // console.log(formObj)
+        alert('Successful')
+         
+    }
+
+    Aclselected=()=>{
+        const {viewEntries,accViewVal, accUpdVal, accRmvVal, accModVal, stakehList,updateSource,removeSource,modifySource} = this.state      
+       
         // console.log(accViewVal)
         const viewSource = accViewVal.map(item =>({
             stakeholder_id: item.value,
@@ -242,25 +191,81 @@ class accessWizard extends Component {
             qtitle: null,
             qshowDelay: 0,
             children: null
-        }))
+        }))       
 
-        console.log(viewSource)
-        // const update = acl_builder(updateSource, viewEntries, 'update')
-        // const remove = acl_builder(removeSource, update, 'remove')
-        // const modAcl = acl_builder(modifySource, remove, 'modify_access')
+        // console.log(viewSource)   
+        const update = this.acl_builder(accUpdVal, viewSource, 'update')    
+        // console.log(update)    
+        const remove = this.acl_builder(accRmvVal, update, 'remove')
+        // console.log(remove)   
+        const modAcl = this.acl_builder(accModVal, remove, 'modify_access')
+        // console.log(modAcl)                        
 
-        // if (modAcl.length === 0)
-        // {
-        //     modAcl = null;
-        // }
+        if (modAcl.length === 0)
+        {
+            modAcl = null;
+        }
 
-        // acl_builder=(selData,aclEntries,type)=>{
-        //     console.log(aclEntries)
-           
-        // }
-                                 
-         
+        // console.log(modAcl) 
 
+        return modAcl
+    }
+
+    ///////////////////////////////////recursive function//////////////////////////////////////////
+    acl_builder=(selData,aclEntries,type)=>{  
+        // console.log(selData)         
+        // console.log(aclEntries)          
+        selData.map(item=>
+           { const TargetItem = aclEntries.findIndex(rec=>rec.stakeholder_id===item.value) 
+            // console.log(TargetItem)
+            if ( TargetItem!==-1) {
+                aclEntries[TargetItem][type] = true
+            } 
+            else {
+                var aclObj =
+                    {                             
+                        stakeholder_id: null,
+                        stakeholder_name: null,
+                        stakeholder_type_id: null,
+                        attach: false,
+                        modify_access: false,
+                        remove: false,
+                        remove_child: false,
+                        update: false,
+                        update_child: false,
+                        view: false,
+                        view_child: false,
+                        index: -1,
+                        depth: 0,
+                        expanded: false,
+                        expandable: true,
+                        checked: null,
+                        leaf: false,
+                        cls: null,
+                        iconCls: null,
+                        icon: null,
+                        root: false,
+                        isLast: false,
+                        isFirst: false,
+                        allowDrop: true,
+                        allowDrag: true,
+                        loaded: false,
+                        loading: false,
+                        href: null,
+                        hrefTarget: null,
+                        qtip: null,
+                        qtitle: null,
+                        qshowDelay: 0,
+                        children: null
+                    };
+            aclObj.stakeholder_id= item.value  
+            aclObj.stakeholder_name=  item.label  
+            aclObj.stakeholder_type_id= item.type  
+            aclObj[type]=true
+            aclEntries.push(aclObj)
+            }              
+        })          
+        return aclEntries   
     }
   
  
@@ -348,6 +353,7 @@ accessWizard.propTypes={
     stakeholderView: PropTypes.object.isRequired,
     layout:PropTypes.object.isRequired,
     stakeholderUpdate: PropTypes.object.isRequired,
+    updStkh: PropTypes.func.isRequired,
    
     
      
@@ -364,6 +370,7 @@ const mapStateToProps= state =>({
 })
     
 export default connect(mapStateToProps,{
+    updStkh,
     
 
     
