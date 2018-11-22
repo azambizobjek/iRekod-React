@@ -210,7 +210,7 @@ class accessWizard extends Component {
 
         if (modAcl === undefined)
         {
-            modAcl = null  
+            // modAcl = null  
             this.setState({
                 acl_id:null
             })           
@@ -285,7 +285,7 @@ class accessWizard extends Component {
   
     // console.log(acl_entries)
     const active = this.props.active
-    const item = this.props.item
+    // const item = this.props.item
     const {accViewVal, accUpdVal, accRmvVal, accModVal, stakehList} = this.state
     //console.log(item)
 
