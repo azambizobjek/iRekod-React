@@ -1,17 +1,19 @@
 import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEHOLDER_LIST} from './types'
 import {biorisUrl} from '../appConfig'
 
-export const setStakehType = (stakehType) => dispatch =>{
-    // console.log(stakehType)
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(stakehType)}`
-        fetch(url)
+
+export const setStakehType = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+        fetch(url,{method:'GET'})
         .then(res=>res.json())
         .then(res=>{
+            // console.log(res)
             dispatch({
                 type:STAKEH_TYPE,payload:res.results
             })
         })
-}
+} 
 
 //Select stakeholder
 export const setStakehSel=(stakehSel)=>{
