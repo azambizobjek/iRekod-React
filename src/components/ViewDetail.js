@@ -286,7 +286,21 @@ class ViewDetail extends Component {
                                          </div>
                                      </div>                                     
                                  </div>                                 
-                             </div>                            
+                             </div>
+                             {/* <div className="col-lg-12 col-md-12 col-sm-12">
+                                 <div className="card bg-light flex-column">
+                                     <div className="card-header card-header-transparent d-flex align-items-center">
+                                         <h4>Custom Field</h4>
+                                     </div>
+                                     <div className="card-body">
+                                        <div className="col-lg-12 col-md-12 col-sm-12">                                        
+                                            <div className="row">                                                                                                           
+                                                
+                                            </div>
+                                         </div>
+                                     </div>                                     
+                                 </div>                                 
+                             </div>                             */}
                          </form>
                      </div> 
                  </div>              
