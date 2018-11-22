@@ -53,11 +53,9 @@ class securityWizard extends Component {
             const {role_Store}=this.props.stakeholderUpdate                    
             const item = this.props.item                 
             const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))
-                // console.log(roleOptions)
-            const roleValue = ({value: item.role_id, label:item.role_value})
+                // console.log(roleOptions)          
             this.setState({ 
-                role_list:roleOptions,
-                roleVal: roleValue
+                role_list:roleOptions,                
             })
         }
         if(prevProps.stakeholderUpdate.securityLevel!==this.props.stakeholderUpdate.securityLevel){
@@ -65,15 +63,15 @@ class securityWizard extends Component {
             const item = this.props.item 
             // console.log(securityLevel)   
             const secLevel = securityLevel.map(itm=>({ value: itm.security_level_id, label: itm.title }))
-            // console.log(secLevel)   
-            const security =({value: item.security_level_id, label:item.security_level_value})
+            // console.log(secLevel)  
             this.setState({
-                secList:secLevel,
-                secVal: security
+                secList:secLevel,                
             })
         } 
         if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
-            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password} = this.props.item
+            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value} = this.props.item
+            const security =({value: security_level_id, label:security_level_value})
+            const roleValue = ({value: role_id, label:role_value})
             this.setState({
                 stakeh_type_name: stakeh_type_name,            
                 initials: initials,
@@ -89,6 +87,8 @@ class securityWizard extends Component {
                 can_login: can_login,
                 login_username:login_username,
                 password:password,
+                secVal: security,
+                roleVal: roleValue,
             })      
         }         
     }
@@ -152,11 +152,12 @@ class securityWizard extends Component {
 
   render() {
     
-    // const item = this.props.item
+    const item = this.props.item
+    
     const {stakeh_type_name} = this.props.item    
     const active1 = this.props.active    
     const {role_list,roleVal,secList,secVal,date_active_from,date_active_to,login_username,internal,is_blocked,can_login,active}=this.state
-    // console.log(secVal)  
+    // console.log(item)  
     
     return (
       <Fragment>
