@@ -178,7 +178,7 @@ class index extends Component {
         const {stakehView,showFab}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
         const {stakeholderlistType,current}=this.state
-        const {stakeholder_Detail}=this.props.stakeholderView 
+        // const {stakeholder_Detail}=this.props.stakeholderView 
         // console.log(stakeholder_Detail)
         
         return (
