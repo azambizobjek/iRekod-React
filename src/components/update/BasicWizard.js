@@ -1,8 +1,12 @@
 import React, { Component,Fragment } from 'react' 
+import DatePicker from "react-datepicker"
+import moment from 'moment'
 import {updStkh} from '../../actions/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+
+import "react-datepicker/dist/react-datepicker.css"
 
 class basicWizard extends Component {
     constructor(){
@@ -15,13 +19,14 @@ class basicWizard extends Component {
             last_name: null,
             full_name: null,
             email: null,
-            date_of_birth: null,             
+            date_of_birth: null,        
         }        
     }  
     
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
             const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+            console.log(moment(date_of_birth, 'DD/MM/YYYY', true).format())          
             this.setState({
                 stakeh_type_name: stakeh_type_name,            
                 initials: initials,
@@ -29,7 +34,7 @@ class basicWizard extends Component {
                 last_name: last_name,
                 full_name: full_name,
                 email: email,
-                date_of_birth: date_of_birth,
+                date_of_birth: moment(),
                 stakeh_type: parseInt(stakeh_type),           
             })      
         }
@@ -46,6 +51,12 @@ class basicWizard extends Component {
          // console.log(inputName)   
         //  console.log(inputVal)
     }    
+
+    handleDateChange=(date)=>{
+        // console.log(value)
+        this.setState({date_of_birth:date})  
+        // console.log(date)
+    }  
     
     formSubmit=(e)=>{
         const {stakehSel} = this.props.stakeholderlistType  
@@ -63,7 +74,7 @@ class basicWizard extends Component {
             last_name: last_name,
             full_name: full_name,
             email: email,
-            date_of_birth: date_of_birth,
+            date_of_birth: moment(date_of_birth).format("DD/MM/YYYY"),
 
             internal: internal,
             is_blocked: is_blocked,
@@ -87,7 +98,7 @@ class basicWizard extends Component {
 
         }        
         this.props.updStkh(formObj)
-        // console.log(formObj)
+        console.log(formObj)
         
         alert("Succesful")
  
@@ -99,7 +110,7 @@ class basicWizard extends Component {
     const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name, initials, first_name, last_name, full_name, email, date_of_birth, stakeh_type}=this.state  
-    // console.log(item)
+    console.log(date_of_birth)
     
     return (
       <Fragment>
@@ -143,7 +154,7 @@ class basicWizard extends Component {
                             </div>
                             <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label>
-                                <input name="date_of_birth" type="text" className="form-control input-datepicker" onChange={this.handleChange} value={decodeURIComponent(date_of_birth)}/>
+                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="dd/MM/yyyy" selected={date_of_birth} onChange={this.handleDateChange}/>                               
                             </div>                
                         </div>
                     </div>
