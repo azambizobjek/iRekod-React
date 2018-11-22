@@ -19,30 +19,30 @@ class securityWizard extends Component {
             roleVal:null,             
             secList:[],
             secVal:null,                 
-            internal: null,
-            is_blocked: null,
-            can_login: null,
+            internal: false,
+            is_blocked: false,
+            can_login: false,
             login_username: null,
             password: null,
             role_value: null,
             role_id: null,
             security_level_value: null,
             security_level_id: null,
-            active: null,
+            active: false,
             date_active_from: null,
             date_active_to: null,     
               
         }
     }       
     
-    handleChange=(e)=>{
-        e.preventDefault()
-        const target = e.target
-        const value =  e.target.type==='checkbox'?target.checked:target.value 
-        const input = e.target.name      
+    handleChange=(event)=>{
+        // e.preventDefault()
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;     
                 
         this.setState({
-            [input]:value
+            [name]:value
         })  
         // console.log(input)  
         // console.log(value)
@@ -69,14 +69,13 @@ class securityWizard extends Component {
                 secList:secLevel,
                 secVal:secVal       
             })
-        }   
-           
+        }                 
     }    
 
     handleRoleChange=(value)=>{
         // console.log(value)
         this.setState({roleVal:value})  
-        console.log(value)
+        // console.log(value)
     }
 
     handleSecLevelChange=(value)=>{       
@@ -122,7 +121,7 @@ class securityWizard extends Component {
             // custom_field:custom_field,          
         }
         this.props.addStkh(formObj)
-        // console.log(formObj)
+        console.log(formObj)
       
         // for ( const propName in formObj)
         // if (formObj[propName] === "" || formObj[propName] === undefined ){
@@ -136,10 +135,9 @@ class securityWizard extends Component {
 
   render() {
     
-    // const item = this.props.item
-   
+    // const item = this.props.item   
     const active1 = this.props.active    
-    const {role_list,roleVal,secList,secVal,can_login}=this.state
+    const {role_list,roleVal,secList,secVal,can_login,active,internal,is_blocked,}=this.state
     // console.log(secVal)  
     
     return (
@@ -173,7 +171,7 @@ class securityWizard extends Component {
                         </div>
                       <div className="form-group">                           
                           <div className="i-checks">
-                            <input name="active" type="checkbox" onChange={this.handleChange}  />    
+                            <input name="active" type="checkbox" checked={active} onChange={this.handleChange}  />    
                                 <label>Active</label>
                           </div>
                         </div>
@@ -188,15 +186,15 @@ class securityWizard extends Component {
                             </div>
                         <div className="form-group row">
                             <div className="i-checks col-sm-2">
-                                <input name="internal" type="checkbox" onChange={this.handleChange}   />
+                                <input name="internal" type="checkbox" checked={internal} onChange={this.handleChange}   />
                                 <label>Internal</label>
                             </div>
                             <div className="i-checks col-sm-2">
-                                <input name="is_blocked" type="checkbox" onChange={this.handleChange}   />
+                                <input name="is_blocked" type="checkbox" checked={is_blocked} onChange={this.handleChange}   />
                                 <label>Is Blocked</label>
                             </div>
                             <div className="i-checks col-sm-2">
-                                <input name="can_login" type="checkbox" onChange={this.handleChange}   />
+                                <input name="can_login" type="checkbox" checked={can_login} onChange={this.handleChange}   />
                                 <label>Can Login</label>
                             </div>
                         </div>
