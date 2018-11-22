@@ -68,16 +68,7 @@ class NewStakeholder extends Component {
         }
         this.props.setSecLevel(SecurityObj)
 
-    }
-
-    nextPage=(param)=>{
-        // console.log(param)
-        this.props.setWizardPage(param)
-    }
-
-    prevPage=(param)=>{
-        this.props.setWizardPage(param)
-    }
+    }     
 
     components={
         basic:BasicWizard,
@@ -145,9 +136,7 @@ class NewStakeholder extends Component {
                         </div>
                             <div className="card-body">
                                <Body                                     
-                                    nextPage={this.nextPage}  
-                                    active={wzdPage} 
-                                    prevPage={this.prevPage}/>                                   
+                                    active={wzdPage}/>                                   
                            </div>
                        </div>
                    </div>
