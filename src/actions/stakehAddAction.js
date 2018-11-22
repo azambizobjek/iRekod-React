@@ -3,12 +3,12 @@ import {biorisUrl} from '../appConfig'
 
 //Update Stakeholder
 export const addStkh = (param) => dispatch =>{
-    console.log(param)
+    // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
         fetch(url,{method:'PUT'})
         .then(res=>res.json())
         .then(res=>{ 
-            console.log(res)
+            // console.log(res)
             dispatch({
                 type:ADD_STAKEH,payload:res
             })
