@@ -8,7 +8,7 @@ export const setStakeholderItemDetail = (param) => dispatch =>{
         fetch(url)
         .then(res=>res.json())
         .then(res=>{
-        //    if(res.results.acl_entries)
+            // console.log(res)           
             dispatch({
                 type:STAKEHOLDER_VIEW,payload:res.results
             })
@@ -62,7 +62,7 @@ export const setDelBtn=(param)=>dispatch=>{
     fetch(url,{method:'DELETE'})
     .then(res=>res.json())
     .then(res=>{
-        console.log(res)
+        // console.log(res)
         dispatch({
             type:DELETE_STAKEHOLDER,payload:res.results
         })
