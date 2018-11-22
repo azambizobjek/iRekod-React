@@ -1,20 +1,20 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
+import Pagination from 'rc-pagination'
 import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../actions/stakehTypeAction' 
 import {setActivePage} from '../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../actions/stakehViewDetail'
 
-
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import CardRow from '../components/CardRow' 
-// import Breadcrumb from '../components/Breadcrumb' 
+import CardRow from '../components/CardRow'  
 import DetailCard from '../components/DetailCard'
 import Fab from '../components/fab/Fab'
 import Tooltip from 'rc-tooltip'
-import 'rc-tooltip/assets/bootstrap.css';
- 
+import 'rc-tooltip/assets/bootstrap.css'
+import 'rc-pagination/assets/index.css'
+
  
 
 class index extends Component {
@@ -22,7 +22,8 @@ class index extends Component {
         super();     
         this.state = {
             stakeholderlistType:[],
-            stakehSelect:null
+            stakehSelect:null,
+            current:5,
         };
     }   
 
@@ -143,10 +144,7 @@ class index extends Component {
         }
         this.props.setDelBtn(stakehObj)
 
-        alert("Successful Deleted")
-        
-
-
+        alert("Successful Deleted")      
         
     }
     
@@ -164,6 +162,14 @@ class index extends Component {
   
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
         //console.log(('data-pagename'))
+    }
+
+    //Pagination
+    pagination=(page)=>{
+        // console.log(page);
+        this.setState({
+            current: page,
+        });
       }
     
    
@@ -171,7 +177,7 @@ class index extends Component {
         
         const {stakehView,showFab}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
-        const {stakeholderlistType}=this.state
+        const {stakeholderlistType,current}=this.state
         const {stakeholder_Detail}=this.props.stakeholderView 
         // console.log(stakeholder_Detail)
         
@@ -244,25 +250,26 @@ class index extends Component {
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
                                         isSel={item.isSel}
-                                        markOnSel={this.markOnSel}
-                                                                         
-                                    />:
+                                        markOnSel={this.markOnSel} />:
+
                                     <CardRow                                         
                                         key={idx} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
                                         isSel={item.isSel}
-                                        markOnSel={this.markOnSel}
-                                                                  
-                                    />                             
+                                        markOnSel={this.markOnSel} />                             
                                 )}     
 
-                                  {showFab?<Fab
-                                        FabRec={this.setActivePage}
-                                        delBtn={this.delBtn}    
-                                    />:''}
-                            </div>                    
+                                {showFab?<Fab
+                                    FabRec={this.setActivePage}
+                                    delBtn={this.delBtn} />:''}
+
+                                
+                            </div>    
+                            <div className="modal-footer">
+                                <Pagination onChange={this.pagination} current={current} total={25} />    
+                            </div>            
                     </div>
                             
                         
