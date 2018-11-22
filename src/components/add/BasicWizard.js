@@ -1,5 +1,8 @@
 import React, { Component,Fragment } from 'react' 
+import DatePicker from "react-datepicker";
+import moment from 'moment'
 import {addStkh} from '../../actions/stakehAddAction'
+import "react-datepicker/dist/react-datepicker.css";
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -15,13 +18,14 @@ class basicWizard extends Component {
             last_name: null,
             full_name: null,
             email: null,
-            date_of_birth: null,             
+            date_of_birth: moment(),             
         }        
     }  
      
     handleChange=(e)=>{
         const inputName = e.target.getAttribute('name')
-        const inputVal =  e.target.value===""?e.target.value=null:e.target.value  
+        const inputVal =  e.target.value
+        //===""?e.target.value=null:e.target.value  
         // console.log(e.target.value)    
     
       this.setState({
@@ -30,6 +34,12 @@ class basicWizard extends Component {
         //  console.log(inputName)   
         //  console.log(inputVal)
     }    
+    
+    handleDateChange=(date)=>{
+        // console.log(value)
+        this.setState({date_of_birth:date})  
+        console.log(date)
+    }   
 
     componentWillMount(){
         const {pageTitle} = this.props.layout
@@ -78,6 +88,7 @@ class basicWizard extends Component {
         }
     }   
     
+    
     formSubmit=(e)=>{
        
         const {user:{bio_access_id:idAccess}} = this.props.session
@@ -86,6 +97,7 @@ class basicWizard extends Component {
         e.preventDefault()
 
         const formObj={
+            //basic
             stakeh_type_name: parseInt(stakeh_type),
             stakeh_type: parseInt(stakeh_type),
             initials: initials,
@@ -93,8 +105,9 @@ class basicWizard extends Component {
             last_name: last_name,
             full_name: full_name,
             email: email,
-            date_of_birth: date_of_birth,
+            date_of_birth: moment(date_of_birth).format('DD/MM/YYYY'),
 
+            //security
             internal: false,
             is_blocked: false,
             can_login: false,
@@ -116,8 +129,8 @@ class basicWizard extends Component {
             // custom_field:custom_field,     
 
         }        
-        this.props.addStkh(formObj)
-        // console.log(formObj)
+        // this.props.addStkh(formObj)
+        console.log(formObj)
         
         alert("Successful Created")
  
@@ -126,9 +139,16 @@ class basicWizard extends Component {
  
   render() {
 
-    const item = this.props.item
+    const a = moment()
+        console.log(a)
+     
+     
+    const {pageTitle} = this.props.layout
+    // const item = this.props.item
     const active = this.props.active
-    const {stakeh_type_name} = this.state
+    const {stakeh_type_name,date_of_birth} = this.state
+    console.log(date_of_birth)
+
     
     return (
       <Fragment>
@@ -158,17 +178,18 @@ class basicWizard extends Component {
                                 <label>Last Name</label>
                                 <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange}  />
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Full Name</label>
-                                <input name="full_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange}  />
+                                <input name="full_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange}/>
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Email</label>
-                                <input name="email" type="email" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange}  />
+                                <input name="email" type="email" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange}/>
                             </div>
-                            <div className="col-sm-4 form-group">
-                                <label>Date of Corporation/Birth</label>
-                                <input name="date_of_birth" type="text" className="form-control input-datepicker" onChange={this.handleChange} />
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
+                                <label>Date of Birth</label> 
+                                <DatePicker selected={this.state.date_of_birth} dateFormat="DD/MM/YYYY" onChange={(d)=>{this.setState({date_of_birth:d})}}/>
+                                {/* <DatePicker name="date_of_birth" className="form-control" selected={date_of_birth}  dateFormat="DD/MM/YYYY" onChange={this.handleDateChange}/> */}
                             </div>                
                         </div>
                     </div>
