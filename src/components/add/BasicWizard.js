@@ -18,7 +18,7 @@ class basicWizard extends Component {
             last_name: null,
             full_name: null,
             email: null,
-            date_of_birth: moment(),             
+            date_of_birth: null,             
         }        
     }  
      
@@ -38,7 +38,7 @@ class basicWizard extends Component {
     handleDateChange=(date)=>{
         // console.log(value)
         this.setState({date_of_birth:date})  
-        console.log(date)
+        // console.log(date)
     }   
 
     componentWillMount(){
@@ -105,7 +105,7 @@ class basicWizard extends Component {
             last_name: last_name,
             full_name: full_name,
             email: email,
-            date_of_birth: moment(date_of_birth).format('DD/MM/YYYY'),
+            date_of_birth: moment(date_of_birth).format("DD/MM/YYYY"),
 
             //security
             internal: false,
@@ -129,8 +129,8 @@ class basicWizard extends Component {
             // custom_field:custom_field,     
 
         }        
-        // this.props.addStkh(formObj)
-        console.log(formObj)
+        this.props.addStkh(formObj)
+        // console.log(formObj)
         
         alert("Successful Created")
  
@@ -139,15 +139,12 @@ class basicWizard extends Component {
  
   render() {
 
-    const a = moment()
-        console.log(a)
-     
-     
+    
     const {pageTitle} = this.props.layout
     // const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name,date_of_birth} = this.state
-    console.log(date_of_birth)
+    // console.log(date_of_birth)
 
     
     return (
@@ -188,8 +185,7 @@ class basicWizard extends Component {
                             </div>
                             <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label> 
-                                <DatePicker selected={this.state.date_of_birth} dateFormat="DD/MM/YYYY" onChange={(d)=>{this.setState({date_of_birth:d})}}/>
-                                {/* <DatePicker name="date_of_birth" className="form-control" selected={date_of_birth}  dateFormat="DD/MM/YYYY" onChange={this.handleDateChange}/> */}
+                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="DD/MM/YYYY" selected={date_of_birth} onChange={this.handleDateChange}/>
                             </div>                
                         </div>
                     </div>
