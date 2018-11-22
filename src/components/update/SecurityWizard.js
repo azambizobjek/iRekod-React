@@ -1,13 +1,16 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
 import Checkbox from 'rc-checkbox'; 
+import DatePicker from "react-datepicker";
+import moment from 'moment'
 import {updStkh} from '../../actions/stakehUpdateAction'
-
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import 'rc-checkbox/assets/index.css';
+import "react-datepicker/dist/react-datepicker.css"
+
 // import '../css/bootstrap-datepicker3.css'
 
 
@@ -29,8 +32,8 @@ class securityWizard extends Component {
             security_level_value: null,
             security_level_id: null,
             active: false,
-            date_active_from: null,
-            date_active_to: null,    
+            startDate: null,
+            endDate: null   
              
         }
     }    
@@ -69,7 +72,7 @@ class securityWizard extends Component {
             })
         } 
         if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
-            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value} = this.props.item
+            const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value,date_active_from,date_active_to} = this.props.item
             const security =({value: security_level_id, label:security_level_value})
             const roleValue = ({value: role_id, label:role_value})
             this.setState({
@@ -89,6 +92,8 @@ class securityWizard extends Component {
                 password:password,
                 secVal: security,
                 roleVal: roleValue,
+                startDate: null, //date_active_from
+                endDate: null  //date_active_to 
             })      
         }         
     }
@@ -152,11 +157,10 @@ class securityWizard extends Component {
 
   render() {
     
-    const item = this.props.item
-    
+    // const item = this.props.item    
     const {stakeh_type_name} = this.props.item    
     const active1 = this.props.active    
-    const {role_list,roleVal,secList,secVal,date_active_from,date_active_to,login_username,internal,is_blocked,can_login,active}=this.state
+    const {role_list,roleVal,secList,secVal,startDate,endDate,login_username,internal,is_blocked,can_login,active}=this.state
     // console.log(item)  
     
     return (
@@ -197,10 +201,26 @@ class securityWizard extends Component {
                         <label>Date Active Range</label>
                             <div className="row">                       
                                 <div className="col-sm-6 form-group">
-                                    <input name="date_active_from" type="text" placeholder="Date from" className="form-control input-datepicker" onChange={this.handleChange} value={decodeURIComponent(date_active_from)}/>
+                                <DatePicker
+                                    placeholder="Date Start"
+                                    selected={startDate}
+                                    selectsStart
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={this.handleChangeStart}
+                                    className="form-control"
+                                    dateFormat="DD/MM/YYYY"/>
                                 </div>
                                 <div className="col-sm-6 form-group">
-                                    <input name="date_active_to" type="text" placeholder="Date to" className="form-control input-datepicker" onChange={this.handleChange} value={decodeURIComponent(date_active_to)}/>
+                                <DatePicker
+                                    placeholder="Date End"
+                                    selected={endDate}
+                                    selectsEnd
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={this.handleChangeEnd}
+                                    className="form-control"
+                                    dateFormat="DD/MM/YYYY"/>
                                 </div>
                             </div>
                         <div className="form-group row">
