@@ -65,165 +65,108 @@ class GroupMember extends Component {
     
     handleMemberChange=(value)=>{
         this.setState({memberVal:value})
-        // console.log(value)
+        console.log(value)
     }
-
-    formSubmit1=(e)=>{
-        e.preventDefault()
-        const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
-        const {groupVal,memberVal}= this.state     
-           
-        //Group
-        const storeGroupId = stakeholder_Group.map(itm=>itm.stakeholder_id)
-        // console.log(groupVal)
-        const i = groupVal.map(itm=>itm.value)       
-       
-        // console.log(i)
-        // this.groupSel()
-       
-        
-        // if(groupVal.length >= stakeholder_Group.length ) {
-
-        //     // console.log('save')
-        //     const groupObj={
-        //         action: "ADD_CHILD_ITEM",
-        //         bio_access_id: idAccess,
-        //         parent_id: i,  
-        //         child_id: stakehSel,
-        //         def_organization: false,
-        //         def_group: false,
-        //         def_department: false,
-        //         def_designation: false           
-        //     }
-        //     // console.log(groupObj)
-            // this.props.setGroup(groupObj)
-
-             
-        //         alert('Successful Add Group')
-             
-        // }
-        
-        // if(groupVal.length < stakeholder_Group.length ) {
-
-        //     // console.log('remove')
-        //     const RemoveGroupObj={
-        //         action: "REMOVE_CHILD_ITEM",
-        //         bio_access_id: idAccess,
-        //         parent_id: storeGroupId.toString(),
-        //         child_id: stakehSel
-        //     }          
-        //     this.props.setRmvGroup(RemoveGroupObj)
-
-        //     const stakehGroup={
-        //         stakeholder_id:stakehSel,
-        //         bio_access_id:idAccess,
-        //         action:'ITEM_LIST_GROUP',             
-        //     }
-        //     this.props.updListGroup(stakehGroup)
-
-        //     // const listAncestor={
-        //     //     bio_access_id: idAccess,
-        //     //     stakeholder_id: stakehSel,
-        //     //     action: "ITEM_LIST_ANCESTOR",
-        //     //     stakeh_type: parseInt(stakehNumb)      
-        //     // }
-        //     // this.props.setAncestor(listAncestor)
-
-        //     // alert('Successful Delete Group')
-        // }
-
-        // //Member
-        // const memberId = memberVal.map(itm=>itm.value)   
-        // const storeMemberId = stakeholder_Member.map(itm=>itm.stakeholder_id)
-        // if(memberVal.length >= stakeholder_Member.length ) {
-
-        //     // console.log('save')
-        //     const MemberObj={
-        //         action: "ADD_CHILD_ITEM",
-        //         bio_access_id: idAccess,
-        //         parent_id:  stakehSel,  
-        //         child_id: memberId.toString(),
-        //         def_organization: false,
-        //         def_group: false,
-        //         def_department: false,
-        //         def_designation: false           
-        //     }
-        //     this.props.setMember(MemberObj)
-
-        //     alert('Successful Add Member')
-        // }
-
-        // if(memberVal.length < stakeholder_Member.length ) {
-
-        //     // console.log('remove')
-        //     const RemoveGroupObj={
-        //         action: "REMOVE_CHILD_ITEM",
-        //         bio_access_id: idAccess,
-        //         parent_id: stakehSel,
-        //         child_id: storeMemberId.toString(),
-        //     }          
-        //     this.props.setRmvMember(RemoveGroupObj)
-
-        //     const stakehGroup={
-        //         stakeholder_id:stakehSel,
-        //         bio_access_id:idAccess,
-        //         action:'ITEM_LIST_GROUP',             
-        //     }
-        //     this.props.updListMember(stakehGroup)
-
-        //     // const listAncestor={
-        //     //     bio_access_id: idAccess,
-        //     //     stakeholder_id: stakehSel,
-        //     //     action: "ITEM_LIST_ANCESTOR",
-        //     //     stakeh_type: parseInt(stakehNumb)      
-        //     // }
-        //     // this.props.setAncestor(listAncestor)
-
-        //     // alert('Successful Delete Member')
-        // }
-
-        
-
-    }
+     
 
     formSubmit=(e)=>{
         e.preventDefault()
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {stakehSel} = this.props.stakeholderlistType
         const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
-        const {groupVal}= this.state
-        const obj = {}
-        // console.log(groupVal)
-         
-      
-        if(groupVal.length >= stakeholder_Group.length ) {
-        const groupSource = groupVal.map(x =>({
-            action: "ADD_CHILD_ITEM",
-            bio_access_id: idAccess,
-            parent_id: x.value,  
-            child_id: stakehSel,
-            def_organization: false,
-            def_group: false,
-            def_department: false,
-            def_designation: false
-        
-        }))  
-        // console.log(groupSource)
+        const {groupVal,memberVal}= this.state
+        // console.log(stakeholder_Group)
+        // const reduxGroup = stakeholder_Group.map(x=>({id:x.stakeholder_id}))
+        // console.log(reduxGroup)
+        //  console.log(groupVal)
+       
+        // const test  = groupVal.filter(x=>x.value === stkh-fc2694e297054827920613f180b6458b)
+        console.log(stakeholder_Member)
+       
+        //Group
+        if(groupVal.length >= stakeholder_Group.length ) {     
+            groupVal.forEach((x,idx)=>{
+                const groupSource = {
+                    action: "ADD_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: x.value,  
+                    child_id: stakehSel,
+                    def_organization: false,
+                    def_group: false,
+                    def_department: false,
+                    def_designation: false                
+                }
+                this.props.setGroup(groupSource)
+            })
+        }
 
-        // var mapped = groupVal .map(item => ({ [item.label]: item.value }) )
-        // console.log(mapped)
+        if(groupVal.length < stakeholder_Group.length ) {            
+            groupVal.forEach((x,idx)=>{
+                const groupSource = {
+                    action: "REMOVE_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: x.value,  
+                    child_id: stakehSel,
+                    def_organization: false,
+                    def_group: false,
+                    def_department: false,
+                    def_designation: false                
+                }
+                this.props.setRmvGroup(groupSource)
+            })           
+        }
 
-        const newObj = groupSource.reduce( 
-            (ac,p) => ({...ac, [p.id]: p }), {} )
-        
+        if (groupVal.length === 0 ){
+            stakeholder_Group.forEach((x,idx)=>{
+                const groupSource = {
+                    action: "REMOVE_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: x.stakeholder_id,  
+                    child_id: stakehSel,
+                    def_organization: false,
+                    def_group: false,
+                    def_department: false,
+                    def_designation: false                
+                }
+                this.props.setRmvGroup(groupSource)
+            })
+        }
 
-        // const newObj = Object.assign(obj, ...groupSource)
-        console.log(newObj)
-        
-        // this.props.setGroup(newObj)
-        
+        //Member
+        if(memberVal.length >= stakeholder_Member.length  ) {     
+            memberVal.forEach((x,idx)=>{
+                const memberSource = {
+                    action: "ADD_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: stakehSel,  
+                    child_id: x.value               
+                }
+                this.props.setMember(memberSource)
+            })
+        }
+
+        if(memberVal.length < stakeholder_Member.length  ) {            
+            memberVal.forEach((x,idx)=>{
+                const memberSource = {
+                    action: "REMOVE_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: stakehSel,  
+                    child_id: x.value                             
+                }
+                this.props.setRmvMember(memberSource)
+            })           
+        }
+
+        if (memberVal.length === 0 ){
+            stakeholder_Member.forEach((x,idx)=>{
+                const memberSource = {
+                    action: "REMOVE_CHILD_ITEM",
+                    bio_access_id: idAccess,
+                    parent_id: stakehSel,  
+                    child_id: x.stakeholder_id                                
+                }
+                this.props.setRmvMember(memberSource)
+            })
         }
      
       
