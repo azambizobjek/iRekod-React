@@ -144,7 +144,7 @@ class basicWizard extends Component {
     // const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name,date_of_birth} = this.state
-    // console.log(date_of_birth)
+    console.log(date_of_birth)
 
     
     return (
@@ -165,7 +165,7 @@ class basicWizard extends Component {
                         <div className="row">
                             <div className="col-sm-4 form-group">
                                 <label>Initials</label>
-                                <input name="initials" type="text" className="form-control" onChange={this.handleChange}  /> 
+                                <input name="initials" placeholder="Mr / Mrs" type="text" className="form-control" onChange={this.handleChange}  /> 
                             </div>
                             <div className="col-sm-4 form-group">
                                 <label>First Name</label>
