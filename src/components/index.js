@@ -5,6 +5,7 @@ import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../a
 import {setActivePage} from '../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../actions/stakehViewDetail'
 
+
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -147,6 +148,13 @@ class index extends Component {
         alert("Successful Deleted")      
         
     }
+
+    //Add Stakeholder Child
+    child=(page)=>{
+     
+        this.props.setActivePage(page)   
+        // console.log(test)
+    }
     
     //LayoutView
     stakehViewList=()=>{        
@@ -164,6 +172,7 @@ class index extends Component {
         //console.log(('data-pagename'))
     }
 
+   
     //Pagination
     pagination=(page)=>{
         // console.log(page);
@@ -175,11 +184,12 @@ class index extends Component {
    
     render() {
         
-        const {stakehView,showFab}=this.props.stakeholderlistType
+        const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
         const {stakeholderlistType,current}=this.state
+        const {addChildBtn} = this.props.fab
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        // console.log(stakeholder_Detail)
+        // console.log(stakehNumb)
         
         return (
             <Fragment>  
@@ -263,7 +273,9 @@ class index extends Component {
 
                                 {showFab?<Fab
                                     FabRec={this.setActivePage}
-                                    delBtn={this.delBtn} />:''}
+                                    delBtn={this.delBtn}
+                                    addChild={this.child}
+                                    stakehNumb={stakehNumb} />:''}
 
                                 
                             </div>    
@@ -282,7 +294,8 @@ index.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
-    layout:PropTypes.object.isRequired,
+    layout: PropTypes.object.isRequired,
+    fab: PropTypes.object.isRequired,
     setStakehViewTrue: PropTypes.func.isRequired,
     setStakehViewFalse: PropTypes.func.isRequired,   
     setShowFab: PropTypes.func.isRequired,   
@@ -318,7 +331,7 @@ export default connect(mapStateToProps,{
     viewStakehGroup,
     viewStakehAccess,    
     setDelBtn,
-     
+    
    
     
 })(index)
