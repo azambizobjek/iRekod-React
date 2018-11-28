@@ -1,15 +1,15 @@
-import {SET_FAB} from '../actions/types'
+import {FAB_ADD_BTN} from '../actions/types'
 
 const initialState = {
-    setFab: false,
+  addChildBtn : false ,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
-  case SET_FAB:
+  case FAB_ADD_BTN:
     return { ...state,
-        setFab:action.payload
+      addChildBtn:action.payload
     }
   default:
     return state
