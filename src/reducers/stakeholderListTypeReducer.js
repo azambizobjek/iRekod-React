@@ -4,9 +4,10 @@ import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../action
 const initialState={ 
     stakehType:[],  //List Type Stakeholder
     stakehSel:'null',   //Select Stakeholder
-    stakehView: false, //layout
+    stakehView: false, //layout card to grid
     showFab:false,  //Fab
-    stakehNumb: null, //Stakeh Number Type    
+    stakehNumb: null, //Stakeh Number Type  
+      
 
 }
 
