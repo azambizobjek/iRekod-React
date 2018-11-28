@@ -1,4 +1,4 @@
-import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP,STAKEHOLDER_MEMBER} from './types'
+import {WIZARD_PAGE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP,STAKEHOLDER_MEMBER,CUSTOM_FIELD} from './types'
 import {biorisUrl} from '../appConfig'
 
 //Select stakeholder
@@ -26,7 +26,7 @@ export const setRoleStore = (param) => dispatch =>{
 //Security Level
 export const setSecLevel = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/securityLevel?param=${JSON.stringify(param)}`
+    const url=`${biorisUrl}/secLvl?param=${JSON.stringify(param)}`
         fetch(url,{method:'GET'})
         .then(res=>res.json())
         .then(res=>{
@@ -159,12 +159,12 @@ export const updListGroup = (param) => dispatch => {
 
 //Add Member
 export const setMember = (param) => dispatch =>{
-    // console.log(param)
+    console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            // console.log(res)
+            console.log(res)
             // dispatch({
             //     type:ADD_GROUP_ITEM,payload:res.results
             // })
@@ -207,3 +207,18 @@ export const updListMember = (param) => dispatch => {
         
     })
 }
+
+//Custom Field
+export const setcustomField = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/customField?param=${JSON.stringify(param)}`
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{ 
+        //    if(res.results.acl_entries)
+            dispatch({
+                type:CUSTOM_FIELD,payload:res.results
+            })
+        })
+}
+
