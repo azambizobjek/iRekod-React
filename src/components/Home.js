@@ -4,6 +4,7 @@ import addStakeholder from '../components/add/AddStakeholder'
 import index from '../components/index'
 import ViewDetail from '../components/ViewDetail'
 import UpdateDetail from '../components/update/UpdateDetail'
+import addChild from '../components/addChild/AddStakeholder'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -33,7 +34,8 @@ class Home extends Component {
         'addStakeholder' : addStakeholder,                
         'index' : index,
         'view': ViewDetail,
-        'edit': UpdateDetail,       
+        'edit': UpdateDetail, 
+        'child': addChild,     
         
     }
      
