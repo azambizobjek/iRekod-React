@@ -1,10 +1,10 @@
-import {SET_FAB} from './types'
+import {FAB_ADD_BTN} from './types'
 
  
-export const setFabBtn=(setFab)=>{
+export const addFabBtn=(param)=>{
     return {
-        type:SET_FAB,
-        payload:setFab
+        type:FAB_ADD_BTN,
+        payload:param
     }
 }
  
