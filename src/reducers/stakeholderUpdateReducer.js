@@ -1,4 +1,4 @@
-import {WIZARD_PAGE,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,CUSTOM_FIELD} from '../actions/types'
+import {WIZARD_PAGE,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,CUSTOM_FIELD} from '../actions/types'
 
 const initialState = {
     stakehList:[], //Stakeholder List
@@ -9,8 +9,7 @@ const initialState = {
     listAncestor:[],
     listDescendant:[],
     storeDetail:[],
-    securityLevel:[], 
-    groupItem:[], 
+    securityLevel:[],     
     customField:[]
 }
 
@@ -58,17 +57,12 @@ export default (state = initialState, action) => {
     return {
         ...state,
         securityLevel:action.payload
-    }
-    case ADD_GROUP_ITEM:
-    return {
-        ...state,
-        groupItem:action.payload
-    }
+    }    
     case CUSTOM_FIELD:
     return {
         ...state,
         customField:action.payload
-    }
+    }    
     default:
     return state
   }
