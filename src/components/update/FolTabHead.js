@@ -14,7 +14,7 @@ import React from 'react'
     {/* <div className={iconType?"col-3 colContainer":"col-3 colContainer hideLine"}> */}
     {/* <div className="col-3 colContainer hideLine"> */}
 
-    <div className="col-3 colContainer">
+    <div className="col-2 colContainer">
         <div className={active==='basic'?'tab activeTab mx-auto':'tab mx-auto'}>
         {/* <div className='tab activeTab mx-auto'> */}
             <img
@@ -26,7 +26,7 @@ import React from 'react'
         </div>
     </div>
 
-   <div className={isContainer?"col-3 colContainer":"d-none"}>
+   <div className={isContainer?"col-2 colContainer":"d-none"}>
         <div className={active==='security'?'tab activeTab mx-auto':'tab mx-auto'}>
         {/* <div className='tab activeTab mx-auto'> */} 
             <img
@@ -38,7 +38,7 @@ import React from 'react'
         </div>
     </div>
 
-    <div className={isContainer?"col-3 colContainer":"col-3 colContainer hideLine"}>
+    <div className={isContainer?"col-2 colContainer":"col-3 colContainer hideLine"}>
         <div className={active==='access'?'tab activeTab mx-auto':'tab mx-auto'}>
         {/* <div className='tab activeTab mx-auto'> */}
 
@@ -51,7 +51,7 @@ import React from 'react'
         </div>
     </div> 
 
-    <div className={isContainer?"col-3 colContainer":"d-none"}>
+    <div className={isContainer?"col-2 colContainer":"d-none"}>
         <div className={active==='group'?'tab activeTab mx-auto':'tab mx-auto'}>
         {/* <div className='tab activeTab mx-auto'> */}
 
@@ -63,6 +63,19 @@ import React from 'react'
                 onClick={sendActive} />
         </div>
     </div> 
+
+    <div className={isContainer?"col-2 colContainer":"d-none"}>
+        <div className={active==='custom'?'tab activeTab mx-auto':'tab mx-auto'}>
+        {/* <div className='tab activeTab mx-auto'> */}
+
+            <img
+                name="custom"
+                src={require('../../img/StakeType/Group.svg')}
+                className={active==='custom'?'img-fluid desaturate':'img-fluid'}
+                // className='img-fluid'
+                onClick={sendActive} />
+        </div>
+    </div>
 
 </div>
 )}
