@@ -2,9 +2,10 @@ import React, { Component,Fragment } from 'react'
 import BasicWizard from '../update/BasicWizard'
 import SecurityWizard from '../update/SecurityWizard'
 import AccessWizard from '../update/AccessWizard'
-import GrpMberWizard from '../update/GrpMberWizard'
+import GrpMberWizard from '../update/Group&Member'
+import CustomField from '../update/CustomField'
 import FolTabHead from '../update/FolTabHead'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../actions/stakehUpdateAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField} from '../../actions/stakehUpdateAction'
 import {setWizardPage} from '../../actions/stakehUpdateAction'
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakehType} from '../../actions/stakehTypeAction'
@@ -88,6 +89,12 @@ class UpdateDetail extends Component {
         }
         this.props.viewStakehMember(stakehMember)
 
+        const customFieldObj={
+            action:"ITEM_LIST_ATTRIBUTE",
+            bio_access_id: idAccess
+        }
+        this.props.setcustomField(customFieldObj)
+
     }
  
     components={
@@ -95,6 +102,8 @@ class UpdateDetail extends Component {
         security:SecurityWizard,        
         access:AccessWizard,
         group:GrpMberWizard,
+        custom:CustomField     
+
         // icon:{
         //     delete:`fab-trash.svg`,
         //     move:`fab-move.svg`
@@ -159,6 +168,14 @@ class UpdateDetail extends Component {
 
         // this.handleWizard()
          
+        const customFieldObj={
+            action:"ITEM_LIST_ATTRIBUTE",
+            bio_access_id: idAccess
+        }
+        this.props.setcustomField(customFieldObj)
+
+
+
     }
 
   render() {
@@ -231,8 +248,9 @@ UpdateDetail.propTypes={
     setActivePage: PropTypes.func.isRequired,
     setStakehType: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,
-    viewStakehGroup:  PropTypes.func.isRequired,
-    viewStakehMember:  PropTypes.func.isRequired, 
+    viewStakehGroup: PropTypes.func.isRequired,
+    viewStakehMember: PropTypes.func.isRequired, 
+    setcustomField: PropTypes.func.isRequired,
  
   }
   
@@ -256,6 +274,7 @@ UpdateDetail.propTypes={
     setSecLevel,
     viewStakehGroup,
     viewStakehMember,
+    setcustomField,
        
   
   })(UpdateDetail)
