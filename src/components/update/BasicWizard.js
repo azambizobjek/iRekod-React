@@ -26,7 +26,7 @@ class basicWizard extends Component {
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
             const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
-            console.log(moment(date_of_birth, 'DD/MM/YYYY', true).format())          
+            // console.log(moment(date_of_birth, "DD/MM/YYYY"))  
             this.setState({
                 stakeh_type_name: stakeh_type_name,            
                 initials: initials,
@@ -34,7 +34,7 @@ class basicWizard extends Component {
                 last_name: last_name,
                 full_name: full_name,
                 email: email,
-                date_of_birth: moment(),
+                date_of_birth: date_of_birth,
                 stakeh_type: parseInt(stakeh_type),           
             })      
         }
@@ -42,7 +42,8 @@ class basicWizard extends Component {
      
     handleChange=(e)=>{
         const inputName = e.target.getAttribute('name')
-        const inputVal =  e.target.value===""?e.target.value=null:e.target.value  
+        const inputVal =  e.target.value
+        // ===""?e.target.value=null:e.target.value  
         // console.log(e.target.value)    
     
       this.setState({
@@ -110,7 +111,7 @@ class basicWizard extends Component {
     const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name, initials, first_name, last_name, full_name, email, date_of_birth, stakeh_type}=this.state  
-    console.log(date_of_birth)
+    // console.log(date_of_birth)
     
     return (
       <Fragment>
@@ -134,7 +135,7 @@ class basicWizard extends Component {
                         <div className="row">
                             <div className="col-sm-4 form-group">
                                 <label>Initials</label>
-                                <input name="initials" type="text" className="form-control" onChange={this.handleChange} value={decodeURIComponent(initials)}/> 
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={decodeURIComponent(initials)}/> 
                             </div>
                             <div className="col-sm-4 form-group">
                                 <label>First Name</label>
@@ -154,7 +155,7 @@ class basicWizard extends Component {
                             </div>
                             <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label>
-                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="dd/MM/yyyy" selected={date_of_birth} onChange={this.handleDateChange}/>                               
+                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="DD/MM/YYYY" selected={date_of_birth!==null?moment(date_of_birth, "DD/MM/YYYY"):date_of_birth} onChange={this.handleDateChange}/>                               
                             </div>                
                         </div>
                     </div>
