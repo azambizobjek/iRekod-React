@@ -4,7 +4,7 @@ import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,upd
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import { parse } from 'url';
+ 
 
 class grpMberWizard extends Component {
     constructor(){
@@ -79,10 +79,9 @@ class grpMberWizard extends Component {
         const storeGroupId = stakeholder_Group.map(itm=>itm.stakeholder_id)
         // console.log(groupVal)
         const i = groupVal.map(itm=>itm.value)
-        const test = i.join('","') 
-         //const test = groupVal.map((groupVal) =>  groupVal.value  )
        
-            // console.log(i.join())
+       
+        console.log(i)
              
         
         
@@ -92,7 +91,7 @@ class grpMberWizard extends Component {
             const groupObj={
                 action: "ADD_CHILD_ITEM",
                 bio_access_id: idAccess,
-                parent_id: test,  
+                parent_id: i,  
                 child_id: stakehSel,
                 def_organization: false,
                 def_group: false,
