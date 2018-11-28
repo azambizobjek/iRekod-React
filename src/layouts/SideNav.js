@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {setActivePage,setPageTitle} from '../actions/layoutInitAction'
 import {setStakehType,setStakehNumb} from '../actions/stakehTypeAction'
  
+ 
 
 class SideNav extends React.Component {
   constructor(){
@@ -33,8 +34,8 @@ class SideNav extends React.Component {
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setStakehNumb(e.target.getAttribute('data-id'))
-      // console.log(e.target.getAttribute('data-pageTitle'))
-      
+      // console.log(e.target.getAttribute('data-pageTitle'))     
+
       const stakehObj={
         stakeholder_id:bId,
         bio_access_id:idAccess,
@@ -159,6 +160,8 @@ SideNav.propTypes={
     setPageTitle: PropTypes.func.isRequired,
     setStakehType: PropTypes.func.isRequired,
     setStakehNumb: PropTypes.func.isRequired,
+    
+
   }
   const mapStateToProps= state =>({
     session:state.session,
@@ -173,6 +176,6 @@ SideNav.propTypes={
     setStakehType,
     setPageTitle,
     setStakehNumb,
-
+    
   })
   (SideNav)
