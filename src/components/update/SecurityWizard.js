@@ -51,6 +51,22 @@ class securityWizard extends Component {
         // console.log(value)
     }    
 
+    handleDateChange = ({ startDate, endDate }) => {
+        // console.log(startDate, endDate)
+        startDate = startDate || this.state.startDate
+        endDate = endDate || this.state.endDate
+
+        if (startDate.isAfter(endDate)){
+            endDate = startDate
+        }
+        this.setState({ startDate, endDate})
+       
+    }
+
+    handleChangeStart = (startDate) => this.handleDateChange({ startDate })
+
+    handleChangeEnd = (endDate) => this.handleDateChange({ endDate })
+
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderUpdate.role_Store!==this.props.stakeholderUpdate.role_Store){
             const {role_Store}=this.props.stakeholderUpdate                    
@@ -75,6 +91,7 @@ class securityWizard extends Component {
             const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value,date_active_from,date_active_to} = this.props.item
             const security =({value: security_level_id, label:security_level_value})
             const roleValue = ({value: role_id, label:role_value})
+            // console.log(date_active_from,date_active_to)
             this.setState({
                 stakeh_type_name: stakeh_type_name,            
                 initials: initials,
@@ -92,8 +109,8 @@ class securityWizard extends Component {
                 password:password,
                 secVal: security,
                 roleVal: roleValue,
-                startDate: null, //date_active_from
-                endDate: null  //date_active_to 
+                startDate: date_active_from,
+                endDate: date_active_to, 
             })      
         }         
     }
@@ -114,9 +131,9 @@ class securityWizard extends Component {
         e.preventDefault()
         const {stakehSel} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {date_active_from,date_active_to,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
+        const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
-        console.log(password)
+        // console.log(password)
 
         const formObj={                       
             stakeh_type_name: stakeh_type_name,
@@ -138,8 +155,8 @@ class securityWizard extends Component {
             security_level_value: security_level_value,
             security_level_id: security_level_id,
             active: active,
-            date_active_from: date_active_from,
-            date_active_to: date_active_to,  
+            date_active_from: moment(startDate).format("DD/MM/YYYY"),
+            date_active_to: moment(endDate).format("DD/MM/YYYY"),  
             
             version: 0,           
             stakeholder_id: stakehSel,
@@ -149,7 +166,7 @@ class securityWizard extends Component {
             // custom_field:custom_field,          
         }
         this.props.updStkh(formObj)
-        console.log(formObj)
+        // console.log(formObj)
 
         alert("Succesful")
     }
@@ -160,9 +177,8 @@ class securityWizard extends Component {
     // const item = this.props.item    
     const {stakeh_type_name} = this.props.item    
     const active1 = this.props.active    
-    const {role_list,roleVal,secList,secVal,startDate,endDate,login_username,internal,is_blocked,can_login,active}=this.state
-    // console.log(item)  
-    
+    const {role_list,roleVal,secList,secVal,startDate,endDate,login_username,internal,is_blocked,can_login,active}=this.state   
+    // console.log(roleVal,secVal)
     return (
       <Fragment>
         <h1 className="h3 display text-primary text-center">Security</h1>
@@ -180,7 +196,7 @@ class securityWizard extends Component {
                                 <Select 
                                     options={role_list}
                                     onChange={this.handleRoleChange}
-                                    value={roleVal} 
+                                    value={roleVal.value===""?null:roleVal} 
                                     placeholder="Role"/> 
                             </div>
                             <div className="form-group col-sm-6">
@@ -188,7 +204,7 @@ class securityWizard extends Component {
                                 <Select 
                                     options={secList}
                                     onChange={this.handleSecLevelChange}
-                                    value={secVal} 
+                                    value={secVal.value===""?null:secVal} 
                                     placeholder="Security Level"/> 
                             </div>                                                 
                         </div>
@@ -202,37 +218,37 @@ class securityWizard extends Component {
                             <div className="row">                       
                                 <div className="col-sm-6 form-group">
                                 <DatePicker
-                                    placeholder="Date Start"
-                                    selected={startDate}
+                                    placeholderText="Date Start"
+                                    selected={startDate!==null?moment(startDate, "DD/MM/YYYY"):startDate}
                                     selectsStart
-                                    startDate={startDate}
-                                    endDate={endDate}
+                                    startDate={startDate!==null?moment(startDate, "DD/MM/YYYY"):startDate}
+                                    endDate={endDate!==null?moment(endDate, "DD/MM/YYYY"):endDate}
                                     onChange={this.handleChangeStart}
                                     className="form-control"
                                     dateFormat="DD/MM/YYYY"/>
                                 </div>
                                 <div className="col-sm-6 form-group">
                                 <DatePicker
-                                    placeholder="Date End"
-                                    selected={endDate}
+                                    placeholderText="Date End"
+                                    selected={endDate!==null?moment(endDate, "DD/MM/YYYY"):endDate}
                                     selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
+                                    startDate={startDate!==null?moment(startDate, "DD/MM/YYYY"):startDate}
+                                    endDate={endDate!==null?moment(endDate, "DD/MM/YYYY"):endDate}
                                     onChange={this.handleChangeEnd}
                                     className="form-control"
                                     dateFormat="DD/MM/YYYY"/>
                                 </div>
                             </div>
                         <div className="form-group row">
-                            <div className="i-checks col-sm-2">
+                            <div className="col-sm-2">
                                 <input name="internal" type="checkbox" checked={internal} onChange={this.handleChange}   />
                                 <label>Internal</label>
                             </div>
-                            <div className="i-checks col-sm-2">
+                            <div className=" col-sm-2">
                                 <input name="is_blocked" type="checkbox" checked={is_blocked} onChange={this.handleChange}   />
                                 <label>Is Blocked</label>
                             </div>
-                            <div className="i-checks col-sm-2">
+                            <div className="col-sm-2">
                                 <input name="can_login" type="checkbox" checked={can_login} onChange={this.handleChange}   />
                                 <label>Can Login</label>
                             </div>
