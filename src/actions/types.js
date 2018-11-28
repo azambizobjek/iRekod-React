@@ -24,7 +24,7 @@ export const DELETE_STAKEHOLDER = 'DELETE_STAKEHOLDER'
 export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
 
 //Fab
-export const SET_FAB = 'SET_FAB'
+export const FAB_ADD_BTN = 'FAB_ADD_BTN'
 
 //Stakeholder Viewer
 export const STAKEHOLDER_VIEW = 'STAKEHOLDER_VIEW'
@@ -41,6 +41,7 @@ export const ITEM_LIST_DESCENDANT = 'ITEM_LIST_DESCENDANT'
 export const STORE_DETAIL = 'STORE_DETAIL'
 export const SECURITY_LEVEL = 'SECURITY_LEVEL'
 export const ADD_GROUP_ITEM = 'ADD_GROUP_ITEM'
+export const CUSTOM_FIELD = 'CUSTOM_FIELD'
 
 
 //Stakeholeder Add
