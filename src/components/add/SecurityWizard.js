@@ -17,10 +17,8 @@ class securityWizard extends Component {
     constructor(){
         super()
         this.state={              
-            role_list:[], 
-            roleVal:null,             
-            secList:[],
-            secVal:null,                 
+            role_list:[],                        
+            secList:[],                      
             internal: false,
             is_blocked: false,
             can_login: false,
@@ -70,23 +68,19 @@ class securityWizard extends Component {
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderUpdate.role_Store!==this.props.stakeholderUpdate.role_Store){
             const {role_Store}=this.props.stakeholderUpdate                        
-            const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))             
-            const roleValue = ({value: null, label:null})
-                // console.log(roleOptions)
+            const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))           
+            // console.log(roleOptions)
             this.setState({ 
-                role_list:roleOptions,
-                roleVal:roleValue
+                role_list:roleOptions                
             })
         }
         if(prevProps.stakeholderUpdate.securityLevel!==this.props.stakeholderUpdate.securityLevel){
             const {securityLevel} = this.props.stakeholderUpdate                           
             // console.log(securityLevel)   
-            const secLevel = securityLevel.map(itm=>({ value: itm.security_level_id, label: itm.title }))
-            const secVal = ({value: null, label:null})
+            const secLevel = securityLevel.map(itm=>({ value: itm.security_level_id, label: itm.title }))            
             // console.log(secLevel)  
             this.setState({
-                secList:secLevel,
-                secVal:secVal       
+                secList:secLevel               
             })
         }                 
     }    
@@ -156,7 +150,7 @@ class securityWizard extends Component {
     
     // const item = this.props.item   
     const active1 = this.props.active    
-    const {role_list,roleVal,secList,secVal,can_login,active,internal,is_blocked,startDate,endDate}=this.state
+    const {role_list,secList,can_login,active,internal,is_blocked,startDate,endDate}=this.state
     // console.log(startDate, endDate)  
     
     return (
@@ -175,16 +169,14 @@ class securityWizard extends Component {
                                 <label>Role</label>
                                 <Select 
                                     options={role_list}
-                                    onChange={this.handleRoleChange}
-                                    value={roleVal}                               
+                                    onChange={this.handleRoleChange}                                                               
                                     placeholder="Role"/> 
                             </div>
                             <div className="form-group col-sm-6">
                                 <label>Security Level</label>
                                 <Select 
                                     options={secList}
-                                    onChange={this.handleSecLevelChange}
-                                    value={secVal} 
+                                    onChange={this.handleSecLevelChange}                                   
                                     placeholder="Security Level" /> 
                             </div>                                                 
                         </div>
@@ -198,7 +190,7 @@ class securityWizard extends Component {
                             <div className="row">
                             <div className="col-sm-6 form-group">
                                 <DatePicker
-                                    placeholder="Date Start"
+                                    placeholderText="Date Start"
                                     selected={startDate}
                                     selectsStart
                                     startDate={startDate}
@@ -209,7 +201,7 @@ class securityWizard extends Component {
                                 </div>
                                 <div className="col-sm-6 form-group">
                                 <DatePicker
-                                    placeholder="Date End"
+                                    placeholderText="Date End"
                                     selected={endDate}
                                     selectsEnd
                                     startDate={startDate}
