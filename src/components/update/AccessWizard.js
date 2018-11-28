@@ -160,7 +160,7 @@ class accessWizard extends Component {
 
     Aclselected=()=>{
         const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
-        console.log(accViewVal)
+        // console.log(accViewVal)
         
        
         // console.log(accViewVal)
