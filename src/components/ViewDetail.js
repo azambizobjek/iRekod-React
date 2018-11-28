@@ -21,7 +21,9 @@ class ViewDetail extends Component {
   constructor(){
       super()
       this.state={
-        aclEntries:[]       
+        aclEntries:[],
+        groupItem:[],
+        memberItem:[]     
       }
   }
 
@@ -64,6 +66,14 @@ class ViewDetail extends Component {
       if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
             const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView
             this.setState({aclEntries:acl_entries})
+        }    
+    if(prevProps.stakeholderView.stakeholder_Group!==this.props.stakeholderView.stakeholder_Group){
+            const {stakeholder_Group}=this.props.stakeholderView
+            this.setState({groupItem:stakeholder_Group})
+        }
+    if(prevProps.stakeholderView.stakeholder_Member!==this.props.stakeholderView.stakeholder_Member){
+            const {stakeholder_Member}=this.props.stakeholderView
+            this.setState({memberItem:stakeholder_Member})
         }        
     }
 
@@ -162,8 +172,8 @@ class ViewDetail extends Component {
   render() {
    
     const {pageTitle}=this.props.layout
-    const {stakeholder_Detail,stakeholder_Member,stakeholder_Group} = this.props.stakeholderView
-    const {aclEntries}=this.state
+    const {stakeholder_Detail,stakeholder_Member} = this.props.stakeholderView
+    const {aclEntries,groupItem,memberItem}=this.state
     // console.log(stakeholder_Group)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(aclEntries)    
@@ -231,13 +241,13 @@ class ViewDetail extends Component {
                                     <hr/>
                                  </div>
                                  <h5 className="title text-center">Associate</h5>                                    
-                                    {stakeholder_Member.map((item,idx)=><MemberView 
+                                    {memberItem!==null?memberItem.map((item,idx)=><MemberView 
                                         key={idx} 
                                         stkhId={item.stakeholder_id}  
                                         stakehType={item.stakeh_type}                                     
                                         fullName={item.full_name}
                                         typeName={item.stakeh_type_name}
-                                        setActivePage={this.setPageView} />)} 
+                                        setActivePage={this.setPageView} />):"No Items"} 
                              </div>
                          </div>
                      </div>
@@ -254,13 +264,13 @@ class ViewDetail extends Component {
                                      <div className="card-body">
                                         <div className='col-lg-12 col-md-12 col-sm-12'>
                                             <div className="row">
-                                            {stakeholder_Group.map((item,idx)=><GroupView 
+                                            {groupItem!==null?groupItem.map((item,idx)=><GroupView 
                                                     key={idx} 
                                                     stkhId={item.stakeholder_id}                                       
                                                     fullName={item.full_name}
                                                     typeName={item.stakeh_type_name}
                                                     stakehType={item.stakeh_type}  
-                                                    setActivePage={this.setPageView}/>)} 
+                                                    setActivePage={this.setPageView}/>):"No Items"} 
                                             </div>
                                         </div>
                                      </div>
