@@ -13,6 +13,7 @@ export const PAGE_TITLE = 'PAGE_TITLE'
 
 //search action and reducer link
 export const BASIC_SEARCH = 'BASIC_SEARCH'
+export const STAKEH_LIST = 'STAKEH_LIST'
 
 //Stakeholder List Type
 export const STAKEH_TYPE = 'STAKEH_TYPE'
