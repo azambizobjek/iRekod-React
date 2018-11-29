@@ -1,18 +1,24 @@
-import {BASIC_SEARCH} from '../actions/types'
+import {BASIC_SEARCH,STAKEH_LIST} from '../actions/types'
+const _ = require('lodash') // Lodash.
 
 
 const initialState={
-    basicKey:null
+    stakehList:[],
+    basicKey:null,
+
 
 }
 
 export default function(state = initialState, action){
     switch(action.type){
-        case BASIC_SEARCH:
-        return {
-            ...state,
-            basicKey:action.payload,
+        case STAKEH_LIST:
+        return {...state,
+            stakehList:action.payload,
         }
+        case BASIC_SEARCH:
+        const {payload} = action
+        const filtered = _.filter(state.stakehList, (x) => _.toLower(x.full_name).includes(_.toLower(payload)))
+        return {...state, filtered}
         // case TOGGLE_SIDENAV:
         // return {
         //     ...state,
