@@ -1,5 +1,20 @@
-import {BASIC_SEARCH} from './types'
+import {BASIC_SEARCH,STAKEH_LIST} from './types'
+import {biorisUrl} from '../appConfig'
 
+
+//Stakeh List
+export const stakehList = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/stakeholder?param=${encodeURIComponent(JSON.stringify(param))}`
+        fetch(url,{method:'GET'})
+        .then(res=>res.json())
+        .then(res=>{ 
+            // console.log(res)
+            dispatch({
+                type:STAKEH_LIST,payload:res.results
+            })
+        })   
+}
 
 export const basicSearch=(searchKey)=>{
    return {
@@ -7,6 +22,8 @@ export const basicSearch=(searchKey)=>{
        payload:searchKey
    }
 }
+
+
 // export const setSideNavClass=(sideNavClass)=>{
 //     return {
 //         type:SIDENAV_CLASS,
