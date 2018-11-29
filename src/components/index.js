@@ -79,8 +79,7 @@ class index extends Component {
         }
 
         this.setState({
-            stakeholderlistType: newStakeholderList 
-            
+            stakeholderlistType: newStakeholderList             
         })
     }
     pageBreadCrumb=(e)=>{
@@ -189,7 +188,7 @@ class index extends Component {
         const {stakeholderlistType,current}=this.state
         const {addChildBtn} = this.props.fab
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        // console.log(stakehNumb)
+        console.log(stakeholderlistType)
         
         return (
             <Fragment>  
