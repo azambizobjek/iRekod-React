@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login} from '../actions/authAction'
+ 
+
 
 const imageUrl = require(`../img/loginbg.jpg`)
 const styles = {
@@ -77,6 +79,7 @@ class Login extends Component {
   }
   authUser=(e)=>{
     e.preventDefault()
+    
     const usrInput = e.target.loginUsername.value,
           saperatorIdx = usrInput.indexOf("@"),
           usrName = usrInput.substr(0,saperatorIdx),
@@ -88,7 +91,7 @@ class Login extends Component {
       repository_id:repoName,
       language_id:"en_US"
     }
-    this.props.login(loginObj)
+    this.props.login(loginObj)    
     // let url = '../bioris-web/Login?param='+JSON.stringify(loginObj)
     // fetch(url ,{
     // headers:{
@@ -149,7 +152,8 @@ class Login extends Component {
 
 Login.propTypes={
     session: PropTypes.object.isRequired,
-    login:PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+     
   }
   const mapStateToProps= state =>({
     session:state.session
