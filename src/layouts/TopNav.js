@@ -3,15 +3,48 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setNavToggle,setActivePage} from '../actions/layoutInitAction'
-import {basicSearch} from '../actions/searchAction'
-import {logout} from '../actions/authAction'
+import {basicSearch,stakehList} from '../actions/searchAction'
+import {logout} from '../actions/authAction' 
 
 class TopNav extends Component {
+  constructor() {
+    super();     
+    this.state = {
+      Display:[]
+    };
+  } 
 
-  searchParam=(e)=>{
-    e.preventDefault()
-    this.props.basicSearch(e.target.searchTxt.value)
+  // componentWillUpdate=(nextProps)=>{
+  //   if(nextProps.session.user!==this.props.session.user){
+  //     const {user:{bio_access_id:idAccess}} = this.props.session  
+  //     const stakehListObj = {
+  //       action: "ITEM_LIST",
+  //       bio_access_id: idAccess
+  //     }
+  //     this.props.stakehList(stakehListObj)
+  //   }
+  // }
+
+
+
+  searchParam=(event)=>{
+    event.preventDefault()
+   
+    const target = event.target;
+    const {stakehType}=this.props.stakeholderlistType 
+    // console.log(target.searchTxt.value.charAt(0).toUpperCase() + target.searchTxt.value.slice(1))
+    // const newDisplay = _.filter(stakehType, (x) => _.toLower(x.first_name).includes(_.toLower()))
+    
+
+   
+
+    this.props.basicSearch(target.searchTxt.value)
+    // console.log(target.searchTxt.value.charAt(0).toUpperCase() + target.searchTxt.value.slice(1))
+    
+
+
   }
+
   doParentToggleFromChild=(e)=>{
     e.preventDefault()
     const {toggleSideNav}=this.props.layout
@@ -81,13 +114,17 @@ TopNav.propTypes={
     layout: PropTypes.object.isRequired,
     search: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
-    setNavToggle:PropTypes.func.isRequired,
-    setActivePage:PropTypes.func.isRequired,
-    logout:PropTypes.func.isRequired
+    stakeholderlistType: PropTypes.object.isRequired,
+    setNavToggle: PropTypes.func.isRequired,
+    setActivePage: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    stakehList: PropTypes.func.isRequired,
+    
   }
   const mapStateToProps= state =>({
     layout:state.layout,
     search:state.searchConf,
-    session:state.session
+    session:state.session,
+    stakeholderlistType: state.stakeholderlistType
   })
-  export default connect(mapStateToProps,{setNavToggle,setActivePage,basicSearch,logout})(TopNav)
+  export default connect(mapStateToProps,{setNavToggle,setActivePage,basicSearch,logout,stakehList})(TopNav)
