@@ -185,13 +185,17 @@ class basicWizard extends Component {
                             </div>
                             <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label> 
-                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="DD/MM/YYYY" selected={date_of_birth} onChange={this.handleDateChange}/>
+                                <DatePicker
+                                    name="date_of_birth"
+                                    placeholderText="Date of Birth"
+                                    className="form-control"
                                     dateFormat="DD/MM/YYYY" 
                                     selected={date_of_birth} 
                                     peekNextMonth
                                     showMonthDropdown
                                     showYearDropdown
                                     dropdownMode="select" 
+                                    onChange={this.handleDateChange}/>
                             </div>                
                         </div>
                     </div>
