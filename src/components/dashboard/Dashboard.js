@@ -1,17 +1,35 @@
 import React, { Component,Fragment } from 'react'
 import Card from '../dashboard/Card'  
 
-export default class Dashboard extends Component {
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+
+class Dashboard extends Component {
+
+
   render() {
-    return (
+    
+
+  return (
       <Fragment>
-        <div className="breadcrumb">
-          <h4 className="modal-title">DASHBOARD</h4>          
-        </div>
+         <div className="breadcrumb-holder">
+            <div className="container-fluid">        
+              <div className="breadcrumb"> 
+          
+                <h4 className="text-primary"><strong>DASHBOARD</strong></h4>   
+                
+             
+              </div>
+            </div>
+        </div>   
+
+        
+             
+        
 
        
             <Card
-            
+
             />
 
 
@@ -22,3 +40,30 @@ export default class Dashboard extends Component {
     )
   }
 }
+Dashboard.propTypes={
+  session: PropTypes.object.isRequired,
+  stakeholderlistType: PropTypes.object.isRequired,
+  stakeholderView: PropTypes.object.isRequired,
+  layout: PropTypes.object.isRequired,
+  fab: PropTypes.object.isRequired,
+ 
+  
+ 
+  
+   
+}
+
+const mapStateToProps= state =>({
+      session:state.session,
+      stakeholderlistType:state.stakeholderlistType,
+      layout:state.layout,
+      stakeholderView: state.stakeholderView,
+      fab:state.fab,
+       
+})
+  
+export default connect(mapStateToProps,{
+ 
+ 
+  
+})(Dashboard)
