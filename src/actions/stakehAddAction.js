@@ -10,7 +10,7 @@ export const addStkh = (param) => dispatch =>{
         .then(res=>{ 
             // console.log(res)
             dispatch({
-                type:ADD_STAKEH,payload:res
+                type:ADD_STAKEH,payload:res.stakeholder_id
             })
             dispatch({
                 type:BASIC_DET,payload:param
