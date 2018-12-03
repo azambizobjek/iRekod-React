@@ -187,6 +187,7 @@ class basicWizard extends Component {
                                 <label>Date of Birth</label> 
                                 <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="DD/MM/YYYY" selected={date_of_birth} onChange={this.handleDateChange}/>
                                     dateFormat="DD/MM/YYYY" 
+                                    selected={date_of_birth} 
                                     peekNextMonth
                                     showMonthDropdown
                                     showYearDropdown
