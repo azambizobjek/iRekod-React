@@ -24,7 +24,7 @@ class search extends Component {
         this.state = {
             stakeholderlist:[],
             stakehSelect:null,
-            current:5,
+           
         }
     } 
     
@@ -172,14 +172,7 @@ class search extends Component {
     }
 
    
-    //Pagination
-    pagination=(page)=>{
-        // console.log(page);
-        this.setState({
-            current: page,
-        });
-      }
-    
+   
    
     render() {
         
@@ -276,9 +269,9 @@ class search extends Component {
 
                                 
                             </div>    
-                            <div className="modal-footer">
+                            {/* <div className="modal-footer">
                                 <Pagination onChange={this.pagination} current={current} total={25} />    
-                            </div>            
+                            </div>             */}
                     </div>
                             
                         
