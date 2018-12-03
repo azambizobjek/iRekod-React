@@ -67,6 +67,15 @@ class securityWizard extends Component {
 
     handleChangeEnd = (endDate) => this.handleDateChange({ endDate })
 
+    // handleChangeStart = (value) =>{
+    //     this.setState({startDate:value})
+    // }
+
+    // handleChangeEnd = (value) =>{
+    //     this.setState({endDate:value})
+    // }
+
+
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderUpdate.role_Store!==this.props.stakeholderUpdate.role_Store){
             const {role_Store}=this.props.stakeholderUpdate                    
@@ -133,7 +142,7 @@ class securityWizard extends Component {
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
-        // console.log(password)
+        // console.log(startDate)
 
         const formObj={                       
             stakeh_type_name: stakeh_type_name,
