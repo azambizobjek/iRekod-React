@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
-import Dashboard from '../components/Dashboard'
+import Dashboard from '../components/dashboard/Dashboard'
 import addStakeholder from '../components/add/AddStakeholder' 
 import index from '../components/index'
 import ViewDetail from '../components/ViewDetail'
 import UpdateDetail from '../components/update/UpdateDetail'
 import addChild from '../components/addChild/AddStakeholder'
+import search from '../components/search/search'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -35,7 +36,8 @@ class Home extends Component {
         'index' : index,
         'view': ViewDetail,
         'edit': UpdateDetail, 
-        'child': addChild,     
+        'child': addChild,  
+        'search': search,   
         
     }
      
