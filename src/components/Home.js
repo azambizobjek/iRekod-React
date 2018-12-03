@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Dashboard from '../components/dashboard/Dashboard'
 import addStakeholder from '../components/add/AddStakeholder' 
 import index from '../components/index'
-import ViewDetail from '../components/ViewDetail'
+import ViewDetail from '../components/view/ViewDetail'
 import UpdateDetail from '../components/update/UpdateDetail'
 import addChild from '../components/addChild/AddStakeholder'
 import search from '../components/search/search'
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 import {setNavToggle,setPageClass, setSideNavClass} from '../actions/layoutInitAction'
 
-import {Footer, SideNav, TopNav} from '../layouts'
+import {Footer, SideNav, TopNav} from '../components/layouts'
 
 class Home extends Component {    
 
