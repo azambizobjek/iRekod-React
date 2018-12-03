@@ -2,7 +2,7 @@ import {ADD_STAKEH,BASIC_DET} from '../actions/types'
 
 
 const initialState = {
-    addStakeh:[],
+    stakehId:[],
     basicDet:[],
      
  
@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
 
     case ADD_STAKEH:
     return { ...state,
-      addStakeh:action.payload,
+      stakehId:action.payload,
     } 
     case BASIC_DET:
     return { ...state,
