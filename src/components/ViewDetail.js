@@ -22,8 +22,8 @@ class ViewDetail extends Component {
       super()
       this.state={
         aclEntries:[],
-        groupItem:[],
-        memberItem:[]     
+        groupItem:null,
+        memberItem:[],     
       }
   }
 
@@ -69,10 +69,12 @@ class ViewDetail extends Component {
         }    
     if(prevProps.stakeholderView.stakeholder_Group!==this.props.stakeholderView.stakeholder_Group){
             const {stakeholder_Group}=this.props.stakeholderView
+            // console.log(stakeholder_Group)
             this.setState({groupItem:stakeholder_Group})
         }
     if(prevProps.stakeholderView.stakeholder_Member!==this.props.stakeholderView.stakeholder_Member){
             const {stakeholder_Member}=this.props.stakeholderView
+            // console.log(stakeholder_Member)
             this.setState({memberItem:stakeholder_Member})
         }        
     }
@@ -174,7 +176,8 @@ class ViewDetail extends Component {
     const {pageTitle}=this.props.layout
     const {stakeholder_Detail,stakeholder_Member} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
-    // console.log(stakeholder_Group)
+    // console.log(groupItem)
+    console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(aclEntries)    
       
@@ -241,13 +244,14 @@ class ViewDetail extends Component {
                                     <hr/>
                                  </div>
                                  <h5 className="title text-center">Associate</h5>                                    
-                                    {memberItem!==null?memberItem.map((item,idx)=><MemberView 
+                                    {memberItem!==[0]?memberItem.map((item,idx)=><MemberView 
                                         key={idx} 
                                         stkhId={item.stakeholder_id}  
                                         stakehType={item.stakeh_type}                                     
                                         fullName={item.full_name}
                                         typeName={item.stakeh_type_name}
-                                        setActivePage={this.setPageView} />):"No Items"} 
+                                        setActivePage={this.setPageView} />):"No Member Items" } 
+                                         
                              </div>
                          </div>
                      </div>
@@ -270,7 +274,7 @@ class ViewDetail extends Component {
                                                     fullName={item.full_name}
                                                     typeName={item.stakeh_type_name}
                                                     stakehType={item.stakeh_type}  
-                                                    setActivePage={this.setPageView}/>):"No Items"} 
+                                                    setActivePage={this.setPageView}/>):"No Group Items"} 
                                             </div>
                                         </div>
                                      </div>
