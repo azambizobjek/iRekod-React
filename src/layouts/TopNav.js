@@ -2,48 +2,28 @@ import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import {setNavToggle,setActivePage} from '../actions/layoutInitAction'
+import {setNavToggle,setActivePage,setPageTitle} from '../actions/layoutInitAction'
 import {basicSearch,stakehList} from '../actions/searchAction'
 import {logout} from '../actions/authAction' 
 
 class TopNav extends Component {
-  constructor() {
-    super();     
-    this.state = {
-      Display:[]
-    };
-  } 
-
-  // componentWillUpdate=(nextProps)=>{
-  //   if(nextProps.session.user!==this.props.session.user){
-  //     const {user:{bio_access_id:idAccess}} = this.props.session  
-  //     const stakehListObj = {
-  //       action: "ITEM_LIST",
-  //       bio_access_id: idAccess
-  //     }
-  //     this.props.stakehList(stakehListObj)
-  //   }
-  // }
-
-
-
+  
   searchParam=(event)=>{
-    event.preventDefault()
-   
+    event.preventDefault()   
     const target = event.target;
     const {stakehType}=this.props.stakeholderlistType 
-    // console.log(target.searchTxt.value.charAt(0).toUpperCase() + target.searchTxt.value.slice(1))
-    // const newDisplay = _.filter(stakehType, (x) => _.toLower(x.first_name).includes(_.toLower()))
+    const {user:{bio_access_id:idAccess}} = this.props.session    
     
+    const stakehListObj = {
+      action: "ITEM_LIST",
+      bio_access_id: idAccess
+    }
 
-   
-
+    this.props.stakehList(stakehListObj)
     this.props.basicSearch(target.searchTxt.value)
-    // console.log(target.searchTxt.value.charAt(0).toUpperCase() + target.searchTxt.value.slice(1))
-    
-
-
-  }
+    this.props.setActivePage('search')
+    this.props.setPageTitle('Search Results : '+target.searchTxt.value )
+  }  
 
   doParentToggleFromChild=(e)=>{
     e.preventDefault()
@@ -119,6 +99,8 @@ TopNav.propTypes={
     setActivePage: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     stakehList: PropTypes.func.isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    basicSearch: PropTypes.func.isRequired,
     
   }
   const mapStateToProps= state =>({
@@ -127,4 +109,4 @@ TopNav.propTypes={
     session:state.session,
     stakeholderlistType: state.stakeholderlistType
   })
-  export default connect(mapStateToProps,{setNavToggle,setActivePage,basicSearch,logout,stakehList})(TopNav)
+  export default connect(mapStateToProps,{setNavToggle,setActivePage,logout,stakehList,setPageTitle,basicSearch})(TopNav)
