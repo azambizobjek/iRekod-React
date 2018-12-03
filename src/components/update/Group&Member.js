@@ -32,7 +32,7 @@ class GroupMember extends Component {
             const {listDescendant}=this.props.stakeholderUpdate      
                 // console.log(listDescendant)                     
                 const descendant = listDescendant!==undefined?listDescendant.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name) })):listDescendant
-                // console.log(stakehOptions)
+                // console.log(descendant)
             this.setState({ 
                 listItemMember:descendant
             })
@@ -41,7 +41,7 @@ class GroupMember extends Component {
             const {stakeholder_Group} = this.props.stakeholderView
 
             const group = stakeholder_Group.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)} ))
-
+                // console.log(group)
             this.setState({
                 groupVal: group                
             })
@@ -65,7 +65,7 @@ class GroupMember extends Component {
     
     handleMemberChange=(value)=>{
         this.setState({memberVal:value})
-        console.log(value)
+        // console.log(value)
     }
      
 
@@ -75,16 +75,17 @@ class GroupMember extends Component {
         const {stakehSel} = this.props.stakeholderlistType
         const {stakeholder_Group,stakeholder_Member} = this.props.stakeholderView
         const {groupVal,memberVal}= this.state
+
+        // console.log(groupVal)
         // console.log(stakeholder_Group)
-        // const reduxGroup = stakeholder_Group.map(x=>({id:x.stakeholder_id}))
-        // console.log(reduxGroup)
-        //  console.log(groupVal)
-       
-        // const test  = groupVal.filter(x=>x.value === stkh-fc2694e297054827920613f180b6458b)
-        console.log(stakeholder_Member)
-       
+        
+     
+
+
         //Group
-        if(groupVal.length >= stakeholder_Group.length ) {     
+        if(groupVal.length >= stakeholder_Group.length ) {    
+         
+
             groupVal.forEach((x,idx)=>{
                 const groupSource = {
                     action: "ADD_CHILD_ITEM",
@@ -100,12 +101,22 @@ class GroupMember extends Component {
             })
         }
 
-        if(groupVal.length < stakeholder_Group.length ) {            
-            groupVal.forEach((x,idx)=>{
+        if(groupVal.length < stakeholder_Group.length ) {           
+            
+            const valuesA = groupVal.reduce((groupVal,{value}) => Object.assign(groupVal, {[value]:value}), {})
+            // console.log(valuesA)
+
+            const valuesB = stakeholder_Group.reduce((groupVal,{stakeholder_id}) => Object.assign(groupVal, {[stakeholder_id]:stakeholder_id}), {})
+            // console.log(valuesB)
+
+            const result = [...groupVal.filter(({value}) => !valuesB[value]), ...stakeholder_Group.filter(({stakeholder_id}) => !valuesA[stakeholder_id])];
+            console.log(result);
+            
+            result.forEach((x,idx)=>{
                 const groupSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: x.value,  
+                    parent_id: x.stakeholder_id,  
                     child_id: stakehSel,
                     def_organization: false,
                     def_group: false,
