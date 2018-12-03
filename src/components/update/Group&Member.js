@@ -103,14 +103,14 @@ class GroupMember extends Component {
 
         if(groupVal.length < stakeholder_Group.length ) {           
             
-            const valuesA = groupVal.reduce((groupVal,{value}) => Object.assign(groupVal, {[value]:value}), {})
+            const valA = groupVal.reduce((groupVal,{value}) => Object.assign(groupVal, {[value]:value}), {})
             // console.log(valuesA)
 
-            const valuesB = stakeholder_Group.reduce((groupVal,{stakeholder_id}) => Object.assign(groupVal, {[stakeholder_id]:stakeholder_id}), {})
+            const valB = stakeholder_Group.reduce((groupVal,{stakeholder_id}) => Object.assign(groupVal, {[stakeholder_id]:stakeholder_id}), {})
             // console.log(valuesB)
 
-            const result = [...groupVal.filter(({value}) => !valuesB[value]), ...stakeholder_Group.filter(({stakeholder_id}) => !valuesA[stakeholder_id])];
-            console.log(result);
+            const result = [...groupVal.filter(({value}) => !valB[value]), ...stakeholder_Group.filter(({stakeholder_id}) => !valA[stakeholder_id])]
+            // console.log(result);
             
             result.forEach((x,idx)=>{
                 const groupSource = {
@@ -123,7 +123,7 @@ class GroupMember extends Component {
                     def_department: false,
                     def_designation: false                
                 }
-                this.props.setRmvGroup(groupSource)
+                this.props.setRmvGroup(groupSource)                
             })           
         }
 
@@ -140,6 +140,7 @@ class GroupMember extends Component {
                     def_designation: false                
                 }
                 this.props.setRmvGroup(groupSource)
+                 
             })
         }
 
@@ -156,8 +157,18 @@ class GroupMember extends Component {
             })
         }
 
-        if(memberVal.length < stakeholder_Member.length  ) {            
-            memberVal.forEach((x,idx)=>{
+        if(memberVal.length < stakeholder_Member.length  ) {      
+            
+            const valA = memberVal.reduce((memberVal,{value}) => Object.assign(memberVal, {[value]:value}), {})
+            // console.log(valuesA)
+
+            const valB = stakeholder_Member.reduce((memberVal,{stakeholder_id}) => Object.assign(memberVal, {[stakeholder_id]:stakeholder_id}), {})
+            // console.log(valuesB)
+
+            const result = [...memberVal.filter(({value}) => !valB[value]), ...stakeholder_Member.filter(({stakeholder_id}) => !valA[stakeholder_id])]
+            // console.log(result);
+            
+            result.forEach((x,idx)=>{
                 const memberSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
@@ -165,7 +176,10 @@ class GroupMember extends Component {
                     child_id: x.value                             
                 }
                 this.props.setRmvMember(memberSource)
-            })           
+                
+            })      
+            
+           
         }
 
         if (memberVal.length === 0 ){
@@ -177,7 +191,18 @@ class GroupMember extends Component {
                     child_id: x.stakeholder_id                                
                 }
                 this.props.setRmvMember(memberSource)
+               
             })
+
+            
+        }
+        if (groupVal.length!==stakeholder_Group.length)
+        {
+            alert("Sucessful")
+        }
+        if (memberVal.length!==stakeholder_Member.length)
+        {
+            alert("Sucessful")
         }
      
       
