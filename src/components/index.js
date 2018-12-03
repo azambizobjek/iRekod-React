@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
-import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../actions/stakehTypeAction' 
-import {setActivePage} from '../actions/layoutInitAction' 
+import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab,setStakehType} from '../actions/stakehTypeAction' 
+import {setActivePage,setPageTitle} from '../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../actions/stakehViewDetail'
-
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -14,8 +13,8 @@ import DetailCard from '../components/DetailCard'
 import Fab from '../components/fab/Fab'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
-import 'rc-pagination/assets/index.css'
-
+import 'rc-pagination/assets/index.css' 
+ 
  
 
 class index extends Component {
@@ -23,18 +22,16 @@ class index extends Component {
         super();     
         this.state = {
             stakeholderlistType:[],
-            stakehSelect:null,
-            current:5,
+            stakehSelect:null,            
         };
     }   
 
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){
-            const {stakehType}=this.props.stakeholderlistType  
-            
+            const {stakehType}=this.props.stakeholderlistType              
             const liststakeh = stakehType.map(res=>({...res,isSel:false}))
             // console.log(liststakeh)
-             
+            
             this.setState({
                 stakeholderlistType:liststakeh
             })
@@ -42,7 +39,8 @@ class index extends Component {
         if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
             const {stakehSel}=this.props.stakeholderlistType
             this.setState({stakehSelect:stakehSel})
-        }         
+        }   
+             
     }
 
     //Selection 
@@ -134,17 +132,38 @@ class index extends Component {
 
     //Delete Btn
     delBtn=()=>{
-        const {stakehSelect} = this.state
-        const {user:{bio_access_id:idAccess}} = this.props.session      
-        //  console.log(stakehSelect)       
+        if (window.confirm("Are you sure want to delete it?")){          
+            const {stakehSelect} = this.state
+            const {stakehNumb} = this.props.stakeholderlistType
+            const {activePage,pageTitle} = this.props.layout    
+            const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
+            //  console.log(stakehNumb)       
 
-        const stakehObj={
-            bio_access_id:idAccess,
-            stakeholder_ids:[stakehSelect]        
+            const stakehObj={
+                bio_access_id:idAccess,
+                stakeholder_ids:[stakehSelect]        
+            }
+            this.props.setDelBtn(stakehObj)
+                alert("Successful Deleted")  
+            // this.props.setActivePage(activePage)
+            // this.props.setPageTitle(pageTitle)
+
+            // const callObj={
+            //     stakeholder_id:bId,
+            //     bio_access_id:idAccess,
+            //     action:'ITEM_LIST_TYPE',
+            //     stakeh_type: parseInt(stakehNumb),
+            //   }
+        
+            // this.props.setStakehType(callObj) 
+            // this.forceUpdate();
+            
+
         }
-        this.props.setDelBtn(stakehObj)
+        else{}
 
-        alert("Successful Deleted")      
+       
+       
         
     }
 
@@ -171,15 +190,7 @@ class index extends Component {
         //console.log(('data-pagename'))
     }
 
-   
-    //Pagination
-    pagination=(page)=>{
-        // console.log(page);
-        this.setState({
-            current: page,
-        });
-      }
-    
+  
    
     render() {
         
@@ -188,7 +199,7 @@ class index extends Component {
         const {stakeholderlistType,current}=this.state
         const {addChildBtn} = this.props.fab
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        console.log(stakeholderlistType)
+        // console.log(stakeholderlistType)
         
         return (
             <Fragment>  
@@ -200,12 +211,7 @@ class index extends Component {
                             
                         </div>
                     </div>
-                </div>
-                {/* <div className="breadcrumb-holder">
-                    <div className="container-fluid">
-                        <Breadcrumb/>
-                    </div>
-                </div> */}
+                </div>             
 
                 <section>
                     <div className="container-fluid">
@@ -251,10 +257,10 @@ class index extends Component {
                         </header>               
                             <div className="row">    
                             
-                                {stakeholderlistType.map((item, idx)=>stakehView?
+                                {stakeholderlistType.map(item=>stakehView?
                                  
                                     <DetailCard                                         
-                                        key={idx} 
+                                        key={item.stakeholder_id} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -262,7 +268,7 @@ class index extends Component {
                                         markOnSel={this.markOnSel} />:
 
                                     <CardRow                                         
-                                        key={idx} 
+                                        key={item.stakeholder_id} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -278,9 +284,9 @@ class index extends Component {
 
                                 
                             </div>    
-                            <div className="modal-footer">
+                            {/* <div className="modal-footer">
                                 <Pagination onChange={this.pagination} current={current} total={25} />    
-                            </div>            
+                            </div> */}
                     </div>
                             
                         
@@ -303,8 +309,9 @@ index.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,
     viewStakehAccess: PropTypes.func.isRequired,    
-    setDelBtn: PropTypes.func.isRequired,
-    
+    setDelBtn: PropTypes.func.isRequired,    
+    setStakehType: PropTypes.func.isRequired, 
+    setPageTitle: PropTypes.func.isRequired, 
    
     
      
@@ -330,6 +337,10 @@ export default connect(mapStateToProps,{
     viewStakehGroup,
     viewStakehAccess,    
     setDelBtn,
+    setStakehType,
+    setPageTitle
+   
+   
     
    
     
