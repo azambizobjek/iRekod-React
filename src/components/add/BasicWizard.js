@@ -144,7 +144,7 @@ class basicWizard extends Component {
     // const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name,date_of_birth} = this.state
-    console.log(date_of_birth)
+    // console.log(date_of_birth)
 
     
     return (
