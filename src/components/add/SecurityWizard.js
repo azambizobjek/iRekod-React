@@ -100,8 +100,8 @@ class securityWizard extends Component {
         e.preventDefault()         
         const {user:{bio_access_id:idAccess}} = this.props.session        
         const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
-        const {basicDet:{stakeh_type_name:type,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth},addStakeh:{stakeholder_id:id}} = this.props.stakeholderAdd         
-        // console.log(type)
+        const {basicDet:{stakeh_type_name:type,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth},stakehId} = this.props.stakeholderAdd         
+        // console.log(stakehId)
 
         const formObj={                       
             stakeh_type_name: type,
@@ -127,14 +127,14 @@ class securityWizard extends Component {
             date_active_to: moment(endDate).format("DD/MM/YYYY"), 
             
             version: 0,           
-            stakeholder_id: id,
+            stakeholder_id: stakehId,
             bio_access_id: idAccess,
             // acl_id:acl_id,
             // acl_entries:acl_entries,
             // custom_field:custom_field,          
         }
         this.props.addStkh(formObj)
-        console.log(formObj)
+        // console.log(formObj)
       
         // for ( const propName in formObj)
         // if (formObj[propName] === "" || formObj[propName] === undefined ){
