@@ -12,16 +12,21 @@ export const stakehList = (param) => dispatch =>{
             // console.log(res)
             dispatch({
                 type:STAKEH_LIST,payload:res.results
-            })
+            })             
         })   
 }
 
+//Search Key
 export const basicSearch=(searchKey)=>{
    return {
        type:BASIC_SEARCH,
        payload:searchKey
    }
 }
+
+
+
+ 
 
 
 // export const setSideNavClass=(sideNavClass)=>{
