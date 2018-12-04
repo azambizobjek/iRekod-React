@@ -163,15 +163,15 @@ class basicWizard extends Component {
                                 <input type="text" name="stakeh_type_name" className="form-control" onChange={this.handleChange} value={decodeURIComponent(stakeh_type_name)} disabled/>
                         </div>
                         <div className="row">
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Initials</label>
                                 <input name="initials" placeholder="Mr / Mrs" type="text" className="form-control" onChange={this.handleChange}  /> 
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>First Name</label>
                                 <input name="first_name" type="text" className="form-control" placeholder="Smith"   onChange={this.handleChange} />
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Last Name</label>
                                 <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange}  />
                             </div>
@@ -183,7 +183,7 @@ class basicWizard extends Component {
                                 <label>Email</label>
                                 <input name="email" type="email" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange}/>
                             </div>
-                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label> 
                                 <DatePicker
                                     name="date_of_birth"
