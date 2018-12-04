@@ -164,7 +164,7 @@ export const setMember = (param) => dispatch =>{
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            // console.log(res)
+            console.log(res)
             // dispatch({
             //     type:GROUP_ITEM,payload:res.results
             // })
