@@ -3,7 +3,7 @@ import Select from 'react-select'
 import Checkbox from 'rc-checkbox'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {addStkh} from '../../actions/stakehAddAction'
+import {addStkh} from '../../actions/stakehAddAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -100,7 +100,7 @@ class securityWizard extends Component {
         e.preventDefault()         
         const {user:{bio_access_id:idAccess}} = this.props.session        
         const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
-        const {basicDet:{stakeh_type_name:type,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth},addStakeh:{stakeholder_id:id}} = this.props.stakeholderAdd         
+        const {basicDet:{stakeh_type_name:type,stakeh_type,initials,first_name,full_name,email,date_of_birth},stakehId} = this.props.stakeholderAdd         
         // console.log(type)
 
         const formObj={                       
@@ -108,7 +108,7 @@ class securityWizard extends Component {
             stakeh_type: stakeh_type,
             initials: initials,
             first_name: first_name,
-            last_name: last_name,
+            // last_name: last_name,
             full_name: full_name,
             email: email,
             date_of_birth: date_of_birth,
@@ -127,7 +127,7 @@ class securityWizard extends Component {
             date_active_to: moment(endDate).format("DD/MM/YYYY"), 
             
             version: 0,           
-            stakeholder_id: id,
+            stakeholder_id: stakehId,
             bio_access_id: idAccess,
             // acl_id:acl_id,
             // acl_entries:acl_entries,
@@ -232,7 +232,7 @@ class securityWizard extends Component {
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Password</label>
-                                <input name="" type="password" onChange={this.handleChange} className="form-control" />
+                                <input name="password" type="password" onChange={this.handleChange} className="form-control" />
                             </div>
                         </div>  
                     </div>
