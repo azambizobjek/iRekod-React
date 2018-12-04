@@ -171,7 +171,7 @@ class index extends Component {
     child=(page)=>{
      
         this.props.setActivePage(page)   
-        // console.log(test)
+        // console.log(page)
     }
     
     //LayoutView
