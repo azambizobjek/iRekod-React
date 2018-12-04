@@ -1,7 +1,8 @@
 import React, { Component,Fragment } from 'react' 
 import DatePicker from "react-datepicker";
 import moment from 'moment'
-import {addStkh} from '../../actions/stakehAddAction'
+import {addChild} from '../../actions/stakehAddAction'
+import {setMember} from '../../actions/stakehUpdateAction'
 import "react-datepicker/dist/react-datepicker.css";
 
 import {connect} from 'react-redux'
@@ -45,55 +46,56 @@ class basicWizard extends Component {
         const {pageTitle} = this.props.layout
         // console.log(pageTitle)
         if(pageTitle==="Group"){
-            const my = 0            
+            const my = 1            
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: pageTitle
+                stakeh_type_name: "Organization"
             })
         }
         if(pageTitle==="Organization"){
-            const my = 1          
+            const my = 2          
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: pageTitle
+                stakeh_type_name: "Branch"
             })
         }
         if(pageTitle==="Branch"){
-            const my = 2            
+            const my = 3            
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: pageTitle
+                stakeh_type_name: "Department"
             })
         }
         if(pageTitle==="Department"){
-            const my = 3           
+            const my = 4           
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: pageTitle
+                stakeh_type_name: "Designation"
             })
         }
         if(pageTitle==="Designation"){
-            const my = 4          
+            const my = 5         
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: pageTitle
+                stakeh_type_name: "User"
             })
         }
-        if(pageTitle==="User"){
-            const my = 5        
-            this.setState({
-                stakeh_type: my,
-                stakeh_type_name: pageTitle
-            })
-        }
+        // if(pageTitle==="User"){
+        //     const my =         
+        //     this.setState({
+        //         stakeh_type: my,
+        //         stakeh_type_name: pageTitle
+        //     })
+        // }
     }   
     
     
     formSubmit=(e)=>{
        
         const {user:{bio_access_id:idAccess}} = this.props.session
+        const {stakehSel} = this.props.stakeholderlistType
         // const {internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
-        const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.state
+        const {stakeh_type,initials,full_name,email,date_of_birth} = this.state
         e.preventDefault()
 
         const formObj={
@@ -101,8 +103,8 @@ class basicWizard extends Component {
             stakeh_type_name: parseInt(stakeh_type),
             stakeh_type: parseInt(stakeh_type),
             initials: initials,
-            first_name: first_name,
-            last_name: last_name,
+            first_name: full_name,
+            // last_name: last_name,
             full_name: full_name,
             email: email,
             date_of_birth: moment(date_of_birth).format("DD/MM/YYYY"),
@@ -128,11 +130,14 @@ class basicWizard extends Component {
             // acl_entries:acl_entries,
             // custom_field:custom_field,     
 
-        }        
-        this.props.addStkh(formObj)
+        }             
+        this.props.addChild(formObj,stakehSel)
         // console.log(formObj)
         
         alert("Successful Created")
+
+      
+     
  
 
     }
@@ -144,7 +149,7 @@ class basicWizard extends Component {
     // const item = this.props.item
     const active = this.props.active
     const {stakeh_type_name,date_of_birth} = this.state
-    console.log(date_of_birth)
+    // console.log(date_of_birth)
 
     
     return (
@@ -163,15 +168,15 @@ class basicWizard extends Component {
                                 <input type="text" name="stakeh_type_name" className="form-control" onChange={this.handleChange} value={decodeURIComponent(stakeh_type_name)} disabled/>
                         </div>
                         <div className="row">
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Initials</label>
                                 <input name="initials" placeholder="Mr / Mrs" type="text" className="form-control" onChange={this.handleChange}  /> 
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>First Name</label>
                                 <input name="first_name" type="text" className="form-control" placeholder="Smith"   onChange={this.handleChange} />
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Last Name</label>
                                 <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange}  />
                             </div>
@@ -183,9 +188,19 @@ class basicWizard extends Component {
                                 <label>Email</label>
                                 <input name="email" type="email" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange}/>
                             </div>
-                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label> 
-                                <DatePicker name="date_of_birth" placeholderText="Date of Birth" className="form-control" dateFormat="DD/MM/YYYY" selected={date_of_birth} onChange={this.handleDateChange}/>
+                                <DatePicker
+                                    name="date_of_birth"
+                                    placeholderText="Date of Birth"
+                                    className="form-control"
+                                    dateFormat="DD/MM/YYYY" 
+                                    selected={date_of_birth} 
+                                    peekNextMonth
+                                    showMonthDropdown
+                                    showYearDropdown
+                                    dropdownMode="select" 
+                                    onChange={this.handleDateChange}/>
                             </div>                
                         </div>
                     </div>
@@ -207,8 +222,10 @@ basicWizard.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
-    layout: PropTypes.object.isRequired,    
-    addStkh: PropTypes.func.isRequired,
+    layout: PropTypes.object.isRequired, 
+    stakeholderAdd: PropTypes.object.isRequired,    
+    addChild: PropTypes.func.isRequired,
+    setMember: PropTypes.func.isRequired, 
    
     
      
@@ -219,11 +236,13 @@ const mapStateToProps= state =>({
         stakeholderlistType:state.stakeholderlistType,
         layout:state.layout,
         stakeholderView: state.stakeholderView,
+        stakeholderAdd: state.stakeholderAdd,
          
 })
     
 export default connect(mapStateToProps,{
-    addStkh,
+    addChild,
+    setMember
    
 
     
