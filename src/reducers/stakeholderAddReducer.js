@@ -2,7 +2,7 @@ import {ADD_STAKEH,BASIC_DET} from '../actions/types'
 
 
 const initialState = {
-    stakehId:[],
+    stakehId:null,
     basicDet:[],
      
  
