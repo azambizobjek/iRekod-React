@@ -201,13 +201,7 @@ class ViewDetail extends Component {
                      <div className="col-auto mr-auto">
                          <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
                      </div>
-                     <div className="col-auto mr-4">
-                        <span><Tooltip
-                            placement="top"
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Stakeholder Child</div>}
-                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>} >
-                                <img className="btn btn-link mr-3" src={require('../../img/add.svg')} alt='' />                                                        
-                            </Tooltip></span>
+                     <div className="col-auto mr-4">                        
                         <span><Tooltip
                             placement="bottom"
                             overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Edit Details</div>}
