@@ -232,7 +232,7 @@ class securityWizard extends Component {
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Password</label>
-                                <input name="" type="password" onChange={this.handleChange} className="form-control" />
+                                <input name="password" type="password" onChange={this.handleChange} className="form-control" />
                             </div>
                         </div>  
                     </div>
