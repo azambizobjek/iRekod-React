@@ -10,6 +10,7 @@ export const SIDENAV_CLASS = 'SIDENAV_CLASS'
 export const TOGGLE_SIDENAV = 'TOGGLE_SIDENAV'
 export const ACTIVE_PAGE = 'ACTIVE_PAGE'
 export const PAGE_TITLE = 'PAGE_TITLE'
+export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 
 //search action and reducer link
 export const BASIC_SEARCH = 'BASIC_SEARCH'

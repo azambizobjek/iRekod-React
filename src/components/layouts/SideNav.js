@@ -1,9 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {setActivePage,setPageTitle} from '../../actions/layoutInitAction'
+import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
 import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
- 
+import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
+import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
+import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
  
 
 class SideNav extends React.Component {
@@ -65,31 +67,31 @@ class SideNav extends React.Component {
       /////////workflow////////
       const listWrkFlwObj ={
         action: 'ITEM_LIST',
-        bio_access_id: bId
+        bio_access_id: idAccess
       }
       const listofSubjectObj ={
         action: 'LIST_ITEM_SUBJECT',
-        bio_access_id: bId
+        bio_access_id: idAccess
       }
   
       const stakehList={
         action: "ITEM_LIST",
-        bio_access_id: bId       
+        bio_access_id: idAccess       
       }
   
       const customFieldObj={
         action: "ITEM_LIST_BY_OBJECT",
-        bio_access_id: bId,
+        bio_access_id: idAccess,
         object_id:"STKH"    
     }
    
-       const pageSubject= ""
-      // this.props.setStakehListNew(stakehList)
-      // this.props.setListWorkFlow(listWrkFlwObj)
-      // this.props.setListofSubject(listofSubjectObj)
-      // this.props.setPageTitle(e.target.name)
-      // this.props.setCustomField(customFieldObj)
-      // this.props.setPageSubject(pageSubject)
+      const pageSubject= ""
+      this.props.setStakehListNew(stakehList)
+      this.props.setListWorkFlow(listWrkFlwObj)
+      this.props.setListofSubject(listofSubjectObj)
+      this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
+      this.props.setCustomField(customFieldObj)
+      this.props.setPageSubject(pageSubject)
 
       
 
@@ -138,7 +140,7 @@ class SideNav extends React.Component {
               <div className="userIcon"><img src={require(`../../img/folder.svg`)} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
               <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
-                      <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" name="List Workflow" >
+                      <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
                       <img src={require(`../../img/management.svg`)} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
                       </div>List of Workflow
@@ -213,6 +215,11 @@ SideNav.propTypes={
     setPageTitle: PropTypes.func.isRequired,
     setStakehType: PropTypes.func.isRequired,
     setStakehNumb: PropTypes.func.isRequired,
+    setListWorkFlow: PropTypes.func.isRequired,
+    setListofSubject: PropTypes.func.isRequired,
+    setStakehListNew: PropTypes.func.isRequired,
+    setCustomField: PropTypes.func.isRequired,
+    setPageSubject: PropTypes.func.isRequired, 
     
 
   }
@@ -229,6 +236,11 @@ SideNav.propTypes={
     setStakehType,
     setPageTitle,
     setStakehNumb,
+    setListWorkFlow,
+    setListofSubject,
+    setStakehListNew,
+    setCustomField,
+    setPageSubject,
     
   })
   (SideNav)

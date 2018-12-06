@@ -6,7 +6,7 @@ import ViewDetail from '../components/stakeholder/view/ViewDetail'
 import UpdateDetail from '../components/stakeholder/update/UpdateDetail'
 import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
-// import ListWorkflow from './workflow/ListWorkflow' 
+import ListWorkflow from './workflow/ListWorkflow' 
 // import NewActivity from './workflow/NewActivity'
 // import WorkflowDetails from './workflow/WorkflowDetails'
 
@@ -41,7 +41,7 @@ class Home extends Component {
         'edit': UpdateDetail, 
         'child': addChild,  
         'search': search,   
-        // 'listOfWorkflow':ListWorkflow,
+        'listOfWorkflow':ListWorkflow,
         // 'createNewAct': NewActivity,
         // 'view': WorkflowDetails,
         

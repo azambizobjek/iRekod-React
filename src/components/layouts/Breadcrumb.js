@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import {setActivePage} from '../actions/layoutInitAction'
+import {setActivePage} from '../../actions/layoutInitAction'
 
 class Breadcrumb extends Component {
 

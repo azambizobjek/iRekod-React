@@ -30,7 +30,7 @@ class index extends Component {
     componentDidUpdate(prevProps){
         if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){                   
             const {stakehType}=this.props.stakeholderlistType 
-            console.log(stakehType)   
+            // console.log(stakehType)   
             const liststakeh = stakehType.map(res=>({...res,isSel:false}))
             // console.log(liststakeh)
             
