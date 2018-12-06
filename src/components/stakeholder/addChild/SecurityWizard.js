@@ -3,7 +3,7 @@ import Select from 'react-select'
 import Checkbox from 'rc-checkbox'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {addStkh} from '../../actions/stakehAddAction' 
+import {addStkh} from '../../../actions/stakehAddAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -160,7 +160,7 @@ class securityWizard extends Component {
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center">
-                            <img src={require('../../img/add.svg')} alt='add'className=" img-dash" />
+                            <img src={require('../../../img/add.svg')} alt='add'className=" img-dash" />
                         </div>
                     </div>
                     <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">                    

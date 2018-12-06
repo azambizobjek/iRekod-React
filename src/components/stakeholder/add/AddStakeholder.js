@@ -1,11 +1,11 @@
 import React, { Component,Fragment } from 'react'
-import BasicWizard from '../addChild/BasicWizard'
-import SecurityWizard from '../addChild/SecurityWizard' 
-import FolTabHead from '../addChild/FolTabHeadAdd'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../actions/stakehUpdateAction'
-import {setWizardPage} from '../../actions/stakehUpdateAction'
-import {setActivePage} from '../../actions/layoutInitAction' 
-import {setStakehType} from '../../actions/stakehTypeAction'
+import BasicWizard from '../../stakeholder/add/BasicWizard'
+import SecurityWizard from '../../stakeholder/add/SecurityWizard' 
+import FolTabHead from '../../stakeholder/add/FolTabHeadAdd'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakehUpdateAction'
+import {setWizardPage} from '../../../actions/stakehUpdateAction'
+import {setActivePage} from '../../../actions/layoutInitAction' 
+import {setStakehType} from '../../../actions/stakehTypeAction'
  
 
 import {connect} from 'react-redux'

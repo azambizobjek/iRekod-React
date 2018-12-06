@@ -5,44 +5,44 @@ import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../.
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakehViewDetail'
 
-
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import CardRow from '../../components/CardRow'  
-import DetailCard from '../../components/DetailCard'
-import Fab from '../../components/fab/Fab'
+import CardRow from '../stakeholder/CardRow'  
+import DetailCard from '../stakeholder/DetailCard'
+import Fab from '../fab/Fab'
+import MainFab from '../fab/MainFab'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
-import 'rc-pagination/assets/index.css'
-
+import 'rc-pagination/assets/index.css' 
+ 
  
 
-class search extends Component {
+class index extends Component {
     constructor() {
         super();     
         this.state = {
-            stakeholderlist:[],
-            stakehSelect:null,
-           
-        }
-    } 
-    
+            stakeholderlistType:[],
+            stakehSelect:null,            
+        };
+    }   
+
     componentDidUpdate(prevProps){
-        if(prevProps.searchConf.stakehList!==this.props.searchConf.stakehList){
-            const {stakehList}=this.props.searchConf  
-            
-            const liststakeh = stakehList.map(res=>({...res,isSel:false}))
+        if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){                   
+            const {stakehType}=this.props.stakeholderlistType 
+            console.log(stakehType)   
+            const liststakeh = stakehType.map(res=>({...res,isSel:false}))
             // console.log(liststakeh)
-             
+            
             this.setState({
-                stakeholderlist:liststakeh
+                stakeholderlistType:liststakeh
             })
         }   
         if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
             const {stakehSel}=this.props.stakeholderlistType
             this.setState({stakehSelect:stakehSel})
-        }         
+        }   
+             
     }
 
     //Selection 
@@ -51,19 +51,19 @@ class search extends Component {
         this.props.setStakehSel(sId)     
         // console.log(sId)
         
-        const {stakeholderlist} = this.state
+        const {stakeholderlistType} = this.state
         // console.log({stakeholder} )
-        const itmIdx = stakeholderlist.findIndex(itm=>itm.stakeholder_id === sId)
-        const desIdx = stakeholderlist.findIndex(itm=>itm.isSel===true)
+        const itmIdx = stakeholderlistType.findIndex(itm=>itm.stakeholder_id === sId)
+        const desIdx = stakeholderlistType.findIndex(itm=>itm.isSel===true)
        
 
         // console.log(itmIdx)
 
         const newStakeholderList = desIdx === -1?
-        update(stakeholderlist,{
+        update(stakeholderlistType,{
           [itmIdx]:{isSel:{$set:true}}
         })
-        :update(stakeholderlist,{
+        :update(stakeholderlistType,{
           [itmIdx]:{isSel:{$set:true}},
           [desIdx]:{isSel:{$set:false}}
         })       
@@ -79,7 +79,7 @@ class search extends Component {
         }
 
         this.setState({
-            stakeholderlist: newStakeholderList             
+            stakeholderlistType: newStakeholderList             
         })
     }
     pageBreadCrumb=(e)=>{
@@ -134,17 +134,40 @@ class search extends Component {
 
     //Delete Btn
     delBtn=()=>{
-        const {stakehSelect} = this.state
-        const {user:{bio_access_id:idAccess}} = this.props.session      
-        //  console.log(stakehSelect)       
+        if (window.confirm("Are you sure want to delete it?")){          
+            const {stakehSelect} = this.state
+            const {stakehNumb,stakehType} = this.props.stakeholderlistType
+            const {activePage,pageTitle} = this.props.layout    
+            const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
+            //  console.log(stakehNumb)       
 
-        const stakehObj={
-            bio_access_id:idAccess,
-            stakeholder_ids:[stakehSelect]        
+            const stakehObj={
+                bio_access_id:idAccess,
+                stakeholder_ids:[stakehSelect]        
+            }
+            this.props.setDelBtn(stakehObj)
+                alert("Successful Deleted") 
+            
+            const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakehSelect) 
+            // console.log(arr)
+            this.setState({
+                stakeholderlistType:newStakehList
+            })            
+                
+
+
+
+           
+          
+
+ 
+            
+
         }
-        this.props.setDelBtn(stakehObj)
+        else{}
 
-        alert("Successful Deleted")      
+       
+       
         
     }
 
@@ -152,7 +175,7 @@ class search extends Component {
     child=(page)=>{
      
         this.props.setActivePage(page)   
-        // console.log(test)
+        // console.log(page)
     }
     
     //LayoutView
@@ -171,19 +194,16 @@ class search extends Component {
         //console.log(('data-pagename'))
     }
 
-   
-   
+  
    
     render() {
         
-        const _ = require('lodash')
-        const {stakehView,showFab}=this.props.stakeholderlistType
-        const {basicKey,stakehlist} = this.props.searchConf        
+        const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
-        const {stakeholderlist,current}=this.state
-        const {addChildBtn} = this.props.fab    
-       
-       
+        const {stakeholderlistType,current}=this.state
+        const {addChildBtn} = this.props.fab
+        // const {stakeholder_Detail}=this.props.stakeholderView 
+        // console.log(stakeholderlistType)
         
         return (
             <Fragment>  
@@ -195,7 +215,7 @@ class search extends Component {
                             
                         </div>
                     </div>
-                </div>          
+                </div>             
 
                 <section>
                     <div className="container-fluid">
@@ -240,11 +260,11 @@ class search extends Component {
                                 </div> 
                         </header>               
                             <div className="row">    
- 
-                             {stakeholderlist.filter(x => _.toUpper(x.full_name).includes(_.toUpper(basicKey||""))).map((item,idx)=>stakehView?
+                            
+                                {stakeholderlistType.map(item=>stakehView?
                                  
                                     <DetailCard                                         
-                                        key={idx} 
+                                        key={item.stakeholder_id} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -252,7 +272,7 @@ class search extends Component {
                                         markOnSel={this.markOnSel} />:
 
                                     <CardRow                                         
-                                        key={idx} 
+                                        key={item.stakeholder_id} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -264,14 +284,19 @@ class search extends Component {
                                     FabRec={this.setActivePage}
                                     delBtn={this.delBtn}
                                     addChild={this.child}
-                                    // stakehNumb={numb} 
-                                    />:''}
+                                    stakehNumb={stakehNumb} />:""
+                                    // <MainFab
+                                    // FabRec={this.setActivePage}
+                                    // delBtn={this.delBtn}
+                                    // addChild={this.child}
+                                    // stakehNumb={stakehNumb} />
+                                }
 
                                 
                             </div>    
                             {/* <div className="modal-footer">
                                 <Pagination onChange={this.pagination} current={current} total={25} />    
-                            </div>             */}
+                            </div> */}
                     </div>
                             
                         
@@ -280,13 +305,12 @@ class search extends Component {
         )
     }
 }
-search.propTypes={
+index.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,
     fab: PropTypes.object.isRequired,
-    searchConf: PropTypes.object.isRequired,
     setStakehViewTrue: PropTypes.func.isRequired,
     setStakehViewFalse: PropTypes.func.isRequired,   
     setShowFab: PropTypes.func.isRequired,   
@@ -295,7 +319,8 @@ search.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,
     viewStakehAccess: PropTypes.func.isRequired,    
-    setDelBtn: PropTypes.func.isRequired,
+    setDelBtn: PropTypes.func.isRequired,    
+    
     
    
     
@@ -308,7 +333,6 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         fab:state.fab,
-        searchConf: state.searchConf,
          
 })
     
@@ -325,5 +349,9 @@ export default connect(mapStateToProps,{
     setDelBtn,
     
    
+   
+   
     
-})(search)
+   
+    
+})(index)

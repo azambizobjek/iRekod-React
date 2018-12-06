@@ -1,12 +1,12 @@
 import React, { Component,Fragment } from 'react'
-import '../../css/ViewDetail.css'
-import MemberView from '../view/MemberView'
-import GroupView from '../view/GroupView'
-import AccessView from '../view/AccessView'
-import {setActivePage} from '../../actions/layoutInitAction' 
-import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../actions/stakehViewDetail'
-import {setStakehType,setStakehSel,setStakehNumb} from '../../actions/stakehTypeAction'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../actions/stakehUpdateAction'
+import '../../../css/ViewDetail.css'
+import MemberView from '../../stakeholder/view/MemberView'
+import GroupView from '../../stakeholder/view/GroupView'
+import AccessView from '../../stakeholder/view/AccessView'
+import {setActivePage} from '../../../actions/layoutInitAction' 
+import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakehViewDetail'
+import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakehTypeAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakehUpdateAction'
 
 
 import {connect} from 'react-redux'
@@ -206,7 +206,7 @@ class ViewDetail extends Component {
                             placement="bottom"
                             overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Edit Details</div>}
                             arrowContent={<div className="rc-tooltip-arrow-inner"></div>} >
-                                <img className="btn btn-link" src={require('../../img/edit.svg')} alt="Edit Details" data-pagename="edit" onClick={this.updDetail} />                                                        
+                                <img className="btn btn-link" src={require('../../../img/edit.svg')} alt="Edit Details" data-pagename="edit" onClick={this.updDetail} />                                                        
                             </Tooltip></span>                         
                      </div>                     
                  </div>
@@ -219,17 +219,17 @@ class ViewDetail extends Component {
                      <div className="col-lg-4 col-md-4 col-sm-4">
                          <div className="card card-user">
                              <div className="card-image">
-                                <img src={require('../../img/ImgBackground/'+ item.stakeh_type_name +'.jpg')} alt={item.stakeh_type_name} />
+                                <img src={require('../../../img/ImgBackground/'+ item.stakeh_type_name +'.jpg')} alt={item.stakeh_type_name} />
                              </div>
                              <div className="card-body">
                                  <div className="author">
                                      <span>                                        
-                                        <img src={require('../../img/StakeType/'+ item.stakeh_type_name +'.svg')} className="avatar border-gray" alt="..."/>
+                                        <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} className="avatar border-gray" alt="..."/>
                                         <h5 className="title">{decodeURIComponent(item.full_name)}</h5>
                                      </span>
                                  </div>
                                  <p className="description text-center">
-                                    <label><img className="userIcon mr-2" src={require('../../img/email.svg')} alt="email"/>{decodeURIComponent(item.email)} </label>
+                                    <label><img className="userIcon mr-2" src={require('../../../img/email.svg')} alt="email"/>{decodeURIComponent(item.email)} </label>
                                     <br />
                                     <label ></label>
                                  </p>

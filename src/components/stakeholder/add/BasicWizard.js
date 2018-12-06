@@ -1,8 +1,7 @@
 import React, { Component,Fragment } from 'react' 
 import DatePicker from "react-datepicker";
 import moment from 'moment'
-import {addChild} from '../../actions/stakehAddAction'
-import {setMember} from '../../actions/stakehUpdateAction'
+import {addStkh} from '../../../actions/stakehAddAction'
 import "react-datepicker/dist/react-datepicker.css";
 
 import {connect} from 'react-redux'
@@ -46,56 +45,55 @@ class basicWizard extends Component {
         const {pageTitle} = this.props.layout
         // console.log(pageTitle)
         if(pageTitle==="Group"){
-            const my = 1            
+            const my = 0            
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: "Organization"
+                stakeh_type_name: pageTitle
             })
         }
         if(pageTitle==="Organization"){
-            const my = 2          
+            const my = 1          
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: "Branch"
+                stakeh_type_name: pageTitle
             })
         }
         if(pageTitle==="Branch"){
-            const my = 3            
+            const my = 2            
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: "Department"
+                stakeh_type_name: pageTitle
             })
         }
         if(pageTitle==="Department"){
-            const my = 4           
+            const my = 3           
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: "Designation"
+                stakeh_type_name: pageTitle
             })
         }
         if(pageTitle==="Designation"){
-            const my = 5         
+            const my = 4          
             this.setState({
                 stakeh_type: my,
-                stakeh_type_name: "User"
+                stakeh_type_name: pageTitle
             })
         }
-        // if(pageTitle==="User"){
-        //     const my =         
-        //     this.setState({
-        //         stakeh_type: my,
-        //         stakeh_type_name: pageTitle
-        //     })
-        // }
+        if(pageTitle==="User"){
+            const my = 5        
+            this.setState({
+                stakeh_type: my,
+                stakeh_type_name: pageTitle
+            })
+        }
     }   
     
     
     formSubmit=(e)=>{
        
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel} = this.props.stakeholderlistType
         // const {internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
-        const {stakeh_type,initials,full_name,email,date_of_birth} = this.state
+        const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.state
         e.preventDefault()
 
         const formObj={
@@ -104,7 +102,7 @@ class basicWizard extends Component {
             stakeh_type: parseInt(stakeh_type),
             initials: initials,
             first_name: full_name,
-            // last_name: last_name,
+            last_name: last_name,
             full_name: full_name,
             email: email,
             date_of_birth: moment(date_of_birth).format("DD/MM/YYYY"),
@@ -130,14 +128,11 @@ class basicWizard extends Component {
             // acl_entries:acl_entries,
             // custom_field:custom_field,     
 
-        }             
-        this.props.addChild(formObj,stakehSel)
+        }        
+        this.props.addStkh(formObj)
         // console.log(formObj)
         
         alert("Successful Created")
-
-      
-     
  
 
     }
@@ -159,7 +154,7 @@ class basicWizard extends Component {
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center">
-                            <img src={require('../../img/add.svg')} alt="add" className=" img-dash" />
+                            <img src={require('../../../img/add.svg')} alt="add" className=" img-dash" />
                         </div>
                     </div>                 
                     <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
@@ -222,10 +217,8 @@ basicWizard.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
-    layout: PropTypes.object.isRequired, 
-    stakeholderAdd: PropTypes.object.isRequired,    
-    addChild: PropTypes.func.isRequired,
-    setMember: PropTypes.func.isRequired, 
+    layout: PropTypes.object.isRequired,    
+    addStkh: PropTypes.func.isRequired,
    
     
      
@@ -236,13 +229,11 @@ const mapStateToProps= state =>({
         stakeholderlistType:state.stakeholderlistType,
         layout:state.layout,
         stakeholderView: state.stakeholderView,
-        stakeholderAdd: state.stakeholderAdd,
          
 })
     
 export default connect(mapStateToProps,{
-    addChild,
-    setMember
+    addStkh,
    
 
     

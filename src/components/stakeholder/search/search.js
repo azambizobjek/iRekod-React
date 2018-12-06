@@ -1,46 +1,48 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
-import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab,setStakehType} from '../actions/stakehTypeAction' 
-import {setActivePage,setPageTitle} from '../actions/layoutInitAction' 
-import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../actions/stakehViewDetail'
+import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../../actions/stakehTypeAction' 
+import {setActivePage} from '../../../actions/layoutInitAction' 
+import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../../actions/stakehViewDetail'
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import CardRow from '../components/CardRow'  
-import DetailCard from '../components/DetailCard'
-import Fab from '../components/fab/Fab'
+import CardRow from '../../stakeholder/CardRow'  
+import DetailCard from '../../stakeholder/DetailCard'
+import Fab from '../../../components/fab/Fab'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
-import 'rc-pagination/assets/index.css' 
- 
+import 'rc-pagination/assets/index.css'
+
  
 
-class index extends Component {
+class search extends Component {
     constructor() {
         super();     
         this.state = {
-            stakeholderlistType:[],
-            stakehSelect:null,            
-        };
-    }   
-
+            stakeholderlist:[],
+            stakehSelect:null,
+           
+        }
+    } 
+    
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){
-            const {stakehType}=this.props.stakeholderlistType              
-            const liststakeh = stakehType.map(res=>({...res,isSel:false}))
-            // console.log(liststakeh)
+        if(prevProps.searchConf.stakehList!==this.props.searchConf.stakehList){
+            const {stakehList}=this.props.searchConf  
             
+            const liststakeh = stakehList.map(res=>({...res,isSel:false}))
+            // console.log(liststakeh)
+             
             this.setState({
-                stakeholderlistType:liststakeh
+                stakeholderlist:liststakeh
             })
         }   
         if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
             const {stakehSel}=this.props.stakeholderlistType
             this.setState({stakehSelect:stakehSel})
-        }   
-             
+        }         
     }
 
     //Selection 
@@ -49,19 +51,19 @@ class index extends Component {
         this.props.setStakehSel(sId)     
         // console.log(sId)
         
-        const {stakeholderlistType} = this.state
+        const {stakeholderlist} = this.state
         // console.log({stakeholder} )
-        const itmIdx = stakeholderlistType.findIndex(itm=>itm.stakeholder_id === sId)
-        const desIdx = stakeholderlistType.findIndex(itm=>itm.isSel===true)
+        const itmIdx = stakeholderlist.findIndex(itm=>itm.stakeholder_id === sId)
+        const desIdx = stakeholderlist.findIndex(itm=>itm.isSel===true)
        
 
         // console.log(itmIdx)
 
         const newStakeholderList = desIdx === -1?
-        update(stakeholderlistType,{
+        update(stakeholderlist,{
           [itmIdx]:{isSel:{$set:true}}
         })
-        :update(stakeholderlistType,{
+        :update(stakeholderlist,{
           [itmIdx]:{isSel:{$set:true}},
           [desIdx]:{isSel:{$set:false}}
         })       
@@ -77,7 +79,7 @@ class index extends Component {
         }
 
         this.setState({
-            stakeholderlistType: newStakeholderList             
+            stakeholderlist: newStakeholderList             
         })
     }
     pageBreadCrumb=(e)=>{
@@ -132,38 +134,17 @@ class index extends Component {
 
     //Delete Btn
     delBtn=()=>{
-        if (window.confirm("Are you sure want to delete it?")){          
-            const {stakehSelect} = this.state
-            const {stakehNumb} = this.props.stakeholderlistType
-            const {activePage,pageTitle} = this.props.layout    
-            const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
-            //  console.log(stakehNumb)       
+        const {stakehSelect} = this.state
+        const {user:{bio_access_id:idAccess}} = this.props.session      
+        //  console.log(stakehSelect)       
 
-            const stakehObj={
-                bio_access_id:idAccess,
-                stakeholder_ids:[stakehSelect]        
-            }
-            this.props.setDelBtn(stakehObj)
-                alert("Successful Deleted")  
-            // this.props.setActivePage(activePage)
-            // this.props.setPageTitle(pageTitle)
-
-            // const callObj={
-            //     stakeholder_id:bId,
-            //     bio_access_id:idAccess,
-            //     action:'ITEM_LIST_TYPE',
-            //     stakeh_type: parseInt(stakehNumb),
-            //   }
-        
-            // this.props.setStakehType(callObj) 
-            // this.forceUpdate();
-            
-
+        const stakehObj={
+            bio_access_id:idAccess,
+            stakeholder_ids:[stakehSelect]        
         }
-        else{}
+        this.props.setDelBtn(stakehObj)
 
-       
-       
+        alert("Successful Deleted")      
         
     }
 
@@ -171,7 +152,7 @@ class index extends Component {
     child=(page)=>{
      
         this.props.setActivePage(page)   
-        // console.log(page)
+        // console.log(test)
     }
     
     //LayoutView
@@ -190,16 +171,19 @@ class index extends Component {
         //console.log(('data-pagename'))
     }
 
-  
+   
+   
    
     render() {
         
-        const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
+        const _ = require('lodash')
+        const {stakehView,showFab}=this.props.stakeholderlistType
+        const {basicKey,stakehlist} = this.props.searchConf        
         const {pageTitle}=this.props.layout
-        const {stakeholderlistType,current}=this.state
-        const {addChildBtn} = this.props.fab
-        // const {stakeholder_Detail}=this.props.stakeholderView 
-        // console.log(stakeholderlistType)
+        const {stakeholderlist,current}=this.state
+        const {addChildBtn} = this.props.fab    
+       
+       
         
         return (
             <Fragment>  
@@ -211,7 +195,7 @@ class index extends Component {
                             
                         </div>
                     </div>
-                </div>             
+                </div>          
 
                 <section>
                     <div className="container-fluid">
@@ -229,7 +213,7 @@ class index extends Component {
                                                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>List View</div>}
                                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                                                         >
-                                                            <img onClick={this.stakehViewList} className="btn btn-light" src={require('../img/list.svg')} alt="List"/>                                                        
+                                                            <img onClick={this.stakehViewList} className="btn btn-light" src={require('../../../img/list.svg')} alt="List"/>                                                        
                                                         </Tooltip>  
                                                 </div>
                                                 <div className="mr-4">  
@@ -238,7 +222,7 @@ class index extends Component {
                                                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Card View</div>}
                                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                                                         >
-                                                            <img onClick={this.stakehViewCard} className="btn btn-light" src={require('../img/card.svg')} alt="Card"/>                                                        
+                                                            <img onClick={this.stakehViewCard} className="btn btn-light" src={require('../../../img/card.svg')} alt="Card"/>                                                        
                                                         </Tooltip>    
                                                 </div>                                   
                                                 <div className="mr-4">    
@@ -247,7 +231,7 @@ class index extends Component {
                                                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>New Stakeholder</div>}
                                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                                                         >
-                                                            <img className="btn btn-delete btn-light" src={require('../img/add.svg')} alt="add" data-pagename="addStakeholder" onClick={this.pageChange}/>                                                       
+                                                            <img className="btn btn-delete btn-light" src={require('../../../img/add.svg')} alt="add" data-pagename="addStakeholder" onClick={this.pageChange}/>                                                       
                                                     </Tooltip>                                 
                                                 </div>
                                             </div>
@@ -256,11 +240,11 @@ class index extends Component {
                                 </div> 
                         </header>               
                             <div className="row">    
-                            
-                                {stakeholderlistType.map(item=>stakehView?
+ 
+                             {stakeholderlist.filter(x => _.toUpper(x.full_name).includes(_.toUpper(basicKey||""))).map((item,idx)=>stakehView?
                                  
                                     <DetailCard                                         
-                                        key={item.stakeholder_id} 
+                                        key={idx} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -268,7 +252,7 @@ class index extends Component {
                                         markOnSel={this.markOnSel} />:
 
                                     <CardRow                                         
-                                        key={item.stakeholder_id} 
+                                        key={idx} 
                                         stakehId={item.stakeholder_id}
                                         name={item.first_name}
                                         typeName={item.stakeh_type_name}
@@ -280,13 +264,14 @@ class index extends Component {
                                     FabRec={this.setActivePage}
                                     delBtn={this.delBtn}
                                     addChild={this.child}
-                                    stakehNumb={stakehNumb} />:''}
+                                    // stakehNumb={numb} 
+                                    />:''}
 
                                 
                             </div>    
                             {/* <div className="modal-footer">
                                 <Pagination onChange={this.pagination} current={current} total={25} />    
-                            </div> */}
+                            </div>             */}
                     </div>
                             
                         
@@ -295,12 +280,13 @@ class index extends Component {
         )
     }
 }
-index.propTypes={
+search.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,
     fab: PropTypes.object.isRequired,
+    searchConf: PropTypes.object.isRequired,
     setStakehViewTrue: PropTypes.func.isRequired,
     setStakehViewFalse: PropTypes.func.isRequired,   
     setShowFab: PropTypes.func.isRequired,   
@@ -309,9 +295,8 @@ index.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,
     viewStakehAccess: PropTypes.func.isRequired,    
-    setDelBtn: PropTypes.func.isRequired,    
-    setStakehType: PropTypes.func.isRequired, 
-    setPageTitle: PropTypes.func.isRequired, 
+    setDelBtn: PropTypes.func.isRequired,
+    
    
     
      
@@ -323,6 +308,7 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         fab:state.fab,
+        searchConf: state.searchConf,
          
 })
     
@@ -337,11 +323,7 @@ export default connect(mapStateToProps,{
     viewStakehGroup,
     viewStakehAccess,    
     setDelBtn,
-    setStakehType,
-    setPageTitle
-   
-   
     
    
     
-})(index)
+})(search)

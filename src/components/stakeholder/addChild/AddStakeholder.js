@@ -1,22 +1,17 @@
 import React, { Component,Fragment } from 'react'
-import BasicWizard from '../update/BasicWizard'
-import SecurityWizard from '../update/SecurityWizard'
-import AccessWizard from '../update/AccessWizard'
-import GrpMberWizard from '../update/Group&Member'
-import CustomField from '../update/CustomField'
-import FolTabHead from '../update/FolTabHead'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField} from '../../actions/stakehUpdateAction'
-import {setWizardPage} from '../../actions/stakehUpdateAction'
-import {setActivePage} from '../../actions/layoutInitAction' 
-import {setStakehType} from '../../actions/stakehTypeAction'
-import {viewStakehGroup,viewStakehMember} from '../../actions/stakehViewDetail'
-
+import BasicWizard from '../../stakeholder/addChild/BasicWizard'
+import SecurityWizard from '../../stakeholder/addChild/SecurityWizard' 
+import FolTabHead from '../../stakeholder/addChild/FolTabHeadAdd'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakehUpdateAction'
+import {setWizardPage} from '../../../actions/stakehUpdateAction'
+import {setActivePage} from '../../../actions/layoutInitAction' 
+import {setStakehType} from '../../../actions/stakehTypeAction'
  
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-class UpdateDetail extends Component {
+class NewStakeholder extends Component {
 
     handleWizard=(wizardName)=>{        
         const {user:{bio_access_id:idAccess}} = this.props.session
@@ -73,37 +68,11 @@ class UpdateDetail extends Component {
         }
         this.props.setSecLevel(SecurityObj)
 
-        //List Group
-        const stakehGroup={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_GROUP',             
-        }
-        this.props.viewStakehGroup(stakehGroup)
+    }     
 
-         //Member
-        const stakehMember={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_MEMBER',             
-        }
-        this.props.viewStakehMember(stakehMember)
-
-        const customFieldObj={
-            action:"ITEM_LIST_ATTRIBUTE",
-            bio_access_id: idAccess
-        }
-        this.props.setcustomField(customFieldObj)
-
-    }
- 
     components={
         basic:BasicWizard,
-        security:SecurityWizard,        
-        access:AccessWizard,
-        group:GrpMberWizard,
-        custom:CustomField     
-
+        security:SecurityWizard,      
         // icon:{
         //     delete:`fab-trash.svg`,
         //     move:`fab-move.svg`
@@ -113,78 +82,24 @@ class UpdateDetail extends Component {
     setActivePage=(e)=>{
         e.preventDefault()     
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
-        // console.log(stakehNumb)   
-       
+        const {stakehNumb} = this.props.stakeholderlistType
+        // console.log(stakehNumb)
+    
+        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    
         const stakehObj={
             stakeholder_id:bId,
             bio_access_id:idAccess,
             action:'ITEM_LIST_TYPE',
             stakeh_type: parseInt(stakehNumb),
-        }
-        this.props.setStakehType(stakehObj) 
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-
-        const stakehDet={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_DETAIL',            
-        }
-        this.props.setStkhAccDetail(stakehDet)  
-        
-         //Ancestor Group
-         const listAncestor={
-            bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
-            action: "ITEM_LIST_ANCESTOR",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setAncestor(listAncestor)
-
-        //Descendant Member
-        const listDescendant={
-            bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
-            action: "ITEM_LIST_DESCENDANT",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setDescendant(listDescendant)
-
-        //Member
-        const stakehMember={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_MEMBER',             
-        }
-        this.props.viewStakehMember(stakehMember)
-
-         //List Group
-         const stakehGroup={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_GROUP',             
-        }
-        this.props.viewStakehGroup(stakehGroup)
-
-        // this.handleWizard()
-         
-        const customFieldObj={
-            action:"ITEM_LIST_ATTRIBUTE",
-            bio_access_id: idAccess
-        }
-        this.props.setcustomField(customFieldObj)
-
-
-
+          }
+          this.props.setStakehType(stakehObj) 
     }
 
   render() {
 
-    const {pageTitle}=this.props.layout
-    const {stakehSel} = this.props.stakeholderlistType
+    const {pageTitle}=this.props.layout    
     const {wizard_Page:wzdPage,container_Line} = this.props.stakeholderUpdate
-    const {stakeholder_Detail} = this.props.stakeholderView      
-    const item = stakeholder_Detail.find(rec=>rec.stakeholder_id===stakehSel) //iterate
     // console.log(item)
     // console.log(active_Wizard)   
   
@@ -198,8 +113,7 @@ class UpdateDetail extends Component {
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="view" onClick={this.setActivePage}>Details</a></div>
-                    <div className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>
+                   
                 </div>
             </div>
         </div>     
@@ -207,7 +121,7 @@ class UpdateDetail extends Component {
         <section className="forms">
            <div className="container-fluid">
                <header>
-                  <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
+                  <h1 className="h3 display"></h1>
                </header>
                <div className=" row">
                    <div className="col-lg-12">
@@ -222,7 +136,6 @@ class UpdateDetail extends Component {
                         </div>
                             <div className="card-body">
                                <Body                                     
-                                    item={item}                                     
                                     active={wzdPage}/>                                   
                            </div>
                        </div>
@@ -234,7 +147,7 @@ class UpdateDetail extends Component {
     )
   }
 }
-UpdateDetail.propTypes={
+NewStakeholder.propTypes={
     session: PropTypes.object.isRequired,  
     layout:PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,    
@@ -248,10 +161,12 @@ UpdateDetail.propTypes={
     setActivePage: PropTypes.func.isRequired,
     setStakehType: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,
-    viewStakehGroup: PropTypes.func.isRequired,
-    viewStakehMember: PropTypes.func.isRequired, 
-    setcustomField: PropTypes.func.isRequired,
+    
  
+    
+     
+    
+    
   }
   
   const mapStateToProps= state =>({
@@ -272,9 +187,7 @@ UpdateDetail.propTypes={
     setActivePage,
     setStakehType,
     setSecLevel,
-    viewStakehGroup,
-    viewStakehMember,
-    setcustomField,
+   
        
   
-  })(UpdateDetail)
+  })(NewStakeholder)

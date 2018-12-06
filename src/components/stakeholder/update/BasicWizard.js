@@ -1,7 +1,7 @@
 import React, { Component,Fragment } from 'react' 
 import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {updStkh} from '../../actions/stakehUpdateAction'
+import {updStkh} from '../../../actions/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -120,7 +120,7 @@ class basicWizard extends Component {
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center">
-                            <img src={require('../../img/StakeType/'+ item.stakeh_type_name +'.svg')} alt={item.stakeh_type_name} className=" img-dash" />
+                            <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} alt={item.stakeh_type_name} className=" img-dash" />
                         </div>
                     </div>
 
@@ -133,15 +133,15 @@ class basicWizard extends Component {
                                 <input type="text" name="stakeh_type_name" className="form-control" value={decodeURIComponent(stakeh_type_name)} disabled/>
                         </div>
                         <div className="row">
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Initials</label>
                                 <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={decodeURIComponent(initials)}/> 
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>First Name</label>
                                 <input name="first_name" type="text" className="form-control" placeholder="Smith" value={decodeURIComponent(first_name)} onChange={this.handleChange} />
                             </div>
-                            <div className="col-sm-4 form-group">
+                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
                                 <label>Last Name</label>
                                 <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={decodeURIComponent(last_name)}/>
                             </div>
@@ -153,7 +153,7 @@ class basicWizard extends Component {
                                 <label>Email</label>
                                 <input name="email" type="email" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange} value={decodeURIComponent(email)}/>
                             </div>
-                            <div className={pageTitle!=="User"?"d-none":"col-sm-4 form-group"}>
+                            <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label>
                                 <DatePicker
                                     name="date_of_birth" 

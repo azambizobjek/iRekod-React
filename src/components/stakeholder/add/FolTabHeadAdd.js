@@ -19,7 +19,7 @@ import React from 'react'
         {/* <div className='tab activeTab mx-auto'> */}
             <img
                 name="basic"
-                src={require('../../img/StakeType/Group.svg')}
+                src={require('../../../img/StakeType/Group.svg')}
                 // className='img-fluid'
                 className={active==='basic'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive}/>
@@ -31,7 +31,7 @@ import React from 'react'
         {/* <div className='tab activeTab mx-auto'> */} 
             <img
                 name="security"
-                src={require('../../img/StakeType/Group.svg')}
+                src={require('../../../img/StakeType/Group.svg')}
                 className={active==='security'?'img-fluid desaturate':'img-fluid'}
                 // className='img-fluid'
                 onClick={sendActive} />

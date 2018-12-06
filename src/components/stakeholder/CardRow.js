@@ -41,12 +41,12 @@ export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
         <Card>
             <div className={isSel?"card bg-primary":"card"} onClick={sendStakehId}>        
                 <div className="text-center">
-                     <img src={require('../img/StakeType/'+typeName+'.svg')} alt={typeName} className="img-card mt-4"/>
+                     <img src={require('../../img/StakeType/'+typeName+'.svg')} alt={typeName} className="img-card mt-4"/>
                 </div>
                 <div className="card-body">                  
                     <hr className={isSel?"mt-0 bg-light":"mt-0"} />
                     <p className={isSel?"card-title mb-1 font-weight-bold text-truncate text-light":"card-title mb-1 font-weight-bold text-truncate text-muted"}>{decodeURIComponent(name)}</p>
-                    <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../img/gear.svg')}/>Type: {decodeURIComponent(typeName)}</small></p>
+                    <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../../img/gear.svg')}/>Type: {decodeURIComponent(typeName)}</small></p>
                     {/* <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../img/email.svg')} alt="email"/>Email: {decodeURIComponent(stakehId)}</small></p>
                     <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../img/telephone.svg')} alt="email"/>Telephone Number: {decodeURIComponent(stakehId)}</small></p>                     */}
                 </div>
