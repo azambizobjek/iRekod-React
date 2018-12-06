@@ -8,7 +8,7 @@ export const setStakehType = (param) => dispatch =>{
         fetch(url,{method:'GET'})
         .then(res=>res.json())
         .then(res=>{
-            // console.log(res)
+            // console.log(res.results)
             dispatch({
                 type:STAKEH_TYPE,payload:res.results
             })
