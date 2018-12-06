@@ -3,7 +3,7 @@ import Select from 'react-select'
 import Checkbox from 'rc-checkbox'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {addStkh} from '../../../actions/stakehAddAction'
+import {addStkh} from '../../../actions/stakeholderAction/stakehAddAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

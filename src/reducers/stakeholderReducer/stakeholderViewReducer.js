@@ -1,4 +1,4 @@
-import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC} from '../actions/types'
+import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC} from '../../actions/types'
 
 const initialState = {
     stakeholder_Detail:[],

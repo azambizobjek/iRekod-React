@@ -1,6 +1,6 @@
 import React,{ Component,Fragment } from 'react' 
 import Select from 'react-select'
-import {updStkh} from '../../../actions/stakehUpdateAction'
+import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

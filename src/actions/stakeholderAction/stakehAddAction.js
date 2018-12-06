@@ -1,5 +1,5 @@
-import {ADD_STAKEH,BASIC_DET} from './types'
-import {biorisUrl} from '../appConfig'
+import {ADD_STAKEH,BASIC_DET} from '../types'
+import {biorisUrl} from '../../appConfig'
 
 //Add Stakeholder
 export const addStkh = (param) => dispatch =>{

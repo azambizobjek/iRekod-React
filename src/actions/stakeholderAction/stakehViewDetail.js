@@ -1,5 +1,5 @@
-import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC,DELETE_STAKEHOLDER} from './types'
-import {biorisUrl} from '../appConfig'
+import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC,DELETE_STAKEHOLDER} from '../types'
+import {biorisUrl} from '../../appConfig'
 
 //Call stkh Detail
 export const setStakeholderItemDetail = (param) => dispatch =>{

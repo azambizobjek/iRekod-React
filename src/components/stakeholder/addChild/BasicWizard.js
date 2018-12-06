@@ -1,8 +1,8 @@
 import React, { Component,Fragment } from 'react' 
 import DatePicker from "react-datepicker";
 import moment from 'moment'
-import {addChild} from '../../../actions/stakehAddAction'
-import {setMember} from '../../../actions/stakehUpdateAction'
+import {addChild} from '../../../actions/stakeholderAction/stakehAddAction'
+import {setMember} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import "react-datepicker/dist/react-datepicker.css";
 
 import {connect} from 'react-redux'

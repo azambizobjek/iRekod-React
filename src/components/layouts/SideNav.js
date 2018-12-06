@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {setActivePage,setPageTitle} from '../../actions/layoutInitAction'
-import {setStakehType,setStakehNumb} from '../../actions/stakehTypeAction'
+import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
  
  
 
@@ -10,7 +10,8 @@ class SideNav extends React.Component {
   constructor(){
     super();
     this.state = {
-      folderToggle: false,
+      workFlowToggle: false,
+      stakehToggle: false,
       documentToggle: false,
       uploadToggle:false,     
     };
@@ -20,8 +21,12 @@ class SideNav extends React.Component {
     e.preventDefault()
     switch(e.target.name){
       case 'stakeholder':
-        const folderState = this.state.folderToggle
-        this.setState({ folderToggle: !folderState, documentToggle:false})
+        const stakehState = this.state.stakehToggle
+        this.setState({ stakehToggle: !stakehState, workFlowToggle:false})
+        break
+      case 'workflow':
+        const workflowState = this.state.workFlowToggle
+        this.setState({ workFlowToggle: !workflowState, stakehToggle:false})        
       break  
       default:
     }
@@ -29,6 +34,8 @@ class SideNav extends React.Component {
 
   setActivePage=(e)=>{
       e.preventDefault()
+
+      /////////stakeholder////////
       const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -53,6 +60,38 @@ class SideNav extends React.Component {
       //   action:'ITEM_DETAIL',            
       // }
       // this.props.setStakeholderItemDetail(stakehDet)  
+
+
+      /////////workflow////////
+      const listWrkFlwObj ={
+        action: 'ITEM_LIST',
+        bio_access_id: bId
+      }
+      const listofSubjectObj ={
+        action: 'LIST_ITEM_SUBJECT',
+        bio_access_id: bId
+      }
+  
+      const stakehList={
+        action: "ITEM_LIST",
+        bio_access_id: bId       
+      }
+  
+      const customFieldObj={
+        action: "ITEM_LIST_BY_OBJECT",
+        bio_access_id: bId,
+        object_id:"STKH"    
+    }
+   
+       const pageSubject= ""
+      // this.props.setStakehListNew(stakehList)
+      // this.props.setListWorkFlow(listWrkFlwObj)
+      // this.props.setListofSubject(listofSubjectObj)
+      // this.props.setPageTitle(e.target.name)
+      // this.props.setCustomField(customFieldObj)
+      // this.props.setPageSubject(pageSubject)
+
+      
 
   } 
   
@@ -93,12 +132,26 @@ class SideNav extends React.Component {
             </a>
           </li>
 
+             {/* List Of WorkFlow */}
+            <li>
+              <a href="/" aria-expanded={this.state.workFlowToggle} data-toggle="collapse" name="workflow" className={this.state.workFlowToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
+              <div className="userIcon"><img src={require(`../../img/folder.svg`)} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
+              <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" name="List Workflow" >
+                      <div className="userIcon" data-pagename="listOfWorkflow">
+                      <img src={require(`../../img/management.svg`)} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
+                      </div>List of Workflow
+                      </a>
+                </li>
+              </ul>
+            </li>
+
             {/* Stakeholder */}
             <li>
-              <a href="/" aria-expanded={this.state.folderToggle} data-toggle="collapse" name="stakeholder" className={this.state.folderToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
+              <a href="/" aria-expanded={this.state.stakehToggle} data-toggle="collapse" name="stakeholder" className={this.state.stakehToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
               <div className="userIcon"><img src={require('../../img/employee.svg')} alt="employee" className="img-fluid p-1"/></div>Stakeholder </a>
-
-              <ul id="chartsDropdown" className={this.state.folderToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
+              <ul id="chartsDropdown" className={this.state.stakehToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
                   <a href="/" onClick={this.setActivePage} data-id='0' data-pagetitle="Group" data-pagename="index">
                     <div className="userIcon" data-pagename="index">

@@ -2,10 +2,10 @@ import React, { Component,Fragment } from 'react'
 import BasicWizard from '../../stakeholder/addChild/BasicWizard'
 import SecurityWizard from '../../stakeholder/addChild/SecurityWizard' 
 import FolTabHead from '../../stakeholder/addChild/FolTabHeadAdd'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakehUpdateAction'
-import {setWizardPage} from '../../../actions/stakehUpdateAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
+// import {setWizardPage} from '../../../actions/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
-import {setStakehType} from '../../../actions/stakehTypeAction'
+import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
  
 
 import {connect} from 'react-redux'

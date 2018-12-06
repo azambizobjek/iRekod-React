@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
-import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakehTypeAction' 
+import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
 import {setActivePage} from '../../actions/layoutInitAction' 
-import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakehViewDetail'
+import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

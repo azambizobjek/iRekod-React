@@ -4,9 +4,9 @@ import MemberView from '../../stakeholder/view/MemberView'
 import GroupView from '../../stakeholder/view/GroupView'
 import AccessView from '../../stakeholder/view/AccessView'
 import {setActivePage} from '../../../actions/layoutInitAction' 
-import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakehViewDetail'
-import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakehTypeAction'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakehUpdateAction'
+import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
+import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakeholderAction/stakehTypeAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
 
 
 import {connect} from 'react-redux'

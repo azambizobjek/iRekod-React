@@ -1,7 +1,7 @@
 import React, { Component,Fragment } from 'react'
 import Card from '../dashboard/Card'  
 import {setActivePage,setPageTitle} from '../../actions/layoutInitAction'
-import {setStakehType,setStakehNumb} from '../../actions/stakehTypeAction'
+import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

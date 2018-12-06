@@ -1,7 +1,7 @@
 import React, { Component,Fragment } from 'react' 
 import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {updStkh} from '../../../actions/stakehUpdateAction'
+import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

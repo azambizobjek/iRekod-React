@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
-import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,updListMember} from '../../../actions/stakehUpdateAction' 
+import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,updListMember} from '../../../actions/stakeholderAction/stakehUpdateAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

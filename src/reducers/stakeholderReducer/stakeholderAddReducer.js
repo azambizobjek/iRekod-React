@@ -1,4 +1,4 @@
-import {ADD_STAKEH,BASIC_DET} from '../actions/types'
+import {ADD_STAKEH,BASIC_DET} from '../../actions/types'
 
 
 const initialState = {

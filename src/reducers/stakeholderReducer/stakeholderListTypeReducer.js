@@ -1,4 +1,4 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../actions/types'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../../actions/types'
 
 
 const initialState={ 

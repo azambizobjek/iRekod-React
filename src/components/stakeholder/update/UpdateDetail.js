@@ -5,11 +5,10 @@ import AccessWizard from '../../stakeholder/update/AccessWizard'
 import GrpMberWizard from '../../stakeholder/update/Group&Member'
 import CustomField from '../../stakeholder/update/CustomField'
 import FolTabHead from '../../stakeholder/update/FolTabHead'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField} from '../../../actions/stakehUpdateAction'
-import {setWizardPage} from '../../../actions/stakehUpdateAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
-import {setStakehType} from '../../../actions/stakehTypeAction'
-import {viewStakehGroup,viewStakehMember} from '../../../actions/stakehViewDetail'
+import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
+import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
 
  
 

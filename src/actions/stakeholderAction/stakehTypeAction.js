@@ -1,5 +1,5 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from './types'
-import {biorisUrl} from '../appConfig'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../types'
+import {biorisUrl} from '../../appConfig'
 
 
 export const setStakehType = (param) => dispatch =>{
