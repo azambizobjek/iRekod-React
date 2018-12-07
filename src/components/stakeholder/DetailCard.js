@@ -29,7 +29,7 @@ export default function DetailCard({stakehId,name,typeName,isSel,markOnSel,email
    
 return (
     <div className="col-12">
-    <Card>
+    
         <div className={isSel?"card mb-3 bg-primary":"card mb-3"} onClick={sendStakehId}>
             <div className="p-2 d-flex justify-content-between align-items-center">
                 <img src={require('../../img/StakeType/'+typeName+'.svg')} alt={typeName} className="p-2 img-fluid img-scale" />
@@ -42,7 +42,7 @@ return (
                     </div>
             </div>
         </div>
-        </Card>
+        
     </div>
 )
 }
