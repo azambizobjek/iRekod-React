@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 import CardRow from '../../stakeholder/CardRow'  
 import DetailCard from '../../stakeholder/DetailCard'
-import Fab from '../../../components/fab/Fab'
+import Fab from '../../../components/fab/FabStakeholder'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
 import 'rc-pagination/assets/index.css'
