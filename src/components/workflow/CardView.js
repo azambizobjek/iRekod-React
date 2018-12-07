@@ -28,7 +28,7 @@ export default function Workflow({title, markOnSel,taskId, isSel, subject}) {
 
     return (
         <div className="col-6 col-md-4 col-lg-2 col-xl-2">
-        <Box>
+        
            <div className={isSel?"card bg-primary":"card"} onClick={handleClick} >
                <div className="text-center">
                     <img className="img-card mt-4" src={require('../../img/management.svg')} alt="activity"/>
@@ -38,7 +38,7 @@ export default function Workflow({title, markOnSel,taskId, isSel, subject}) {
                    <p className={isSel?"card-title mb-1 font-weight-bold text-truncate text-light":"card-title mb-1 font-weight-bold text-truncate text-muted"}>{decodeURIComponent(title)}</p>
                </div>
            </div>
-           </Box>
+           
        </div>
 
 
