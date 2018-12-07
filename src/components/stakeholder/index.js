@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 
 import CardRow from '../stakeholder/CardRow'  
 import DetailCard from '../stakeholder/DetailCard'
-import Fab from '../fab/Fab'
+import Fab from '../fab/FabStakeholder'
 import MainFab from '../fab/MainFab'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
