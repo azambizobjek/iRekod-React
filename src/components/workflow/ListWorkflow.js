@@ -15,7 +15,7 @@ import update from 'immutability-helper'
 
 import CardView from './CardView'
 import ListView from './ListView'
-import Fab from '../../components/fab/Fab'
+import Fab from '../../components/fab/FabWorkflow'
 import 'rc-tooltip/assets/bootstrap.css'
 
 
