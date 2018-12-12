@@ -16,7 +16,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
     <div className={active==='activity'?'tab activeTab mx-auto':'tab mx-auto'}>
             <img
             name="activity"
-            src={require('../../img/Group2.svg')} alt="activityImage"
+            src={require('../../../img/add.svg')} alt="activityImage"
             className={active==='activity'?'img-fluid desaturate':'img-fluid'}
             onClick={sendActive} />
         </div>
@@ -26,7 +26,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
    <div className={active==='email'?'tab activeTab mx-auto':'tab mx-auto'}>
             <img
                 name="email"
-                src={require('../../img/Group2.svg')} alt="emailImage"
+                src={require('../../../img/add.svg')} alt="emailImage"
                 className={active==='email'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive} />
         </div>
@@ -36,7 +36,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
     <div className={active==='autoscript'?'tab activeTab mx-auto':'tab mx-auto'}>
                 <img
                 name="autoscript"
-                src={require('../../img/Group2.svg')} alt="autoscriptImage"
+                src={require('../../../img/add.svg')} alt="autoscriptImage"
                 className={active==='autoscript'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive} />
         </div>

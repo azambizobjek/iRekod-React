@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import NewFolTabHead from './newActivity/NewTabWorkflowHead'
-import NewActivityWizard from './newActivity/NewActivityWizard'
-import NewEmailWizard from './newActivity/NewEmailTemplate'
-import NewAutoScript from './newActivity/NewAutoScript'
+import NewFolTabHead from './NewTabWorkflowHead'
+import NewActivityWizard from './NewActivityWizard'
+import NewEmailWizard from './NewEmailTemplate'
+import NewAutoScript from './NewAutoScript'
 
-import {setWizardPageNew} from '../../actions/createNewActAction'
+import {setWizardPageNew} from '../../../actions/workflowAction/createNewActAction'
 
 
 class NewActivity extends Component {

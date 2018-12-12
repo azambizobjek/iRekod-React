@@ -6,9 +6,9 @@ import ViewDetail from '../components/stakeholder/view/ViewDetail'
 import UpdateDetail from '../components/stakeholder/update/UpdateDetail'
 import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
-import ListWorkflow from './workflow/ListWorkflow' 
-// import NewActivity from './workflow/NewActivity'
-// import WorkflowDetails from './workflow/WorkflowDetails'
+import ListWorkflow from './workflow/ListWorkflow'  
+import NewActivity from './workflow/create/NewActivity'
+import WorkflowDetails from './workflow/update/WorkflowDetails'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -42,6 +42,8 @@ class Home extends Component {
         'child': addChild,  
         'search': search,   
         'listOfWorkflow':ListWorkflow,
+        'createNewAct': NewActivity,
+        'viewActivity': WorkflowDetails,
         // 'createNewAct': NewActivity,
         // 'view': WorkflowDetails,
         

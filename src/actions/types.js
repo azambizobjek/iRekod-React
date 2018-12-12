@@ -103,6 +103,9 @@ export const RES_DETAILS = 'RES_DETAILS'
 //update activity action and reducer link
 export const UPDATE_ACTIVITY = 'UPDATE_ACTIVITY'
 export const LIST_UPDATE_ACTIVITY = 'LIST_UPDATE_ACTIVITY'
+export const SELECTED_RECIPIENTS = 'SELECTED_RECIPIENTS'
+export const LIST_EMAIL_RECIPIENTS = 'LIST_EMAIL_RECIPIENTS'
+export const SELECTED_INC_STAKEH = 'SELECTED_INC_STAKEH'
  
  
  
