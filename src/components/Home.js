@@ -37,7 +37,7 @@ class Home extends Component {
         'dashboard' : Dashboard,
         'addStakeholder' : addStakeholder,                
         'index' : index,
-        'view': ViewDetail,
+        'viewStakeh': ViewDetail,
         'edit': UpdateDetail, 
         'child': addChild,  
         'search': search,   

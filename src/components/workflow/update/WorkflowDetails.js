@@ -27,7 +27,7 @@ class WorkflowDetails extends Component {
         bio_access_id: bId      
     }
     this.props.setActivityStore(activityObj)
-console.log(activityObj)
+    // console.log(activityObj)
     }
 
     nextPage=(param)=>{

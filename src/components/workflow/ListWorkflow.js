@@ -45,6 +45,7 @@ class ListWorkflow extends Component {
 
     setActivePage=(FabRec)=>{
         // e.preventDefault()
+        // console.log(FabRec)
         const {user:{bio_access_id:bId}}=this.props.session
         const {wrkflSel, selDetails}=this.props.listWrkFlw
         const pageSubject = selDetails.map(itm => itm.subject)

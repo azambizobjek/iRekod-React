@@ -200,8 +200,7 @@ class index extends Component {
         
         const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
-        const {stakeholderlistType,current}=this.state
-        const {addChildBtn} = this.props.fab
+        const {stakeholderlistType,current}=this.state         
         // const {stakeholder_Detail}=this.props.stakeholderView 
         // console.log(stakeholderlistType)
         
@@ -282,14 +281,9 @@ class index extends Component {
 
                                 {showFab?<Fab
                                     FabRec={this.setActivePage}
-                                    delBtn={this.delBtn}
-                                    addChild={this.child}
+                                    delBtn={this.delBtn}                                   
                                     stakehNumb={stakehNumb} />:""
-                                    // <MainFab
-                                    // FabRec={this.setActivePage}
-                                    // delBtn={this.delBtn}
-                                    // addChild={this.child}
-                                    // stakehNumb={stakehNumb} />
+                                    
                                 }
 
                                 
@@ -309,8 +303,7 @@ index.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
-    layout: PropTypes.object.isRequired,
-    fab: PropTypes.object.isRequired,
+    layout: PropTypes.object.isRequired,    
     setStakehViewTrue: PropTypes.func.isRequired,
     setStakehViewFalse: PropTypes.func.isRequired,   
     setShowFab: PropTypes.func.isRequired,   
@@ -332,7 +325,7 @@ const mapStateToProps= state =>({
         stakeholderlistType:state.stakeholderlistType,
         layout:state.layout,
         stakeholderView: state.stakeholderView,
-        fab:state.fab,
+       
          
 })
     

@@ -61,9 +61,7 @@ Dashboard.propTypes={
   session: PropTypes.object.isRequired,
   stakeholderlistType: PropTypes.object.isRequired,
   stakeholderView: PropTypes.object.isRequired,
-  layout: PropTypes.object.isRequired,
-  fab: PropTypes.object.isRequired,
- 
+  layout: PropTypes.object.isRequired, 
   
  
   
@@ -75,7 +73,7 @@ const mapStateToProps= state =>({
       stakeholderlistType:state.stakeholderlistType,
       layout:state.layout,
       stakeholderView: state.stakeholderView,
-      fab:state.fab,
+      
        
 })
   

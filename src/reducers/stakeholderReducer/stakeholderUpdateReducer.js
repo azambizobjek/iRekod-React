@@ -1,8 +1,8 @@
-import {WIZARD_PAGE,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,CUSTOM_FIELD} from '../../actions/types'
+import {WIZARD_SELECT,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,CUSTOM_FIELD} from '../../actions/types'
 
 const initialState = {
     stakehList:[], //Stakeholder List
-    wizard_Page:'basic',
+    wizardPage:'basic',
     container_Line: true,
     role_Store:[],
     stkhDetail:[],
@@ -16,9 +16,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case WIZARD_PAGE:
+    case WIZARD_SELECT:
     return { ...state,
-        wizard_Page:action.payload,
+        wizardPage:action.payload,
     } 
     case CONTAINER_LINE:
     return { ...state,

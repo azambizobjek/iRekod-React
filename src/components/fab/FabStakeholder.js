@@ -31,7 +31,7 @@ const addBtn=(e)=>{
                 placement="left"
                 overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>View Details</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                 <img name="view" src={require('../../img/detail2.svg')} alt='view' className='img-fluid' onClick={sendActive}    />
+                 <img name="viewStakeh" src={require('../../img/detail2.svg')} alt='view' className='img-fluid' onClick={sendActive}    />
             </Tooltip>
         </span>
 

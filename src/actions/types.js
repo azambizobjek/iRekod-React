@@ -16,9 +16,6 @@ export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
 
-//Fab
-export const FAB_ADD_BTN = 'FAB_ADD_BTN'
-
 
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
@@ -39,7 +36,7 @@ export const STAKEHOLDER_GROUP = 'STAKEHOLDER_GROUP'
 export const STAKEHOLDER_ACC = 'STAKEHOLDER_ACC'
 
 //Stakeholder Update
-export const WIZARD_PAGE = 'WIZARD_PAGE'
+export const WIZARD_SELECT = 'WIZARD_SELECT'
 export const CONTAINER_LINE = 'CONTAINER_LINE'
 export const ROLE_STORE = 'ROLE_STORE'
 export const ITEM_LIST_ANCESTOR = 'ITEM_LIST_ANCESTOR'
@@ -76,7 +73,7 @@ export const SELECT_SEL = 'SELECT_SEL'
 //listworkflowdetails action and reducer link
 export const LIST_ACTIVITY = 'SET_ACTIVITY'
 export const LIST_EMAIL = 'LIST_EMAIL'
-// export const WIZARD_PAGE = 'WIZARD_PAGE'
+export const WIZARD_PAGE = 'WIZARD_PAGE'
 export const SET_ACTIVITY_STORE = 'SET_ACTIVITY_STORE'
 export const SET_EMAIL_STORE = 'SET_EMAIL_STORE'
 export const LIST_ACTIVITY_DETAIL = 'LIST_ACTIVITY_DETAIL'

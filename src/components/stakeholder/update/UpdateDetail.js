@@ -181,7 +181,7 @@ class UpdateDetail extends Component {
 
     const {pageTitle}=this.props.layout
     const {stakehSel} = this.props.stakeholderlistType
-    const {wizard_Page:wzdPage,container_Line} = this.props.stakeholderUpdate
+    const {wizardPage:wzdPage,container_Line} = this.props.stakeholderUpdate
     const {stakeholder_Detail} = this.props.stakeholderView      
     const item = stakeholder_Detail.find(rec=>rec.stakeholder_id===stakehSel) //iterate
     // console.log(item)
