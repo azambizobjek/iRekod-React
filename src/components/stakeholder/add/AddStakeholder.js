@@ -98,7 +98,7 @@ class NewStakeholder extends Component {
   render() {
 
     const {pageTitle}=this.props.layout    
-    const {wizard_Page:wzdPage,container_Line} = this.props.stakeholderUpdate
+    const {wizardPage:wzdPage,container_Line} = this.props.stakeholderUpdate
     // console.log(item)
     // console.log(active_Wizard)   
   

@@ -346,7 +346,7 @@ class accessWizard extends Component {
                 </div>
                 <div className={active==='access'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary" >Close</button>
+                    <button type="button" className="btn btn-secondary">Close</button>
                 </div>
             </form>
                 {/* <Loader

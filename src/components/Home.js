@@ -39,7 +39,7 @@ class Home extends Component {
         'index' : index,
         'viewStakeh': ViewDetail,
         'edit': UpdateDetail, 
-        'child': addChild,  
+        'addChild': addChild,  
         'search': search,   
         'listOfWorkflow':ListWorkflow,
         'createNewAct': NewActivity,

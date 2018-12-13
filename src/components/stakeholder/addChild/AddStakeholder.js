@@ -5,8 +5,7 @@ import FolTabHead from '../../stakeholder/addChild/FolTabHeadAdd'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
 // import {setWizardPage} from '../../../actions/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
-import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
- 
+import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -99,7 +98,7 @@ class NewStakeholder extends Component {
   render() {
 
     const {pageTitle}=this.props.layout    
-    const {wizard_Page:wzdPage,container_Line} = this.props.stakeholderUpdate
+    const {wizardPage:wzdPage,container_Line} = this.props.stakeholderUpdate
     // console.log(item)
     // console.log(active_Wizard)   
   

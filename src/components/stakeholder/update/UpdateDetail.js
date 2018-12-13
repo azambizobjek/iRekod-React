@@ -197,7 +197,7 @@ class UpdateDetail extends Component {
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="view" onClick={this.setActivePage}>Details</a></div>
+                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="viewStakeh" onClick={this.setActivePage}>Details</a></div>
                     <div className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>
                 </div>
             </div>

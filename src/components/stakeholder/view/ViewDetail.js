@@ -84,7 +84,8 @@ class ViewDetail extends Component {
     const {stakehNumb} = this.props.stakeholderlistType
     // console.log(stakehNumb)
 
-    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    // this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    console.log(e.target.getAttribute('data-pagename'))
 
     const stakehObj={
         stakeholder_id:bId,
@@ -202,12 +203,13 @@ class ViewDetail extends Component {
                          <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
                      </div>
                      <div className="col-auto mr-4">                        
-                        <span><Tooltip
-                            placement="bottom"
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Edit Details</div>}
-                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>} >
-                                <img className="btn btn-link" src={require('../../../img/edit.svg')} alt="Edit Details" data-pagename="edit" onClick={this.updDetail} />                                                        
-                            </Tooltip></span>                         
+                        <span>
+                        <Tooltip                            
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Update Details</div>}
+                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                            <img src={require('../../../img/fab-update.svg')} alt="Edit Details" data-pagename="edit" className='btn btn-link' onClick={this.updDetail}/>
+                        </Tooltip>
+                        </span>                         
                      </div>                     
                  </div>
              </header>
