@@ -6,6 +6,8 @@ import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stake
 import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
 import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
+import { toggleAdv,toggleErr } from '../../actions/auditTrailAction/modalAction'
+
  
 
 class SideNav extends React.Component {
@@ -14,8 +16,9 @@ class SideNav extends React.Component {
     this.state = {
       workFlowToggle: false,
       stakehToggle: false,
-      documentToggle: false,
-      uploadToggle:false,     
+      auditTrailToggle: false,
+      // documentToggle: false,
+      // uploadToggle:false,     
     };
 
   }
@@ -24,12 +27,16 @@ class SideNav extends React.Component {
     switch(e.target.name){
       case 'stakeholder':
         const stakehState = this.state.stakehToggle
-        this.setState({ stakehToggle: !stakehState, workFlowToggle:false})
+        this.setState({ stakehToggle: !stakehState, workFlowToggle:false,auditTrailToggle:false})
         break
       case 'workflow':
         const workflowState = this.state.workFlowToggle
-        this.setState({ workFlowToggle: !workflowState, stakehToggle:false})        
-      break  
+        this.setState({ workFlowToggle: !workflowState, stakehToggle:false,auditTrailToggle:false})        
+      break 
+      case 'auditTrail': 
+        const auditTrailState = this.state.auditTrailToggle
+        this.setState({ auditTrailToggle: !auditTrailState, stakehToggle:false, workFlowToggle:false})        
+      break 
       default:
     }
   }
@@ -37,7 +44,7 @@ class SideNav extends React.Component {
   setActivePage=(e)=>{
       e.preventDefault()
 
-      /////////stakeholder////////
+  /////////////////////////////stakeholder////////////////////////////////////
       const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -64,7 +71,8 @@ class SideNav extends React.Component {
       // this.props.setStakeholderItemDetail(stakehDet)  
 
 
-      /////////workflow////////
+  ///////////////////////////////workflow////////////////////////////////////
+
       const listWrkFlwObj ={
         action: 'ITEM_LIST',
         bio_access_id: idAccess
@@ -93,6 +101,27 @@ class SideNav extends React.Component {
       this.props.setCustomField(customFieldObj)
       this.props.setPageSubject(pageSubject)
 
+  ////////////////////////////////workflow////////////////////////////////////
+
+      const pgName = e.target.getAttribute('data-pagename')
+        this.props.setActivePage(pgName)
+
+          if(pgName==='adv-search')
+          {
+            this.props.toggleAdv(true)
+          }
+
+          else if(pgName==='log')
+          {
+            this.props.toggleErr(true)
+          }  
+
+          else if(pgName==='print')
+          {
+            this.props.toggleErr(true)
+          }
+
+  
       
 
   } 
@@ -110,17 +139,19 @@ class SideNav extends React.Component {
         <div className="sidenav-header d-flex align-items-center justify-content-center">
 
           <div className="sidenav-header-inner text-center">
-
             <img src={require('../../img/user.svg')} alt="user" className="img-fluid "/>
             <h2 className="h5">{stakehName}</h2>
             <span>{title}</span>
           </div>
+
           <div className="sidenav-header-logo">
-          <a className="brand-small text-center" href='/' onClick={this.setActivePage} data-pagename="dashboard">
-            <img src={require('../../img/user.svg')} alt="user" className="img-fluid " data-pagename="dashboard" />
-          </a>
+            <a className="brand-small text-center" href='/' onClick={this.setActivePage} data-pagename="dashboard">
+              <img src={require('../../img/user.svg')} alt="user" className="img-fluid " data-pagename="dashboard" />
+            </a>
           </div>
+
         </div>
+
         <div className="main-menu">
           <h5 className="sidenav-heading text-center">Main</h5>
           <ul id="side-main-menu" className="side-menu list-unstyled">
@@ -137,12 +168,12 @@ class SideNav extends React.Component {
              {/* List Of WorkFlow */}
             <li>
               <a href="/" aria-expanded={this.state.workFlowToggle} data-toggle="collapse" name="workflow" className={this.state.workFlowToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
-              <div className="userIcon"><img src={require(`../../img/folder.svg`)} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
+              <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
               <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
                       <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
-                      <img src={require(`../../img/management.svg`)} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
+                      <img src={require('../../img/management.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
                       </div>List of Workflow
                       </a>
                 </li>
@@ -167,37 +198,65 @@ class SideNav extends React.Component {
                     <img src={require('../../img/StakeType/Organization.svg')} alt="organization" className="img-fluid mr-1" data-pagename="index" />
                     </div>Organization
                     </a>
-              </li>   
-              <li>
-                    <a href="/" onClick={this.setActivePage} data-id='2' data-pagetitle="Branch" data-pagename="index">
-                    <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" />
-                    </div>Branch
-                    </a>
-              </li> 
-              <li>
-                    <a href="/" onClick={this.setActivePage} data-id='3' data-pagetitle="Department" data-pagename="index">
-                    <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" />
-                    </div>Department
-                    </a>
-              </li> 
-              <li>
-                    <a href="/" onClick={this.setActivePage} data-id='4' data-pagetitle="Designation" data-pagename="index">
-                    <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" />
-                    </div>Designation
-                    </a>
-              </li>      
-              <li>
-                    <a href="/" onClick={this.setActivePage} data-id='5' data-pagetitle="User" data-pagename="index">
-                    <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" />
-                    </div>User
-                    </a>
-              </li>           
+                </li>   
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-id='2' data-pagetitle="Branch" data-pagename="index">
+                      <div className="userIcon" data-pagename="index">
+                      <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" />
+                      </div>Branch
+                      </a>
+                </li> 
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-id='3' data-pagetitle="Department" data-pagename="index">
+                      <div className="userIcon" data-pagename="index">
+                      <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" />
+                      </div>Department
+                      </a>
+                </li> 
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-id='4' data-pagetitle="Designation" data-pagename="index">
+                      <div className="userIcon" data-pagename="index">
+                      <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" />
+                      </div>Designation
+                      </a>
+                </li>      
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-id='5' data-pagetitle="User" data-pagename="index">
+                      <div className="userIcon" data-pagename="index">
+                      <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" />
+                      </div>User
+                      </a>
+                </li>       
               </ul>
-            </li>           
+            </li> 
+
+                {/* Audit Trail */}
+
+                <li>
+                  <a href="/" aria-expanded={this.state.auditTrailToggle} data-toggle="collapse" name="auditTrail" className={this.state.auditTrailToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
+                  <div className="userIcon"><img src={require('../../img/folder.svg')} alt="audit" className="img-fluid p-1"/></div>Audit Log </a>
+                  <ul id="chartsDropdown" className={this.state.auditTrailToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
+                    <li>
+                        <a href="/" data-pagename="log" onClick={this.setActivePage}>
+                        <div className="userIcon" data-pagename="log">
+                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="log"/>
+                        </div>Search
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/" data-pagename="print" onClick={this.setActivePage}>
+                        <div className="userIcon" data-pagename="print">
+                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="print"/>
+                        </div>Print Report
+                        </a>
+                    </li>
+                  </ul>
+                </li>
+
+
+
+            
+                     
           </ul>
         </div>
       </div>
@@ -220,6 +279,8 @@ SideNav.propTypes={
     setStakehListNew: PropTypes.func.isRequired,
     setCustomField: PropTypes.func.isRequired,
     setPageSubject: PropTypes.func.isRequired, 
+    toggleAdv: PropTypes.func.isRequired,
+    toggleErr: PropTypes.func.isRequired,
     
 
   }
@@ -241,6 +302,8 @@ SideNav.propTypes={
     setStakehListNew,
     setCustomField,
     setPageSubject,
+    toggleAdv,
+    toggleErr,
     
   })
   (SideNav)

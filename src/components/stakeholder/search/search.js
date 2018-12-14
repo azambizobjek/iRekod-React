@@ -200,44 +200,40 @@ class search extends Component {
                 <section>
                     <div className="container-fluid">
                         <header>
-                            <div className="row">
-                                <h1 className="h3 display col-auto mr-auto"> 
-                                    {pageTitle}
-                                </h1>                            
-                                    <div className="col-auto mr-4">
-                                        <div className="form-group">                                            
-                                            <div className="col-auto row">
-                                                <div className="mr-4 ml-3">
-                                                    <Tooltip
-                                                        placement="top"
-                                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>List View</div>}
-                                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                                                        >
-                                                            <img onClick={this.stakehViewList} className="btn btn-light" src={require('../../../img/list.svg')} alt="List"/>                                                        
-                                                        </Tooltip>  
-                                                </div>
-                                                <div className="mr-4">  
-                                                    <Tooltip
-                                                        placement="bottom"
-                                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Card View</div>}
-                                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                                                        >
-                                                            <img onClick={this.stakehViewCard} className="btn btn-light" src={require('../../../img/card.svg')} alt="Card"/>                                                        
-                                                        </Tooltip>    
-                                                </div>                                   
-                                                <div className="mr-4">    
-                                                    <Tooltip
-                                                        placement="top"
-                                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>New Stakeholder</div>}
-                                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                                                        >
-                                                            <img className="btn btn-delete btn-light" src={require('../../../img/add.svg')} alt="add" data-pagename="addStakeholder" onClick={this.pageChange}/>                                                       
-                                                    </Tooltip>                                 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
+                        <div className="d-flex align-items-center justify-content-between mb-2">
+                            <h1 className="h3 display"><strong>{pageTitle}</strong></h1>  
+                       
+                                <div className="d-flex align-items-center">                          
+
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>List View</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <button className="btn btn-sm btn-primary" onClick={this.stakehViewList}>
+                                            <i className="fa fa-tasks"></i>
+                                        </button>                            
+                                    </Tooltip>
+
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Card View</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <button className="btn btn-sm btn-primary ml-2" onClick={this.stakehViewCard}>
+                                            <i className="fa fa-th" aria-hidden="true"></i>
+                                        </button>
+                                    </Tooltip>
+
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <button className="btn btn-sm btn-primary ml-2"  alt="Sort" onClick={this.sortItem}>
+                                            <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                                        </button>
+                                    </Tooltip>
+ 
+                                </div>
+                        </div>
                         </header>               
                             <div className="row">    
  

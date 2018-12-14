@@ -3,7 +3,7 @@ import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css';
  
 
-export default function Fab({FabRec,delBtn,addChild,stakehNumb}) {
+export default function Fab({FabRec,delBtn,addChild,stakehNumb,addStakeh}) {
 //    console.log(addChildBtn)
 const sendActive=(e)=>{
     e.preventDefault()
@@ -14,10 +14,18 @@ const deleteBtn=()=>{
     delBtn()
 }
 
-const addBtn=(e)=>{
+const addChildBtn=(e)=>{
     e.preventDefault()
     addChild(e.target.name)
     // console.log(e.target.name)
+}
+
+const addStakehBtn=(e)=>{
+    e.preventDefault()
+    addStakeh(e.target.name)
+    // console.log(e.target.name)
+
+
 }
 
  
@@ -46,8 +54,7 @@ const addBtn=(e)=>{
                              <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}   />
                         </Tooltip> 
                     </span>
-                </li>
-                
+                </li>                
             
                 <li className= "fab-buttons-item">
                     <span className={stakehNumb!=="5"?"fab-buttons-link":"d-none"}>
@@ -55,8 +62,19 @@ const addBtn=(e)=>{
                             placement="left"
                             overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Stakeholder Child</div>}
                             arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                             <img name="addChild" src={require('../../img/fab-child.svg')} alt='child' className='img-fluid' onClick={addBtn}  /> 
+                             <img name="addChild" src={require('../../img/addChild.svg')} alt='child' className='img-fluid' onClick={addChildBtn}  /> 
                         </Tooltip>
+                    </span>
+                </li>
+
+                <li className= "fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                            placement="left"
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add New Stakeholder</div>}
+                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                             <img name="addStakeholder" src={require('../../img/add.svg')} alt='add' className='img-fluid' onClick={addStakehBtn}   />
+                        </Tooltip> 
                     </span>
                 </li>
                

@@ -9,6 +9,10 @@ import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
 import NewActivity from './workflow/create/NewActivity'
 import WorkflowDetails from './workflow/update/WorkflowDetails'
+// import Viewer from './viewer'
+// import Log from './auditLog'
+// import PrintPage from './auditLog/PrintPage'
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -35,17 +39,27 @@ class Home extends Component {
 
     components={
         'dashboard' : Dashboard,
+
+        //stakeholder
         'addStakeholder' : addStakeholder,                
         'index' : index,
         'viewStakeh': ViewDetail,
         'edit': UpdateDetail, 
         'addChild': addChild,  
         'search': search,   
+
+        //workflow
         'listOfWorkflow':ListWorkflow,
         'createNewAct': NewActivity,
         'viewActivity': WorkflowDetails,
         // 'createNewAct': NewActivity,
         // 'view': WorkflowDetails,
+
+        //auditTrail
+        'log':Log,
+        'adv-search':Viewer,
+        'print' : PrintPage,
+        
         
     }
      

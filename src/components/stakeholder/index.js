@@ -187,11 +187,11 @@ class index extends Component {
     }    
 
     //change page to New Stakeholder
-    pageChange=(e)=>{
-        e.preventDefault()   
+    pageChange=(param)=>{
+        
   
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-        // console.log(e.target.getAttribute('data-pagename'))
+        this.props.setActivePage(param)
+         
     }
 
   
@@ -250,15 +250,7 @@ class index extends Component {
                                             <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
                                         </button>
                                     </Tooltip>
-
-                                    <Tooltip
-                                        placement="top"
-                                        overlay={<div style={{ height: 20, width: '100%' }}>Create</div>}
-                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                                        <button className="btn btn-sm btn-primary ml-2"  alt="add"  data-pagename="addStakeholder" onClick={this.pageChange}>
-                                            <i className="fa fa-user-plus" aria-hidden="true"></i>
-                                        </button>
-                                    </Tooltip>
+ 
                                 </div>
                         </div>
                         </header>               
@@ -287,7 +279,8 @@ class index extends Component {
                                     FabRec={this.setActivePage}
                                     delBtn={this.delBtn}                                   
                                     stakehNumb={stakehNumb} 
-                                    addChild={this.child} />:""
+                                    addChild={this.child}
+                                    addStakeh={this.pageChange} />:""
                                     
                                 }
 

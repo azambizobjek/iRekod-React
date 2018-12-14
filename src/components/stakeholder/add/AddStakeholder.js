@@ -111,7 +111,8 @@ class NewStakeholder extends Component {
             <div className="container-fluid">
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
+                    <div className="breadcrumb-item"><a href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
+                    <div className="breadcrumb-item active">New Stakeholder</div>
                    
                 </div>
             </div>
@@ -120,7 +121,7 @@ class NewStakeholder extends Component {
         <section className="forms">
            <div className="container-fluid">
                <header>
-                  <h1 className="h3 display"></h1>
+                  <h1 className="h3 display">New Stakeholder</h1>
                </header>
                <div className=" row">
                    <div className="col-lg-12">
