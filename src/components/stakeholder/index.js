@@ -73,6 +73,7 @@ class index extends Component {
         //select
         if (itmIdx===desIdx){
             this.props.setShowFab(false)
+            this.props.setStakehSel(null)            
         }
         else{
             this.props.setShowFab(true)

@@ -1,6 +1,6 @@
-import { STAKEH_LIST } from './types'
+import { STAKEH_LIST } from '../types'
 
-import {biorisUrl} from '../config'
+import {biorisUrl} from '../../appConfig'
 
 export const getStakehList=(stakehParam)=>dispatch=>{
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(stakehParam)}`

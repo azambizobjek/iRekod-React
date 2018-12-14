@@ -1,6 +1,6 @@
-import { LIST_AUDIT } from './types'
+import { LIST_AUDIT } from '../types'
 
-import {biorisUrl} from '../config'
+import {biorisUrl} from '../../appConfig'
 
 export const getListAudit=(searchParam)=>dispatch=>{
     const url=`${biorisUrl}/auditLog?param=${JSON.stringify(searchParam)}`

@@ -1,6 +1,6 @@
-import { RECORD_LIST } from './types'
+import { RECORD_LIST } from '../types'
 
-import {biorisUrl} from '../config'
+import {biorisUrl} from '../../appConfig'
 
 export const getRecordList=(recordParam)=>dispatch=>{
     const url=`${biorisUrl}/record?param=${JSON.stringify(recordParam)}`

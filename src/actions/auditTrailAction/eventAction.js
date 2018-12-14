@@ -1,6 +1,6 @@
-import { ACTION_TYPES } from './types'
+import { ACTION_TYPES } from '../types'
 
-import {biorisUrl} from '../config'
+import {biorisUrl} from '../../appConfig'
 
 export const getActionTypes=(actionParam)=>dispatch=>{
     const url=`${biorisUrl}/auditLog?param=${JSON.stringify(actionParam)}`

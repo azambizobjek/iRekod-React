@@ -139,6 +139,8 @@ class ListWorkflow extends Component {
         // // select
         if (itmIdx===desIdx){
             this.props.setShowFab(false)
+            this.props.setSelWorkFlow(null)                 
+         
         }
         else{
             this.props.setShowFab(true)

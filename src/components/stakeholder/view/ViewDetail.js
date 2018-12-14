@@ -84,8 +84,8 @@ class ViewDetail extends Component {
     const {stakehNumb} = this.props.stakeholderlistType
     // console.log(stakehNumb)
 
-    // this.props.setActivePage(e.target.getAttribute('data-pagename'))
-    console.log(e.target.getAttribute('data-pagename'))
+    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    // console.log(e.target.getAttribute('data-pagename'))
 
     const stakehObj={
         stakeholder_id:bId,

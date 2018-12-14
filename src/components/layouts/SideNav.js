@@ -1,12 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {setStakehSel,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction'
+import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
 import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
 import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
 import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
 import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
-import { toggleAdv,toggleErr } from '../../actions/auditTrailAction/modalAction'
+import {toggleErr} from '../../actions/auditTrailAction/modalAction'
 
  
 
@@ -44,7 +46,7 @@ class SideNav extends React.Component {
   setActivePage=(e)=>{
       e.preventDefault()
 
-  /////////////////////////////stakeholder////////////////////////////////////
+      /////////////////////////////stakeholder////////////////////////////////////
       const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -60,6 +62,11 @@ class SideNav extends React.Component {
       }
 
       this.props.setStakehType(stakehObj) 
+      this.props.setStakehSel(null)  
+      this.props.setShowFab(false) 
+      this.props.setSelWorkFlow(null)                 
+
+
       // console.log(stakehObj)      
 
       // //stkh Detail
@@ -71,7 +78,7 @@ class SideNav extends React.Component {
       // this.props.setStakeholderItemDetail(stakehDet)  
 
 
-  ///////////////////////////////workflow////////////////////////////////////
+      ///////////////////////////////workflow////////////////////////////////////
 
       const listWrkFlwObj ={
         action: 'ITEM_LIST',
@@ -100,27 +107,30 @@ class SideNav extends React.Component {
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setCustomField(customFieldObj)
       this.props.setPageSubject(pageSubject)
+      this.props.setStakehSel(null)    
+      this.props.setShowFab(false) 
+      this.props.setSelWorkFlow(null)     
 
-  ////////////////////////////////workflow////////////////////////////////////
+
+      ////////////////////////////////workflow////////////////////////////////////
 
       const pgName = e.target.getAttribute('data-pagename')
         this.props.setActivePage(pgName)
+        this.props.setStakehSel(null)  
+        this.props.setShowFab(false) 
+        this.props.setSelWorkFlow(null)      
+                
+        if(pgName==='log')
+        {
+          this.props.toggleErr(true)
+        }  
 
-          if(pgName==='adv-search')
-          {
-            this.props.toggleAdv(true)
-          }
+        if(pgName==='print')
+        {
+          this.props.toggleErr(true)
+        }
 
-          else if(pgName==='log')
-          {
-            this.props.toggleErr(true)
-          }  
-
-          else if(pgName==='print')
-          {
-            this.props.toggleErr(true)
-          }
-
+       
   
       
 
@@ -279,8 +289,10 @@ SideNav.propTypes={
     setStakehListNew: PropTypes.func.isRequired,
     setCustomField: PropTypes.func.isRequired,
     setPageSubject: PropTypes.func.isRequired, 
-    toggleAdv: PropTypes.func.isRequired,
     toggleErr: PropTypes.func.isRequired,
+    setStakehSel: PropTypes.func.isRequired,
+    setShowFab: PropTypes.func.isRequired, 
+    setSelWorkFlow: PropTypes.func.isRequired,
     
 
   }
@@ -302,8 +314,10 @@ SideNav.propTypes={
     setStakehListNew,
     setCustomField,
     setPageSubject,
-    toggleAdv,
     toggleErr,
+    setStakehSel,
+    setShowFab,
+    setSelWorkFlow,
     
   })
   (SideNav)

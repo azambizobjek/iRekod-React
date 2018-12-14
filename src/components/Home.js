@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react'
+import posed, {PoseGroup} from 'react-pose'
+
 import Dashboard from '../components/dashboard/Dashboard'
 import addStakeholder from '../components/stakeholder/add/AddStakeholder' 
 import index from '../components/stakeholder/index'
@@ -9,17 +11,34 @@ import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
 import NewActivity from './workflow/create/NewActivity'
 import WorkflowDetails from './workflow/update/WorkflowDetails'
-// import Viewer from './viewer'
-// import Log from './auditLog'
-// import PrintPage from './auditLog/PrintPage'
-
+import Log from './auditTrail/auditLog/index'
+import PrintPage from './auditTrail/auditLog/PrintPage'
+import PrintReport from './auditTrail/modal/PrintReport'
+import PrintUsage from './auditTrail/modal/PrintUsage'
+import PrintStatistic from './auditTrail/modal/PrintStatistic';
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setNavToggle,setPageClass, setSideNavClass} from '../actions/layoutInitAction'
-
 import {Footer, SideNav, TopNav} from '../components/layouts'
+
+const RouteContainer = posed.div({
+    enter: {
+        y: 0,
+        opacity: 1,
+        delay: 300,
+        transition: {
+          y: { type: 'spring', stiffness: 1000, damping: 15 },
+          default: { duration: 300 }
+        }
+      },
+      exit: {
+        y: 50,
+        opacity: 0,
+        transition: { duration: 150 }
+      },
+  })
 
 class Home extends Component {    
 
@@ -56,9 +75,11 @@ class Home extends Component {
         // 'view': WorkflowDetails,
 
         //auditTrail
-        'log':Log,
-        'adv-search':Viewer,
+        'log':Log,        
         'print' : PrintPage,
+        'printReport': PrintReport,
+        'printUsage': PrintUsage,
+        'printStat' : PrintStatistic,
         
         
     }
@@ -70,11 +91,15 @@ class Home extends Component {
     return (
         <Fragment>
             <SideNav/>
-            <div className={pageClass}>
-            <TopNav/>
-            <Page/>
-            <Footer/>
-        </div>
+                <div className={pageClass}>
+                    <TopNav/>
+                        <PoseGroup>
+                            <RouteContainer key={pName}>
+                                <Page/>
+                            </RouteContainer>
+                        </PoseGroup>
+                    <Footer/>
+                </div>
     </Fragment>
     )
   }
