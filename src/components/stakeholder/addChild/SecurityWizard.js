@@ -66,9 +66,9 @@ class securityWizard extends Component {
 
 
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderUpdate.role_Store!==this.props.stakeholderUpdate.role_Store){
-            const {role_Store}=this.props.stakeholderUpdate                        
-            const roleOptions = role_Store.map(itm=>({ value: itm.role_id, label:itm.title}))           
+        if(prevProps.stakeholderUpdate.roleStore!==this.props.stakeholderUpdate.roleStore){
+            const {roleStore}=this.props.stakeholderUpdate                        
+            const roleOptions = roleStore.map(itm=>({ value: itm.role_id, label:itm.title}))           
             // console.log(roleOptions)
             this.setState({ 
                 role_list:roleOptions                

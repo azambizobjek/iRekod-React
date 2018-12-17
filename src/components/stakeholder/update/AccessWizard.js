@@ -52,14 +52,14 @@ class accessWizard extends Component {
                 stakehList:stakehOptions
             })
         }
-        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+        if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
             const {acl_id} = this.props.item
             this.setState({
                 acl_id:acl_id          
             })      
         }
         if(prevProps.stakeholderUpdate.stkhDetail!==this.props.stakeholderUpdate.stkhDetail){
-            const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView  
+            const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView  
               
             if(acl_entries!==undefined){
                 function acl_multi(array) {

@@ -9,6 +9,8 @@ import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/aut
 import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 import {toggleErr} from '../../actions/auditTrailAction/modalAction'
+import {bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+
 
  
 
@@ -62,9 +64,10 @@ class SideNav extends React.Component {
       }
 
       this.props.setStakehType(stakehObj) 
-      this.props.setStakehSel(null)  
-      this.props.setShowFab(false) 
-      this.props.setSelWorkFlow(null)                 
+      this.props.bcIndex(true)  // Breadcrumb in index page       
+      this.props.setStakehSel(null)  // ID stakeholder select
+      this.props.setShowFab(false) // Fab True false
+      this.props.setSelWorkFlow(null)  //ID select for workflow             
 
 
       // console.log(stakehObj)      
@@ -107,18 +110,18 @@ class SideNav extends React.Component {
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setCustomField(customFieldObj)
       this.props.setPageSubject(pageSubject)
-      this.props.setStakehSel(null)    
-      this.props.setShowFab(false) 
-      this.props.setSelWorkFlow(null)     
+      this.props.setStakehSel(null)    // ID stakeholder select
+      this.props.setShowFab(false)  // Fav True False
+      this.props.setSelWorkFlow(null)     //ID select for workflow  
 
 
       ////////////////////////////////workflow////////////////////////////////////
 
       const pgName = e.target.getAttribute('data-pagename')
         this.props.setActivePage(pgName)
-        this.props.setStakehSel(null)  
-        this.props.setShowFab(false) 
-        this.props.setSelWorkFlow(null)      
+        this.props.setStakehSel(null)  // ID stakeholder select
+        this.props.setShowFab(false)  // Fav True False
+        this.props.setSelWorkFlow(null)      //ID select for workflow  
                 
         if(pgName==='log')
         {
@@ -293,6 +296,8 @@ SideNav.propTypes={
     setStakehSel: PropTypes.func.isRequired,
     setShowFab: PropTypes.func.isRequired, 
     setSelWorkFlow: PropTypes.func.isRequired,
+    bcIndex: PropTypes.func.isRequired,
+     
     
 
   }
@@ -318,6 +323,8 @@ SideNav.propTypes={
     setStakehSel,
     setShowFab,
     setSelWorkFlow,
+    bcIndex,
+    
     
   })
   (SideNav)

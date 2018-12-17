@@ -98,7 +98,7 @@ class NewStakeholder extends Component {
   render() {
 
     const {pageTitle}=this.props.layout    
-    const {wizardPage:wzdPage,container_Line} = this.props.stakeholderUpdate
+    const {wizardPage:wzdPage,containerLine} = this.props.stakeholderUpdate
     // console.log(item)
     // console.log(active_Wizard)   
   
@@ -131,7 +131,7 @@ class NewStakeholder extends Component {
                                 <FolTabHead
                                     activeEditor={this.handleWizard}
                                     active={wzdPage}
-                                    isContainer={container_Line} />                             
+                                    isContainer={containerLine} />                             
                             </div>
                         </div>
                             <div className="card-body">

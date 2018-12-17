@@ -159,12 +159,12 @@ export const updListGroup = (param) => dispatch => {
 
 //Add Member
 export const setMember = (param) => dispatch =>{
-    console.log(param)
+    // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${encodeURIComponent(JSON.stringify(param))}`
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{ 
-            console.log(res)
+            // console.log(res)
             // dispatch({
             //     type:GROUP_ITEM,payload:res.results
             // })

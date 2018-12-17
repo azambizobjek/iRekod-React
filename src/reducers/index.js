@@ -7,6 +7,7 @@ import searchReducer from './searchReducer'
 // import fabReducer from './fabReducer'
 
 //stakeholder
+import stakeholderBreadCrumb from '../reducers/stakeholderReducer/stakeholderBreadCrumbReducer'
 import stakeholderReducer from './stakeholderReducer/stakeholderListTypeReducer'
 import stakeholderView from './stakeholderReducer/stakeholderViewReducer'
 import stakeholderUpdate from './stakeholderReducer/stakeholderUpdateReducer'
@@ -38,6 +39,7 @@ const appReducer = combineReducers({
     searchConf:searchReducer,
    
     //stakeholder
+    stakeholderBreadCrumb:stakeholderBreadCrumb,
     stakeholderlistType:stakeholderReducer,    
     stakeholderView:stakeholderView,
     stakeholderUpdate:stakeholderUpdate,
