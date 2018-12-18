@@ -435,7 +435,7 @@ componentDidMount() {
     const {wrkflSel} = this.props.listWrkFlw
     // const {activityDet} = this.props.workflowDetail
     const {activityStore} = this.props.workflowDetail
-    console.log(activityStore)
+    // console.log(activityStore)
   
     const { 
     
