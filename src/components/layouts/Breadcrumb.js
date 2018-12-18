@@ -19,13 +19,13 @@ class Breadcrumb extends Component {
 
   render() {
     const {pageTitle}=this.props.layout
-    const {stakeholder_Detail,breadCrumb_View} = this.props.stakeholderView
+    const {stakeholderDetail,breadCrumb_View} = this.props.stakeholderView
 
     return (
         <ul className="breadcrumb">
             <a className="breadcrumb-item" href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a>
                 <a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a>
-                {stakeholder_Detail.map((item,idx)=><li key={idx} className={breadCrumb_View?"breadcrumb-item active":"d-none"}>{item.full_name}</li>)}
+                {stakeholderDetail.map((item,idx)=><li key={idx} className={breadCrumb_View?"breadcrumb-item active":"d-none"}>{item.full_name}</li>)}
         </ul>
 
  

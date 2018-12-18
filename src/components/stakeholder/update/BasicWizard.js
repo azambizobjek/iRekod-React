@@ -24,7 +24,7 @@ class basicWizard extends Component {
     }  
     
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+        if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
             const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
             // console.log(moment(date_of_birth, "DD/MM/YYYY"))  
             this.setState({

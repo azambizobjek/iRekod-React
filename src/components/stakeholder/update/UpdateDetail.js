@@ -181,29 +181,36 @@ class UpdateDetail extends Component {
 
     const {pageTitle}=this.props.layout
     const {stakehSel} = this.props.stakeholderlistType
-    const {wizardPage:wzdPage,container_Line} = this.props.stakeholderUpdate
-    const {stakeholder_Detail} = this.props.stakeholderView      
-    const item = stakeholder_Detail.find(rec=>rec.stakeholder_id===stakehSel) //iterate
-    // console.log(item)
+    const {wizardPage:wzdPage,containerLine} = this.props.stakeholderUpdate
+    const {stakeholderDetail} = this.props.stakeholderView      
+    // const item = stakeholderDetail.find(rec=>rec.stakeholder_id===stakehSel) //iterate
+    // console.log(stakeholderDetail)
     // console.log(active_Wizard)   
   
     const Body=this.components[wzdPage]
     // const icon = this.components.icon[type]      
     
     return (
+         
         <Fragment>
-        <div className="breadcrumb-holder">
+        {stakeholderDetail.map((item,idx)=>
+  
+
+        <div key={idx} className="breadcrumb-holder">
             <div className="container-fluid">
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="viewStakeh" onClick={this.setActivePage}>Details</a></div>
-                    <div className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>
+                    <div className="breadcrumb-item">{decodeURIComponent(item.full_name)}</div>
                 </div>
             </div>
         </div>     
-        
-        <section className="forms">
+)}
+       
+
+       {stakeholderDetail.map((item,idx)=>
+        <section key={idx} className="forms">
            <div className="container-fluid">
                <header>
                   <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
@@ -216,7 +223,7 @@ class UpdateDetail extends Component {
                                 <FolTabHead
                                     activeEditor={this.handleWizard}
                                     active={wzdPage}
-                                    isContainer={container_Line} />                             
+                                    isContainer={containerLine} />                             
                             </div>
                         </div>
                             <div className="card-body">
@@ -228,7 +235,7 @@ class UpdateDetail extends Component {
                    </div>
                </div>
            </div>
-       </section>
+       </section>)}
    </Fragment>
     )
   }

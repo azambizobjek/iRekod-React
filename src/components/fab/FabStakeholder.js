@@ -25,12 +25,8 @@ const addStakehBtn=(e)=>{
     addStakeh(e.target.name)
     // console.log(e.target.name)
 
-
 }
-
- 
-
-    
+   
 
   return (
     <div>
@@ -55,6 +51,7 @@ const addStakehBtn=(e)=>{
                         </Tooltip> 
                     </span>
                 </li>                
+            
             
                 <li className= "fab-buttons-item">
                     <span className={stakehNumb!=="5"?"fab-buttons-link":"d-none"}>

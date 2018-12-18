@@ -19,6 +19,10 @@ export const STAKEH_LIST = 'STAKEH_LIST'
 
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
+//Stakeholder BreadCrumb
+export const BC_DETAIL = 'BC_DETAIL'
+export const BC_UPDATE = 'BC_UPDATE'
+export const BC_INDEX = 'BC_INDEX'
 
 //Stakeholder List Type
 export const STAKEH_TYPE = 'STAKEH_TYPE'

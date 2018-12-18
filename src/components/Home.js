@@ -93,11 +93,11 @@ class Home extends Component {
             <SideNav/>
                 <div className={pageClass}>
                     <TopNav/>
-                        <PoseGroup>
-                            <RouteContainer key={pName}>
+                        {/* <PoseGroup>
+                            <RouteContainer key={pName}> */}
                                 <Page/>
-                            </RouteContainer>
-                        </PoseGroup>
+                            {/* </RouteContainer>
+                        </PoseGroup> */}
                     <Footer/>
                 </div>
     </Fragment>

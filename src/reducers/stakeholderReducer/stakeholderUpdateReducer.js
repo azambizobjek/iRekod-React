@@ -3,8 +3,8 @@ import {WIZARD_SELECT,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIE
 const initialState = {
     stakehList:[], //Stakeholder List
     wizardPage:'basic',
-    container_Line: true,
-    role_Store:[],
+    containerLine: true,
+    roleStore:[],
     stkhDetail:[],
     listAncestor:[],
     listDescendant:[],
@@ -22,11 +22,11 @@ export default (state = initialState, action) => {
     } 
     case CONTAINER_LINE:
     return { ...state,
-      container_Line:action.payload,
+        containerLine:action.payload,
     } 
     case ROLE_STORE:
     return { ...state,
-      role_Store:action.payload,
+        roleStore:action.payload,
     }   
     case STAKEHOLDER_LIST:
     return {

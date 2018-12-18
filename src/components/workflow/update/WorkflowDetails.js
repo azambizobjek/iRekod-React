@@ -43,7 +43,8 @@ render() {
 
   const {wizard_Page, container_Line} = this.props.workflowDetail
   const {wrkflSel, selDetails}=this.props.listWrkFlw
-  const item = selDetails.find(rec=>rec.task_id===wrkflSel)
+// console.log(selDetails[0])
+//   const item = selDetails.find(rec=>rec.task_id===wrkflSel)
     // console.log(item)
 
   
@@ -55,6 +56,7 @@ render() {
   const DetailsWizard=this.components[wizard_Page]
 
   return (
+    
   <Fragment>
 
 
@@ -64,7 +66,9 @@ render() {
         </div>
         </div>
 
-       <section className="forms">
+        {selDetails.map((item,idx)=>   
+
+       <section key={idx} className="forms">
            <div className="container-fluid">
                <header>
                   <h1 className="h3 display">{item.title}</h1>
@@ -94,7 +98,7 @@ render() {
                </div>
            </div>
        </section>
-   </Fragment>
+         ) } </Fragment>
   )
 }
 }
