@@ -7,7 +7,7 @@ import {setActivePage} from '../../../actions/layoutInitAction'
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
 import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
-
+import BreadCrumb from '../../layouts/BreadcrumbStakeh'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -62,39 +62,21 @@ class ViewDetail extends Component {
   }  
 
   componentDidUpdate(prevProps){
-      if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
-            const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView
+      if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
+            const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView
             this.setState({aclEntries:acl_entries})
         }    
-    if(prevProps.stakeholderView.stakeholder_Group!==this.props.stakeholderView.stakeholder_Group){
-            const {stakeholder_Group}=this.props.stakeholderView
-            // console.log(stakeholder_Group)
-            this.setState({groupItem:stakeholder_Group})
+    if(prevProps.stakeholderView.stakeholderGroup!==this.props.stakeholderView.stakeholderGroup){
+            const {stakeholderGroup}=this.props.stakeholderView
+            // console.log(stakeholderGroup)
+            this.setState({groupItem:stakeholderGroup})
         }
-    if(prevProps.stakeholderView.stakeholder_Member!==this.props.stakeholderView.stakeholder_Member){
-            const {stakeholder_Member}=this.props.stakeholderView
-            // console.log(stakeholder_Member)
-            this.setState({memberItem:stakeholder_Member})
+    if(prevProps.stakeholderView.stakeholderMember!==this.props.stakeholderView.stakeholderMember){
+            const {stakeholderMember}=this.props.stakeholderView
+            // console.log(stakeholderMember)
+            this.setState({memberItem:stakeholderMember})
         }        
-    }
-
-  setActivePage=(e)=>{
-    e.preventDefault()     
-    const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-    const {stakehNumb} = this.props.stakeholderlistType
-    // console.log(stakehNumb)
-
-    this.props.setActivePage(e.target.getAttribute('data-pagename'))
-    // console.log(e.target.getAttribute('data-pagename'))
-
-    const stakehObj={
-        stakeholder_id:bId,
-        bio_access_id:idAccess,
-        action:'ITEM_LIST_TYPE',
-        stakeh_type: parseInt(stakehNumb),
-      }
-      this.props.setStakehType(stakehObj) 
-  }
+    }  
 
   updDetail=(e)=>{
       e.preventDefault()   
@@ -113,12 +95,12 @@ class ViewDetail extends Component {
       }
       this.props.setRoleStore(RoleObj)
       
-        //Stakeholder List
-      const stakehList={
-          action:"ITEM_LIST",
-          bio_access_id:idAccess
-      }
-      this.props.setStakehList(stakehList)
+      //Stakeholder List
+    //   const stakehList={
+    //       action:"ITEM_LIST",
+    //       bio_access_id:idAccess
+    //   }
+    //   this.props.setStakehList(stakehList)
 
         //stkh Detail
       const stakehDet={
@@ -174,7 +156,7 @@ class ViewDetail extends Component {
   render() {
    
     const {pageTitle}=this.props.layout
-    const {stakeholder_Detail,stakeholder_Member} = this.props.stakeholderView
+    const {stakeholderDetail,stakeholderMember} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
     // console.log(groupItem)
     // console.log(memberItem)
@@ -183,18 +165,20 @@ class ViewDetail extends Component {
       
     return (
       <Fragment>
-        <div className="breadcrumb-holder">
+            <BreadCrumb/>
+
+        {/* <div className="breadcrumb-holder">
             <div className="container-fluid">
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    {stakeholder_Detail.map((item,idx)=><div key={idx} className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>)}
+                    {stakeholderDetail.map((item,idx)=><div key={idx} className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>)}
                 </div>
             </div>
-        </div>  
+        </div>   */}
 
     {/* iterate */}
-    {stakeholder_Detail.map((item,idx)=>      
+    {stakeholderDetail.map((item,idx)=>      
 
         <div key={idx} className="container-fluid mt-3"> 
              <header>

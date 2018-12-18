@@ -4,6 +4,8 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
+
 import {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh} from '../../../actions/workflowAction/updateActAction'
 
 class EmailWizard extends Component {
@@ -175,7 +177,7 @@ handleChange=(event)=>{
    const target = event.target
   const inputVal =  target.type==="checkbox"?target.checked:target.value 
   const input = target.name 
-  console.log(input)  
+  // console.log(input)  
 
 this.setState({
     [input]:inputVal,
@@ -186,7 +188,7 @@ componentDidMount() {
   const {activityDet} = this.props.workflowDetail
   const {emailObj} = this.props.workflowDetail
   const {recipients} = this.props.item
-  const {stakehList} = this.props.listWrkFlw
+  const {stakehList} = this.props.stakeholderList
 
   const emailTemplateName = emailObj.filter(itm => itm.email_template_id === activityDet[0].email_template_id)
 
@@ -262,6 +264,11 @@ formSubmit=(e)=>{
 
 }
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+} 
+
 
   render() {
 
@@ -277,8 +284,7 @@ formSubmit=(e)=>{
   const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const optionCstmFldStkhObj = customFieldObj.map((itm => ({ value: decodeURIComponent(itm.custom_field_id), label:decodeURIComponent(itm.custom_field_name)})))
   const { receipientDetails, incStakeh, email_template_id} = this.state
-
-  const {stakehList} = this.props.listWrkFlw
+  const {stakehList} = this.props.stakeholderList
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
 
     return (
@@ -358,7 +364,7 @@ formSubmit=(e)=>{
           </div> 
           <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
      </form>
       </Fragment>
@@ -369,13 +375,15 @@ formSubmit=(e)=>{
 EmailWizard.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,  
-  workflowDetail:PropTypes.object.isRequired,  
+  workflowDetail:PropTypes.object.isRequired, 
+  stakeholderList: PropTypes.object.isRequired, 
   listWrkFlw: PropTypes.object.isRequired,  
   updateActivity:PropTypes.func.isRequired,  
   updActReducer:PropTypes.object.isRequired, 
   setRecipients:PropTypes.func.isRequired,  
   taskEmailRecipients:PropTypes.func.isRequired,
   setIncStakeh:PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -384,6 +392,7 @@ const mapStateToProps= state =>({
       workflowDetail:state.workflowDetail,
       listWrkFlw:state.listWrkFlw,
       updActReducer:state.updActReducer,
+      stakeholderList: state.stakeholderList,
 })
   
-export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh})(EmailWizard)
+export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh, setActivePage})(EmailWizard)

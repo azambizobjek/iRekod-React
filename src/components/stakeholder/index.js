@@ -4,10 +4,12 @@ import Pagination from 'rc-pagination'
 import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
+import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import BreadCrumb from '../layouts/BreadcrumbStakeh'
 import CardRow from '../stakeholder/CardRow'  
 import DetailCard from '../stakeholder/DetailCard'
 import Fab from '../fab/FabStakeholder'
@@ -94,7 +96,8 @@ class index extends Component {
         const {stakehSel:bId} = this.props.stakeholderlistType
         const {user:{bio_access_id:idAccess}} = this.props.session
 
-      
+        this.props.bcIndex(false)
+        this.props.bcDet(true) //breadcrumb Detail page 
        
         this.props.setActivePage(FabRec)  //direct page to viewDetail
         // console.log(FabRec)
@@ -153,23 +156,10 @@ class index extends Component {
             // console.log(arr)
             this.setState({
                 stakeholderlistType:newStakehList
-            })            
-                
-
-
-
-           
-          
-
- 
-            
-
+            })                         
         }
-        else{}
-
+        else{}     
        
-       
-        
     }
 
     //Add Stakeholder Child
@@ -189,10 +179,7 @@ class index extends Component {
 
     //change page to New Stakeholder
     pageChange=(param)=>{
-        
-  
         this.props.setActivePage(param)
-         
     }
 
   
@@ -207,6 +194,8 @@ class index extends Component {
         
         return (
             <Fragment>  
+                {/* <BreadCrumb/> */}
+                
                  <div className="breadcrumb-holder">
                     <div className="container-fluid">
                         <div className="breadcrumb">
@@ -281,7 +270,7 @@ class index extends Component {
                                     delBtn={this.delBtn}                                   
                                     stakehNumb={stakehNumb} 
                                     addChild={this.child}
-                                    addStakeh={this.pageChange} />:""
+                                    addStakeh={this.pageChange}/>:""
                                     
                                 }
 
@@ -311,7 +300,9 @@ index.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,
     viewStakehAccess: PropTypes.func.isRequired,    
-    setDelBtn: PropTypes.func.isRequired,    
+    setDelBtn: PropTypes.func.isRequired,   
+    bcDet: PropTypes.func.isRequired,
+    bcIndex: PropTypes.func.isRequired,
     
     
    
@@ -339,6 +330,8 @@ export default connect(mapStateToProps,{
     viewStakehGroup,
     viewStakehAccess,    
     setDelBtn,
+    bcDet,
+    bcIndex
     
    
    

@@ -5,7 +5,6 @@ import { LIST_WORKFLOW,
     WORKFLOW_SEL,
     SHOW_FAB,
     LIST_ACTIVITY_DETAIL,
-    LIST_STAKEHOLDER
     } from '../types'
 
 import {biorisUrl} from '../../appConfig'
@@ -78,20 +77,7 @@ export const setSelDetails=(selDetails)=>dispatch=>{
             })
 
 }
-
-export const setStakehList=(stakehList)=>dispatch=>{
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(stakehList)}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(res=>{
-        dispatch({
-            type: LIST_STAKEHOLDER,
-            payload: res.results
-            })
-            })
-
-}
-
+ 
 
  
 

@@ -4,11 +4,11 @@ import{LIST_ACTIVITY, LIST_EMAIL, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STO
 const initialState={
     activityDet : [],
     listEmailDetails: [],
-    wizard_Page:'activity',
-    activity_Store:[],
+    wizardPage:'activity',
+    activityStore:[],
     emailObj:[], 
     itemListSubject:[],
-    container_Line: true,
+    containerLine: true,
     addTask: [],
     customFieldObj: [],
     taskResulStatusObj:[],
@@ -34,13 +34,13 @@ export default function(state = initialState, action){
         case WIZARD_PAGE:
         return {
             ...state,
-            wizard_Page:action.payload,
+            wizardPage:action.payload,
         }
 
         case SET_ACTIVITY_STORE:
         return { 
             ...state,
-            activity_Store:action.payload,
+            activityStore:action.payload,
         }  
         case SET_EMAIL_STORE:
         return { 
@@ -55,7 +55,7 @@ export default function(state = initialState, action){
         case SET_CONTAINER_LINE:
         return { 
             ...state,
-            container_Line:action.payload,
+            containerLine:action.payload,
         } 
         case LIST_ADD_TASK:
         return { 

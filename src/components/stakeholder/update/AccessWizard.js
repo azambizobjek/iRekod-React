@@ -42,8 +42,8 @@ class accessWizard extends Component {
     }     
 
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderUpdate.stakehList!==this.props.stakeholderUpdate.stakehList){
-            const {stakehList}=this.props.stakeholderUpdate      
+        if(prevProps.stakeholderList.stakehList!==this.props.stakeholderList.stakehList){
+            const {stakehList}=this.props.stakeholderList      
                 // console.log(stakehList)                     
             const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
                 // console.log(stakehOptions)                
@@ -52,14 +52,14 @@ class accessWizard extends Component {
                 stakehList:stakehOptions
             })
         }
-        if(prevProps.stakeholderView.stakeholder_Detail!==this.props.stakeholderView.stakeholder_Detail){
+        if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
             const {acl_id} = this.props.item
             this.setState({
                 acl_id:acl_id          
             })      
         }
         if(prevProps.stakeholderUpdate.stkhDetail!==this.props.stakeholderUpdate.stkhDetail){
-            const {stakeholder_Detail:[{acl_entries}]}=this.props.stakeholderView  
+            const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView  
               
             if(acl_entries!==undefined){
                 function acl_multi(array) {
@@ -284,10 +284,11 @@ class accessWizard extends Component {
 
   
     // console.log(acl_entries)
+    const item = this.props.item
     const active = this.props.active
     // const item = this.props.item
     const {accViewVal, accUpdVal, accRmvVal, accModVal, stakehList} = this.state
-    //console.log(item)
+    // console.log(item)
 
 
 
@@ -300,7 +301,7 @@ class accessWizard extends Component {
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center">
-                            <img src={require('../../../img/add.svg')} alt='folder'className=" img-dash" />
+                            <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} alt={item.stakeh_type_name} className="img-dash" />
                         </div>
                     </div>
                     <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
@@ -359,6 +360,7 @@ class accessWizard extends Component {
 }
 accessWizard.propTypes={
     session: PropTypes.object.isRequired,
+    stakeholderList: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout:PropTypes.object.isRequired,
@@ -375,6 +377,7 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         stakeholderUpdate: state.stakeholderUpdate,
+        stakeholderList: state.stakeholderList
         
          
 })

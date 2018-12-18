@@ -41,9 +41,10 @@ class WorkflowDetails extends Component {
 
 render() {
 
-  const {wizard_Page, container_Line} = this.props.workflowDetail
+  const {wizardPage, containerLine} = this.props.workflowDetail
   const {wrkflSel, selDetails}=this.props.listWrkFlw
-  const item = selDetails.find(rec=>rec.task_id===wrkflSel)
+// console.log(selDetails[0])
+//   const item = selDetails.find(rec=>rec.task_id===wrkflSel)
     // console.log(item)
 
   
@@ -52,9 +53,10 @@ render() {
     email:EmailWizard,        
     autoscript:AutoScriptWizard,
   }
-  const DetailsWizard=this.components[wizard_Page]
+  const DetailsWizard=this.components[wizardPage]
 
   return (
+    
   <Fragment>
 
 
@@ -64,7 +66,9 @@ render() {
         </div>
         </div>
 
-       <section className="forms">
+        {selDetails.map((item,idx)=>   
+
+       <section key={idx} className="forms">
            <div className="container-fluid">
                <header>
                   <h1 className="h3 display">{item.title}</h1>
@@ -76,8 +80,8 @@ render() {
                             <div className="row">
                                 <FolTabHead
                                     activeEditor={this.handleWizard}
-                                    active={wizard_Page}
-                                    isContainer={container_Line} 
+                                    active={wizardPage}
+                                    isContainer={containerLine} 
                                     />                             
                             </div>
                         </div>
@@ -85,7 +89,7 @@ render() {
                                <DetailsWizard                                     
                                     item={item}   
                                     nextPage={this.nextPage}  
-                                    active={wizard_Page} 
+                                    active={wizardPage} 
                                     prevPage={this.prevPage}
                                     />                                   
                            </div>
@@ -94,7 +98,7 @@ render() {
                </div>
            </div>
        </section>
-   </Fragment>
+         ) } </Fragment>
   )
 }
 }

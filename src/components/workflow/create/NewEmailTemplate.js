@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {addNewActivity} from '../../../actions/workflowAction/createNewActAction'
 import { setRecipients, setIncStakeh} from '../../../actions/workflowAction/updateActAction'
 
@@ -159,6 +160,11 @@ formSubmit=(e)=>{
   alert("Successful Created")
 }
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
+
 render() {
 
     const {
@@ -172,7 +178,8 @@ render() {
    } = this.state
    
 
-  const {listEmailObj,stakehList} = this.props.crtNewReducer
+  const {stakehList} = this.props.stakeholderList
+  const {listEmailObj} = this.props.crtNewReducer
   const optionEmailTemp = listEmailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
 
@@ -256,7 +263,7 @@ render() {
 
              <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
 
      </form>
@@ -267,7 +274,8 @@ render() {
 
 NewEmailTemplate.propTypes={
   session: PropTypes.object.isRequired,
-  layout: PropTypes.object.isRequired,  
+  layout: PropTypes.object.isRequired, 
+  stakeholderList: PropTypes.object.isRequired, 
   workflowDetail:PropTypes.object.isRequired,  
   listWrkFlw: PropTypes.object.isRequired,  
   crtNewReducer:  PropTypes.object.isRequired,
@@ -275,6 +283,7 @@ NewEmailTemplate.propTypes={
   setRecipients:PropTypes.func.isRequired,
   setIncStakeh:PropTypes.func.isRequired,
   updActReducer:PropTypes.object.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -283,7 +292,8 @@ const mapStateToProps= state =>({
       workflowDetail:state.workflowDetail,
       listWrkFlw:state.listWrkFlw,
       crtNewReducer: state.crtNewReducer,
-      updActReducer: state.updActReducer
+      updActReducer: state.updActReducer,
+      stakeholderList: state.stakeholderList,
 })
   
-export default connect(mapStateToProps, {addNewActivity, setRecipients, setIncStakeh})(NewEmailTemplate)
+export default connect(mapStateToProps, {addNewActivity, setRecipients, setIncStakeh, setActivePage})(NewEmailTemplate)

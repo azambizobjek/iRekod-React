@@ -19,6 +19,13 @@ export const STAKEH_LIST = 'STAKEH_LIST'
 
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
+//Stakeholder BreadCrumb
+export const BC_DETAIL = 'BC_DETAIL'
+export const BC_UPDATE = 'BC_UPDATE'
+export const BC_INDEX = 'BC_INDEX'
+
+//Stakeholder List
+export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
 
 //Stakeholder List Type
 export const STAKEH_TYPE = 'STAKEH_TYPE'
@@ -27,7 +34,6 @@ export const STAKEH_VIEW = 'STAKEH_VIEW'
 export const SHOW_FAB = 'SHOW_FAB'
 export const STAKEH_NUMB = 'STAKEH_NUMB'
 export const DELETE_STAKEHOLDER = 'DELETE_STAKEHOLDER'
-export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
 
 //Stakeholder Viewer
 export const STAKEHOLDER_VIEW = 'STAKEHOLDER_VIEW'
@@ -77,7 +83,6 @@ export const WIZARD_PAGE = 'WIZARD_PAGE'
 export const SET_ACTIVITY_STORE = 'SET_ACTIVITY_STORE'
 export const SET_EMAIL_STORE = 'SET_EMAIL_STORE'
 export const LIST_ACTIVITY_DETAIL = 'LIST_ACTIVITY_DETAIL'
-export const LIST_STAKEHOLDER = 'LIST_STAKEHOLDER'
 export const LIST_SUBJECT_ITEM = 'LIST_SUBJECT_ITEM'
 export const SET_CONTAINER_LINE = 'SET_CONTAINER_LINE'
 export const DELETE_WORKFLOW = 'DELETE_WORKFLOW'
@@ -90,7 +95,6 @@ export const LIST_SELECTED_TASK_RESULT_STATUS = 'LIST_SELECTED_TASK_RESULT_STATU
 //create new activity action and reducer link
 export const WIZARD_PAGE_ADD = 'WIZARD_PAGE_ADD'
 export const SET_CONTAINER_LINE_ADD = 'SET_CONTAINER_LINE_ADD'
-export const LIST_STAKEH_ADD = 'LIST_STAKEH_ADD'
 export const LIST_WORKFLOWBY_SUBJECT = 'LIST_WORKFLOWBY_SUBJECT'
 export const LIST_EMAIL_ADD = 'LIST_EMAIL_ADD'
 export const LIST_ADD_TASK_NEW = 'LIST_ADD_TASK_NEW'

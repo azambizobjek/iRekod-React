@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {setItemListSubject, setListAddTask, addNewActivity} from '../../../actions/workflowAction/createNewActAction'
 class NewActivityWizard extends Component {
 
@@ -209,7 +210,12 @@ class NewActivityWizard extends Component {
         subject: subject,
         title:title
       })  
-  }    
+  }   
+  
+  setActivePage=(e)=>{
+    e.preventDefault()       
+    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
   
 
     formSubmit=(e)=>{
@@ -408,7 +414,8 @@ acl_builder=(selData,aclEntries,type)=>{
     
 
   render() {
-    const {stakehList, listWorflowbySub, addTask} = this.props.crtNewReducer
+    const {stakehList} = this.props.stakeholderList
+    const {listWorflowbySub, addTask} = this.props.crtNewReducer
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     
     const {subject, stakehValAssigneeNew, stakehValAssignorNew, stakehValManagerNew, stakehValSupervisorNew, hasDecision, 
@@ -673,7 +680,7 @@ acl_builder=(selData,aclEntries,type)=>{
                       </div>
                 <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
             </form>
 
@@ -685,12 +692,14 @@ acl_builder=(selData,aclEntries,type)=>{
 NewActivityWizard.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,  
+  stakeholderList: PropTypes.object.isRequired,
   workflowDetail:PropTypes.object.isRequired,  
   crtNewReducer:PropTypes.object.isRequired, 
   listWrkFlw:PropTypes.object.isRequired, 
   setItemListSubject:PropTypes.func.isRequired, 
   setListAddTask:PropTypes.func.isRequired, 
   addNewActivity: PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -698,7 +707,8 @@ const mapStateToProps= state =>({
       layout:state.layout,
       workflowDetail:state.workflowDetail,
       crtNewReducer:state.crtNewReducer,
-      listWrkFlw:state.listWrkFlw
+      listWrkFlw:state.listWrkFlw,
+      stakeholderList: state.stakeholderList,
 })
   
-export default connect(mapStateToProps, {setItemListSubject, setListAddTask, addNewActivity})(NewActivityWizard)
+export default connect(mapStateToProps, {setItemListSubject, setListAddTask, addNewActivity, setActivePage})(NewActivityWizard)

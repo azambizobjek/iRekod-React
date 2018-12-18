@@ -31,7 +31,7 @@ class customField extends Component {
             })
         } 
         if(prevProps.stakeholderUpdate.stkhDetail!==this.props.stakeholderUpdate.stkhDetail){
-            const {stakeholder_Detail:[{custom_field}]}=this.props.stakeholderView    
+            const {stakeholderDetail:[{custom_field}]}=this.props.stakeholderView    
             const {rows} = this.state          
             // console.log([custom_field].field)  
             // const val = custom_field.map(x=>x)  

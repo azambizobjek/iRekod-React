@@ -1,5 +1,4 @@
-import {WIZARD_PAGE_ADD, SET_CONTAINER_LINE_ADD, LIST_STAKEH_ADD, LIST_WORKFLOWBY_SUBJECT, LIST_EMAIL_ADD, 
-    LIST_ADD_TASK_NEW, ADD_NEW_ACTIVITY, RES_DETAILS} from '../types'
+import {WIZARD_PAGE_ADD, SET_CONTAINER_LINE_ADD, LIST_WORKFLOWBY_SUBJECT, LIST_EMAIL_ADD, LIST_ADD_TASK_NEW, ADD_NEW_ACTIVITY, RES_DETAILS} from '../types'
 
 import {biorisUrl} from '../../appConfig'
 
@@ -23,19 +22,6 @@ export const setListAddTask=(param)=>{
         type:LIST_ADD_TASK_NEW,
         payload:param
     }
-}
-
-export const setStakehListNew=(stakehList)=>dispatch=>{
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(stakehList)}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(res=>{
-        dispatch({
-            type: LIST_STAKEH_ADD,
-            payload: res.results
-            })
-            })
-
 }
 
 export const setItemListSubject=(listWorflowbySub)=>dispatch=>{
