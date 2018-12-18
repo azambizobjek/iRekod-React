@@ -116,7 +116,7 @@ class SideNav extends React.Component {
       this.props.setSelWorkFlow(null)     //ID select for workflow  
 
 
-      ////////////////////////////////workflow////////////////////////////////////
+      ////////////////////////////////Audit Trail////////////////////////////////////
 
       const pgName = e.target.getAttribute('data-pagename')
         this.props.setActivePage(pgName)
