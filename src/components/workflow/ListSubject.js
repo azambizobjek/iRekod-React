@@ -41,6 +41,26 @@ class ListSubject extends Component {
         
       }
 
+      componentWillMount(){
+        const {listofSubjectObj,listWrkFlwObj} = this.props.listWrkFlw
+        
+        const listSub = listWrkFlwObj.filter(itm => itm.subject === listofSubjectObj[0].subject)
+        // console.log(listSub)
+        {listSub===null || listSub==''?
+        this.setState({
+          selectedOption:[{label : '', value: ''}]
+        }):
+
+        this.setState({
+          selectedOption:[{label : listofSubjectObj[0].subject, value: listofSubjectObj[0].subject}]
+        })
+      }
+        // this.setState({
+        //   selectedOption:[{label : listofSubjectObj[0].subject, value: listofSubjectObj[0].subject}]
+        // })
+        this.props.listWorkFlowSub(listSub)
+      }
+
       getWorkFlow=(e)=>{
         console.log('111')
         const {listWrkFlwObj}=this.props.listWrkFlw

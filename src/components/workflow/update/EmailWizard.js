@@ -4,6 +4,8 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
+
 import {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh} from '../../../actions/workflowAction/updateActAction'
 
 class EmailWizard extends Component {
@@ -262,6 +264,11 @@ formSubmit=(e)=>{
 
 }
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+} 
+
 
   render() {
 
@@ -358,7 +365,7 @@ formSubmit=(e)=>{
           </div> 
           <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
      </form>
       </Fragment>
@@ -376,6 +383,7 @@ EmailWizard.propTypes={
   setRecipients:PropTypes.func.isRequired,  
   taskEmailRecipients:PropTypes.func.isRequired,
   setIncStakeh:PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -386,4 +394,4 @@ const mapStateToProps= state =>({
       updActReducer:state.updActReducer,
 })
   
-export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh})(EmailWizard)
+export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh, setActivePage})(EmailWizard)

@@ -5,6 +5,7 @@ import Select from 'react-select'
 import 'rc-checkbox/assets/index.css';
 import { Button } from 'reactstrap';
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {setListAddTask, setListTaskResultTitle, setListTaskResultStatus} from '../../../actions/workflowAction/workflowDetailAction'
 import {updateActivity, setActivityDetailsUpdate} from '../../../actions/workflowAction/updateActAction'
 
@@ -234,17 +235,32 @@ handleSupervisorChange=(value)=>{
 }
 
 handlePrevTaskChange=(value)=>{
-    console.log(value)
+
+    {value===null || value === ''? 
     this.setState({
+        prev_task_title:''
+      }):
+      this.setState({
         prev_task_title:value
       })
 }
+    // this.setState({
+    //     prev_task_title:value
+    //   })
+}
 
 handleNextTaskChange=(value)=>{
-    console.log(value)
+    {value=== null || value === ''?
     this.setState({
+        next_task_title:''
+      }):
+      this.setState({
         next_task_title:value
       })
+}
+    // this.setState({
+    //     next_task_title:value
+    //   })
 }
 
 handleTaskResultTitle=(value)=>{
@@ -297,6 +313,10 @@ handleViewChange=(value)=>{
         // console.log(value)
     }     
 
+    setActivePage=(e)=>{
+        e.preventDefault()       
+        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    } 
 
 componentDidMount() {
     const {stakehList} = this.props.listWrkFlw
@@ -428,6 +448,8 @@ componentDidMount() {
     }
 
   }
+
+
 
   formSubmit=(e)=>{
        
@@ -938,7 +960,7 @@ componentDidMount() {
                       </div>
                 <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" onClick={this.setActivePage} data-pagename="listOfWorkflow">Close</button>
                 </div>
             </form>
 
@@ -957,6 +979,7 @@ ActivityWizard.propTypes={
     updateActivity: PropTypes.func.isRequired,
     updActReducer: PropTypes.object.isRequired,
     setActivityDetailsUpdate: PropTypes.func.isRequired,
+    setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -968,4 +991,4 @@ const mapStateToProps= state =>({
 })
     
 export default connect(mapStateToProps, {setListAddTask, setListTaskResultTitle, setListTaskResultStatus, 
-    updateActivity, setActivityDetailsUpdate})(ActivityWizard)
+    updateActivity, setActivityDetailsUpdate, setActivePage})(ActivityWizard)
