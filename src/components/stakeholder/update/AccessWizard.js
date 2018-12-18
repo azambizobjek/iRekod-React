@@ -42,8 +42,8 @@ class accessWizard extends Component {
     }     
 
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderUpdate.stakehList!==this.props.stakeholderUpdate.stakehList){
-            const {stakehList}=this.props.stakeholderUpdate      
+        if(prevProps.stakeholderList.stakehList!==this.props.stakeholderList.stakehList){
+            const {stakehList}=this.props.stakeholderList      
                 // console.log(stakehList)                     
             const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
                 // console.log(stakehOptions)                
@@ -360,6 +360,7 @@ class accessWizard extends Component {
 }
 accessWizard.propTypes={
     session: PropTypes.object.isRequired,
+    stakeholderList: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout:PropTypes.object.isRequired,
@@ -376,6 +377,7 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         stakeholderUpdate: state.stakeholderUpdate,
+        stakeholderList: state.stakeholderList
         
          
 })

@@ -178,7 +178,8 @@ render() {
    } = this.state
    
 
-  const {listEmailObj,stakehList} = this.props.crtNewReducer
+  const {stakehList} = this.props.stakeholderList
+  const {listEmailObj} = this.props.crtNewReducer
   const optionEmailTemp = listEmailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
 
@@ -273,7 +274,8 @@ render() {
 
 NewEmailTemplate.propTypes={
   session: PropTypes.object.isRequired,
-  layout: PropTypes.object.isRequired,  
+  layout: PropTypes.object.isRequired, 
+  stakeholderList: PropTypes.object.isRequired, 
   workflowDetail:PropTypes.object.isRequired,  
   listWrkFlw: PropTypes.object.isRequired,  
   crtNewReducer:  PropTypes.object.isRequired,
@@ -290,7 +292,8 @@ const mapStateToProps= state =>({
       workflowDetail:state.workflowDetail,
       listWrkFlw:state.listWrkFlw,
       crtNewReducer: state.crtNewReducer,
-      updActReducer: state.updActReducer
+      updActReducer: state.updActReducer,
+      stakeholderList: state.stakeholderList,
 })
   
 export default connect(mapStateToProps, {addNewActivity, setRecipients, setIncStakeh, setActivePage})(NewEmailTemplate)

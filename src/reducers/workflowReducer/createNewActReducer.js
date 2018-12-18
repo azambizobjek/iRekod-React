@@ -1,5 +1,4 @@
-import{WIZARD_PAGE_ADD, SET_CONTAINER_LINE_ADD, LIST_STAKEH_ADD, LIST_WORKFLOWBY_SUBJECT, 
-    LIST_EMAIL_ADD, LIST_ADD_TASK_NEW, ADD_NEW_ACTIVITY, RES_DETAILS} from '../../actions/types'
+import{WIZARD_PAGE_ADD, SET_CONTAINER_LINE_ADD, LIST_WORKFLOWBY_SUBJECT, LIST_EMAIL_ADD, LIST_ADD_TASK_NEW, ADD_NEW_ACTIVITY, RES_DETAILS} from '../../actions/types'
 
 const initialState={
     wizardPage:'newActivityWizard',
@@ -8,7 +7,8 @@ const initialState={
     listEmailObj:[],
     addTask:[],
     newActObj:[],
-    resAct:[]
+    resAct:[],
+   
 }
 
 export default function(state = initialState, action){
@@ -23,13 +23,7 @@ export default function(state = initialState, action){
         return { 
             ...state,
             containerLine:action.payload,
-        } 
-
-        case LIST_STAKEH_ADD:
-        return {
-            ...state,
-            stakehList:action.payload
-        } 
+        }         
 
         case LIST_WORKFLOWBY_SUBJECT:
         return {

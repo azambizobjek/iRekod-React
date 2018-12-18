@@ -319,7 +319,7 @@ handleViewChange=(value)=>{
     } 
 
 componentDidMount() {
-    const {stakehList} = this.props.listWrkFlw
+    const {stakehList} = this.props.stakeholderList
     const {itemListSubject} = this.props.workflowDetail
     const {default_assignee_name, default_assignor_name, default_manager_name, prev_task_title, default_supervisor_name, next_task_title, additional_tasks} = this.props.item
     const stakehOptionsAssignee = stakehList.filter(itm => itm.full_name === default_assignee_name)
@@ -662,7 +662,7 @@ componentDidMount() {
   render() {
 
   
-    const {stakehList} = this.props.listWrkFlw
+    const {stakehList} = this.props.stakeholderList
     const {itemListSubject, addTask, taskResulStatusObj, tskRsltTitle, tskRsltStatus} = this.props.workflowDetail
     const { default_assignee_name, stakehValAssignor, stakehValSupervisor, stakehValManager, addTaskTitle, prev_task_title,taskResStat, accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title} = this.state
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
@@ -973,6 +973,7 @@ ActivityWizard.propTypes={
     layout: PropTypes.object.isRequired,  
     workflowDetail:PropTypes.object.isRequired,  
     listWrkFlw:PropTypes.object.isRequired,
+    stakeholderList: PropTypes.object.isRequired,
     setListAddTask:PropTypes.func.isRequired,
     setListTaskResultTitle:PropTypes.func.isRequired,
     setListTaskResultStatus:PropTypes.func.isRequired,
@@ -988,6 +989,7 @@ const mapStateToProps= state =>({
         workflowDetail:state.workflowDetail,
         listWrkFlw:state.listWrkFlw,
         updActReducer:state.updActReducer,
+        stakeholderList: state.stakeholderList,
 })
     
 export default connect(mapStateToProps, {setListAddTask, setListTaskResultTitle, setListTaskResultStatus, 

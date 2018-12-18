@@ -6,7 +6,7 @@ import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
 import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
 import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
 import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
-import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
+import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 import {toggleErr} from '../../actions/auditTrailAction/modalAction'
 import {bcIndex,bcDet} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
@@ -64,6 +64,7 @@ class SideNav extends React.Component {
       }
 
       this.props.setStakehType(stakehObj) 
+
       this.props.bcIndex(true)  // Breadcrumb in index page   
       this.props.bcDet(false)   // Breadcrumb in detail page
       this.props.setStakehSel(null)  // ID stakeholder select
@@ -105,7 +106,7 @@ class SideNav extends React.Component {
     }
    
       const pageSubject= ""
-      this.props.setStakehListNew(stakehList)
+      this.props.setStakehList(stakehList)
       this.props.setListWorkFlow(listWrkFlwObj)
       this.props.setListofSubject(listofSubjectObj)
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
@@ -290,7 +291,7 @@ SideNav.propTypes={
     setStakehNumb: PropTypes.func.isRequired,
     setListWorkFlow: PropTypes.func.isRequired,
     setListofSubject: PropTypes.func.isRequired,
-    setStakehListNew: PropTypes.func.isRequired,
+    setStakehList: PropTypes.func.isRequired,
     setCustomField: PropTypes.func.isRequired,
     setPageSubject: PropTypes.func.isRequired, 
     toggleErr: PropTypes.func.isRequired,
@@ -318,7 +319,7 @@ SideNav.propTypes={
     setStakehNumb,
     setListWorkFlow,
     setListofSubject,
-    setStakehListNew,
+    setStakehList,
     setCustomField,
     setPageSubject,
     toggleErr,
