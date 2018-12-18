@@ -1,4 +1,4 @@
-import{PAGE_CLASS,TOGGLE_SIDENAV,SIDENAV_CLASS,ACTIVE_PAGE, PAGE_TITLE} from '../actions/types'
+import{PAGE_CLASS,TOGGLE_SIDENAV,SIDENAV_CLASS,ACTIVE_PAGE, PAGE_TITLE, PAGE_SUBJECT} from '../actions/types'
 
 const initialState={
     pageClass:'page',
@@ -7,6 +7,7 @@ const initialState={
     navBarClass:'side-navbar',
     pageTitle:'null',
     pageView:false,
+    pageSubject:''
 }
 
 export default function(state = initialState, action){
@@ -35,7 +36,14 @@ export default function(state = initialState, action){
         return {
             ...state,
             pageTitle:action.payload
-        }          
+        }   
+        
+        case PAGE_SUBJECT:
+        return { 
+            ...state,
+            pageSubject:action.payload,
+        } 
+
         default:
         return state
     }

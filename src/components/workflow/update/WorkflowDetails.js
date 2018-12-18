@@ -41,7 +41,7 @@ class WorkflowDetails extends Component {
 
 render() {
 
-  const {wizard_Page, container_Line} = this.props.workflowDetail
+  const {wizardPage, containerLine} = this.props.workflowDetail
   const {wrkflSel, selDetails}=this.props.listWrkFlw
 // console.log(selDetails[0])
 //   const item = selDetails.find(rec=>rec.task_id===wrkflSel)
@@ -53,7 +53,7 @@ render() {
     email:EmailWizard,        
     autoscript:AutoScriptWizard,
   }
-  const DetailsWizard=this.components[wizard_Page]
+  const DetailsWizard=this.components[wizardPage]
 
   return (
     
@@ -80,8 +80,8 @@ render() {
                             <div className="row">
                                 <FolTabHead
                                     activeEditor={this.handleWizard}
-                                    active={wizard_Page}
-                                    isContainer={container_Line} 
+                                    active={wizardPage}
+                                    isContainer={containerLine} 
                                     />                             
                             </div>
                         </div>
@@ -89,7 +89,7 @@ render() {
                                <DetailsWizard                                     
                                     item={item}   
                                     nextPage={this.nextPage}  
-                                    active={wizard_Page} 
+                                    active={wizardPage} 
                                     prevPage={this.prevPage}
                                     />                                   
                            </div>

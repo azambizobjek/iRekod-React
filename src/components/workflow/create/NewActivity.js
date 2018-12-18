@@ -27,7 +27,7 @@ class NewActivity extends Component {
     
   render() {
 
-    const {wizard_Page, container_Line} = this.props.crtNewReducer
+    const {wizardPage, containerLine} = this.props.crtNewReducer
     const {pageTitle} = this.props.layout
 
     this.components={
@@ -35,7 +35,7 @@ class NewActivity extends Component {
       newEmail:NewEmailWizard,        
       newAutoscript:NewAutoScript,
     }
-    const NewDetailsWizard=this.components[wizard_Page]
+    const NewDetailsWizard=this.components[wizardPage]
     return (
       <div>
 
@@ -61,8 +61,8 @@ class NewActivity extends Component {
                             <div className="row">
                                 <NewFolTabHead
                                     activeEditor={this.handleWizard}
-                                    active={wizard_Page}
-                                    isContainer={container_Line} 
+                                    active={wizardPage}
+                                    isContainer={containerLine} 
                                     />                             
                             </div>
                         </div>
@@ -70,7 +70,7 @@ class NewActivity extends Component {
                                <NewDetailsWizard                                     
                                     // item={item}   
                                     nextPage={this.nextPage}  
-                                    active={wizard_Page} 
+                                    active={wizardPage} 
                                     prevPage={this.prevPage}
                                     />                                   
                            </div>

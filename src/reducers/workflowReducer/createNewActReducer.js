@@ -2,8 +2,8 @@ import{WIZARD_PAGE_ADD, SET_CONTAINER_LINE_ADD, LIST_STAKEH_ADD, LIST_WORKFLOWBY
     LIST_EMAIL_ADD, LIST_ADD_TASK_NEW, ADD_NEW_ACTIVITY, RES_DETAILS} from '../../actions/types'
 
 const initialState={
-    wizard_Page:'newActivityWizard',
-    container_Line: true,
+    wizardPage:'newActivityWizard',
+    containerLine: true,
     listWorflowbySub: [],
     listEmailObj:[],
     addTask:[],
@@ -16,13 +16,13 @@ export default function(state = initialState, action){
         case WIZARD_PAGE_ADD:
         return {
             ...state,
-            wizard_Page:action.payload,
+            wizardPage:action.payload,
         }
 
         case SET_CONTAINER_LINE_ADD:
         return { 
             ...state,
-            container_Line:action.payload,
+            containerLine:action.payload,
         } 
 
         case LIST_STAKEH_ADD:
