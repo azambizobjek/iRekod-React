@@ -434,7 +434,7 @@ componentDidMount() {
     const {user:{bio_access_id:bId}} = this.props.session
     const {wrkflSel} = this.props.listWrkFlw
     // const {activityDet} = this.props.workflowDetail
-    const {activity_Store} = this.props.workflowDetail
+    const {activityDet} = this.props.workflowDetail
   
     const { 
     
@@ -494,15 +494,15 @@ componentDidMount() {
       acl_id: acl_id,
       acl_entries: this.Aclselected(),
 
-      email_template_id: activity_Store[0].email_template_id,
-      recipients: activity_Store[0].recipients,
-      include_assignee: activity_Store[0].include_assignee,
-      include_home: activity_Store[0].include_home,
-      include_owner: activity_Store[0].include_owner,
-      include_stakeholders: activity_Store[0].include_stakeholders,
-      stakeholder_fields: activity_Store[0].stakeholder_fields,
-      is_enable_auto_scripting: activity_Store[0].is_enable_auto_scripting,
-      auto_scripting: activity_Store[0].auto_scripting,
+      email_template_id: activityDet[0].email_template_id,
+      recipients: activityDet[0].recipients,
+      include_assignee: activityDet[0].include_assignee,
+      include_home: activityDet[0].include_home,
+      include_owner: activityDet[0].include_owner,
+      include_stakeholders: activityDet[0].include_stakeholders,
+      stakeholder_fields: activityDet[0].stakeholder_fields,
+      is_enable_auto_scripting: activityDet[0].is_enable_auto_scripting,
+      auto_scripting: activityDet[0].auto_scripting,
 
       bio_access_id: bId,
       action: "SAVE_TASK" 
