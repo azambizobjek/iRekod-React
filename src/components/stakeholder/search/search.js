@@ -164,11 +164,9 @@ class search extends Component {
     }    
 
     //change page to New Stakeholder
-    pageChange=(e)=>{
-        e.preventDefault()   
-  
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-        //console.log(('data-pagename'))
+    pageChange=(page)=>{     
+        this.props.setActivePage(page)
+        // console.log(page)
     }
 
    
@@ -177,10 +175,11 @@ class search extends Component {
     render() {
         
         const _ = require('lodash')
-        const {stakehView,showFab}=this.props.stakeholderlistType
+        const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {basicKey,stakehlist} = this.props.searchConf        
         const {pageTitle}=this.props.layout
         const {stakeholderlist,current}=this.state
+        // console.log(stakeholderlist)
       
        
        
@@ -238,7 +237,7 @@ class search extends Component {
                             <div className="row">    
  
                              {stakeholderlist.filter(x => _.toUpper(x.full_name).includes(_.toUpper(basicKey||""))).map((item,idx)=>stakehView?
-                                 
+                                
                                     <DetailCard                                         
                                         key={idx} 
                                         stakehId={item.stakeholder_id}
@@ -256,12 +255,12 @@ class search extends Component {
                                         markOnSel={this.markOnSel} />                             
                                 )}     
 
-                                {showFab?<Fab
+                                {showFab?<Fab                                     
                                     FabRec={this.setActivePage}
                                     delBtn={this.delBtn}
                                     addChild={this.child}
-                                    // stakehNumb={numb} 
-                                    />:''}
+                                    stakehNumb={stakehNumb} 
+                                    addStakeh={this.pageChange} />:''}
 
                                 
                             </div>    

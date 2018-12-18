@@ -194,9 +194,9 @@ class index extends Component {
         
         return (
             <Fragment>  
-                <BreadCrumb/>
+                {/* <BreadCrumb/> */}
                 
-                 {/* <div className="breadcrumb-holder">
+                 <div className="breadcrumb-holder">
                     <div className="container-fluid">
                         <div className="breadcrumb">
                             <div className="breadcrumb-item"><a href='/' onClick={this.pageBreadCrumb} data-pagename="dashboard">Home</a></div>
@@ -204,7 +204,7 @@ class index extends Component {
                             
                         </div>
                     </div>
-                </div>              */}
+                </div>             
 
                 <section>
                     <div className="container-fluid">
@@ -270,7 +270,7 @@ class index extends Component {
                                     delBtn={this.delBtn}                                   
                                     stakehNumb={stakehNumb} 
                                     addChild={this.child}
-                                    addStakeh={this.pageChange} />:""
+                                    addStakeh={this.pageChange}/>:""
                                     
                                 }
 

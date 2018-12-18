@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import {setActivePage} from '../../actions/layoutInitAction'
-import {bcDet} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakehType} from '../../actions/stakeholderAction/stakehTypeAction'
 
 class BreadcrumbStakeh extends Component {
@@ -15,8 +14,7 @@ class BreadcrumbStakeh extends Component {
         const {stakehNumb} = this.props.stakeholderlistType
   
         this.props.setActivePage(e.target.getAttribute('data-pagename'))        
-        this.props.bcDet(false)
-
+       
         const stakehObj={
             stakeholder_id:bId,
             bio_access_id:idAccess,
@@ -26,12 +24,7 @@ class BreadcrumbStakeh extends Component {
           this.props.setStakehType(stakehObj) 
         
      
-    } 
-
-    Page=(e)=>{
-        e.preventDefault()   
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))   
-    }
+    }    
 
   render() {
     const {pageTitle}=this.props.layout
@@ -45,7 +38,7 @@ class BreadcrumbStakeh extends Component {
             <ul className="breadcrumb">
                 <a className="breadcrumb-item" href='/' onClick={this.Page} data-pagename="dashboard">Home</a> 
                 <a className={bcIndex?"breadcrumb-item active":"breadcrumb-item"} href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a> 
-                <a className={bcDet?"breadcrumb-item active":"d-none"} href='/' data-pagename="viewStakeh" onClick={this.Page}>Details</a>
+                <a className={bcDet?"breadcrumb-item active":"d-none"} href='/' data-pagename="viewStakeh" onClick={this.setActivePage}>Details</a>
                 {stakeholderDetail.map((item,idx)=><div key={idx} className={bcUpd?"breadcrumb-item active":"d-none"}>{decodeURIComponent(item.full_name)}</div>)}
             </ul>
         </div>
@@ -62,8 +55,7 @@ BreadcrumbStakeh.propTypes={
     stakeholderlistType: PropTypes.object.isRequired,
     setActivePage: PropTypes.func.isRequired,
     stakeholderView: PropTypes.object.isRequired,
-    stakeholderBreadCrumb: PropTypes.object.isRequired,
-    bcDet: PropTypes.func.isRequired,
+    stakeholderBreadCrumb: PropTypes.object.isRequired,   
     setStakehType: PropTypes.func.isRequired,
     
   }
@@ -77,4 +69,4 @@ BreadcrumbStakeh.propTypes={
 
 
   })
-  export default connect(mapStateToProps,{setActivePage,bcDet,setStakehType})(BreadcrumbStakeh)
+  export default connect(mapStateToProps,{setActivePage,setStakehType})(BreadcrumbStakeh)

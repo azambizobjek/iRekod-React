@@ -213,6 +213,7 @@ class GroupMember extends Component {
   render() {
 
     const active = this.props.active
+    const item = this.props.item
     const {listItemGroup,listItemMember,groupVal,memberVal} = this.state
 
   
@@ -224,7 +225,7 @@ class GroupMember extends Component {
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center">
-                            <img src={require('../../../img/add.svg')} alt='folder'className=" img-dash" />
+                            <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} alt={item.stakeh_type_name} className=" img-dash" />
                         </div>
                     </div>
                     <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">

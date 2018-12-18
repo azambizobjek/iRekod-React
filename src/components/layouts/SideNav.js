@@ -9,7 +9,7 @@ import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/aut
 import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 import {toggleErr} from '../../actions/auditTrailAction/modalAction'
-import {bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+import {bcIndex,bcDet} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 
  
@@ -64,7 +64,8 @@ class SideNav extends React.Component {
       }
 
       this.props.setStakehType(stakehObj) 
-      this.props.bcIndex(true)  // Breadcrumb in index page       
+      this.props.bcIndex(true)  // Breadcrumb in index page   
+      this.props.bcDet(false)   // Breadcrumb in detail page
       this.props.setStakehSel(null)  // ID stakeholder select
       this.props.setShowFab(false) // Fab True false
       this.props.setSelWorkFlow(null)  //ID select for workflow             
@@ -297,6 +298,7 @@ SideNav.propTypes={
     setShowFab: PropTypes.func.isRequired, 
     setSelWorkFlow: PropTypes.func.isRequired,
     bcIndex: PropTypes.func.isRequired,
+    bcDet: PropTypes.func.isRequired,
      
     
 
@@ -324,6 +326,7 @@ SideNav.propTypes={
     setShowFab,
     setSelWorkFlow,
     bcIndex,
+    bcDet,
     
     
   })
