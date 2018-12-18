@@ -6,7 +6,7 @@ import{LIST_WORKFLOW,
     WORKFLOW_SEL,
     SHOW_FAB, 
     LIST_ACTIVITY_DETAIL,
-    LIST_STAKEHOLDER,
+    STAKEHOLDER_LIST,
     SELECT_SEL} from '../../actions/types'
 
 const initialState={
@@ -69,7 +69,7 @@ export default function(state = initialState, action){
             ...state,
             selDetails:action.payload
         } 
-        case LIST_STAKEHOLDER:
+        case STAKEHOLDER_LIST:
         return {
             ...state,
             stakehList:action.payload

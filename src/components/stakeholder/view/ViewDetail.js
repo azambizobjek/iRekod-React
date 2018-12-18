@@ -95,12 +95,12 @@ class ViewDetail extends Component {
       }
       this.props.setRoleStore(RoleObj)
       
-        //Stakeholder List
-      const stakehList={
-          action:"ITEM_LIST",
-          bio_access_id:idAccess
-      }
-      this.props.setStakehList(stakehList)
+      //Stakeholder List
+    //   const stakehList={
+    //       action:"ITEM_LIST",
+    //       bio_access_id:idAccess
+    //   }
+    //   this.props.setStakehList(stakehList)
 
         //stkh Detail
       const stakehDet={

@@ -175,7 +175,7 @@ handleChange=(event)=>{
    const target = event.target
   const inputVal =  target.type==="checkbox"?target.checked:target.value 
   const input = target.name 
-  console.log(input)  
+  // console.log(input)  
 
 this.setState({
     [input]:inputVal,
@@ -186,7 +186,7 @@ componentDidMount() {
   const {activityDet} = this.props.workflowDetail
   const {emailObj} = this.props.workflowDetail
   const {recipients} = this.props.item
-  const {stakehList} = this.props.listWrkFlw
+  const {stakehList} = this.props.stakeholderList
 
   const emailTemplateName = emailObj.filter(itm => itm.email_template_id === activityDet[0].email_template_id)
 
@@ -277,8 +277,7 @@ formSubmit=(e)=>{
   const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const optionCstmFldStkhObj = customFieldObj.map((itm => ({ value: decodeURIComponent(itm.custom_field_id), label:decodeURIComponent(itm.custom_field_name)})))
   const { receipientDetails, incStakeh, email_template_id} = this.state
-
-  const {stakehList} = this.props.listWrkFlw
+  const {stakehList} = this.props.stakeholderList
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
 
     return (
@@ -369,7 +368,8 @@ formSubmit=(e)=>{
 EmailWizard.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,  
-  workflowDetail:PropTypes.object.isRequired,  
+  workflowDetail:PropTypes.object.isRequired, 
+  stakeholderList: PropTypes.object.isRequired, 
   listWrkFlw: PropTypes.object.isRequired,  
   updateActivity:PropTypes.func.isRequired,  
   updActReducer:PropTypes.object.isRequired, 
@@ -384,6 +384,7 @@ const mapStateToProps= state =>({
       workflowDetail:state.workflowDetail,
       listWrkFlw:state.listWrkFlw,
       updActReducer:state.updActReducer,
+      stakeholderList: state.stakeholderList,
 })
   
 export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh})(EmailWizard)

@@ -243,7 +243,8 @@ class UpdateDetail extends Component {
 UpdateDetail.propTypes={
     session: PropTypes.object.isRequired,  
     layout:PropTypes.object.isRequired,
-    stakeholderView: PropTypes.object.isRequired,    
+    stakeholderView: PropTypes.object.isRequired, 
+    stakeholderList: PropTypes.object.isRequired,   
     stakeholderlistType: PropTypes.object.isRequired,   
     setWizardPage: PropTypes.func.isRequired,
     stakeholderUpdate: PropTypes.object.isRequired,
@@ -261,11 +262,12 @@ UpdateDetail.propTypes={
   }
   
   const mapStateToProps= state =>({
-        session:state.session,      
-        layout:state.layout,
+        session: state.session,      
+        layout: state.layout,
         stakeholderView: state.stakeholderView,
-        stakeholderlistType:state.stakeholderlistType,
-        stakeholderUpdate:state.stakeholderUpdate,
+        stakeholderlistType: state.stakeholderlistType,
+        stakeholderUpdate: state.stakeholderUpdate,
+        stakeholderList: state.stakeholderList,
   })
     
   export default connect(mapStateToProps,{
