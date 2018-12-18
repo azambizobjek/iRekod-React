@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {setItemListSubject, setListAddTask, addNewActivity} from '../../../actions/workflowAction/createNewActAction'
 class NewActivityWizard extends Component {
 
@@ -209,7 +210,12 @@ class NewActivityWizard extends Component {
         subject: subject,
         title:title
       })  
-  }    
+  }   
+  
+  setActivePage=(e)=>{
+    e.preventDefault()       
+    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
   
 
     formSubmit=(e)=>{
@@ -673,7 +679,7 @@ acl_builder=(selData,aclEntries,type)=>{
                       </div>
                 <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
             </form>
 
@@ -691,6 +697,7 @@ NewActivityWizard.propTypes={
   setItemListSubject:PropTypes.func.isRequired, 
   setListAddTask:PropTypes.func.isRequired, 
   addNewActivity: PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -701,4 +708,4 @@ const mapStateToProps= state =>({
       listWrkFlw:state.listWrkFlw
 })
   
-export default connect(mapStateToProps, {setItemListSubject, setListAddTask, addNewActivity})(NewActivityWizard)
+export default connect(mapStateToProps, {setItemListSubject, setListAddTask, addNewActivity, setActivePage})(NewActivityWizard)

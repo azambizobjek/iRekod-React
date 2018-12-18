@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {updateActivity} from '../../../actions/workflowAction/updateActAction'
 
 class AutoScriptWizard extends Component {
@@ -55,6 +56,10 @@ this.setState({
   }) 
 } 
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
 
 formSubmit=(e)=>{
   e.preventDefault()
@@ -143,7 +148,7 @@ formSubmit=(e)=>{
           </div> 
           <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
      </form>
       </Fragment>
@@ -156,6 +161,7 @@ AutoScriptWizard.propTypes={
   layout: PropTypes.object.isRequired,  
   workflowDetail:PropTypes.object.isRequired, 
   updateActivity:PropTypes.func.isRequired, 
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -164,5 +170,5 @@ const mapStateToProps= state =>({
       workflowDetail:state.workflowDetail,
 })
   
-export default connect(mapStateToProps, {updateActivity})(AutoScriptWizard)
+export default connect(mapStateToProps, {updateActivity, setActivePage})(AutoScriptWizard)
 

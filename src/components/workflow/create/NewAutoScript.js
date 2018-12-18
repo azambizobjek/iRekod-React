@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {addNewActivity} from '../../../actions/workflowAction/createNewActAction'
 
 class NewAutoScript extends Component {
@@ -88,6 +89,11 @@ formSubmit=(e)=>{
   alert("Successful Created")
 }
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
+
   render() {
     const { is_enable_auto_scripting} = this.state
     return (
@@ -116,7 +122,7 @@ formSubmit=(e)=>{
           </div> 
           <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
      </form>
       </Fragment>
@@ -128,7 +134,8 @@ NewAutoScript.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,  
   addNewActivity:PropTypes.func.isRequired, 
-  crtNewReducer:PropTypes.object.isRequired
+  crtNewReducer:PropTypes.object.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -137,5 +144,5 @@ const mapStateToProps= state =>({
       crtNewReducer:state.crtNewReducer,
 })
   
-export default connect(mapStateToProps, {addNewActivity})(NewAutoScript)
+export default connect(mapStateToProps, {addNewActivity, setActivePage})(NewAutoScript)
 

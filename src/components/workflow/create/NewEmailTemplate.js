@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction'
 import {addNewActivity} from '../../../actions/workflowAction/createNewActAction'
 import { setRecipients, setIncStakeh} from '../../../actions/workflowAction/updateActAction'
 
@@ -159,6 +160,11 @@ formSubmit=(e)=>{
   alert("Successful Created")
 }
 
+setActivePage=(e)=>{
+  e.preventDefault()       
+  this.props.setActivePage(e.target.getAttribute('data-pagename'))
+}
+
 render() {
 
     const {
@@ -256,7 +262,7 @@ render() {
 
              <div className="">
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>
 
      </form>
@@ -275,6 +281,7 @@ NewEmailTemplate.propTypes={
   setRecipients:PropTypes.func.isRequired,
   setIncStakeh:PropTypes.func.isRequired,
   updActReducer:PropTypes.object.isRequired,
+  setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -286,4 +293,4 @@ const mapStateToProps= state =>({
       updActReducer: state.updActReducer
 })
   
-export default connect(mapStateToProps, {addNewActivity, setRecipients, setIncStakeh})(NewEmailTemplate)
+export default connect(mapStateToProps, {addNewActivity, setRecipients, setIncStakeh, setActivePage})(NewEmailTemplate)
