@@ -30,11 +30,12 @@ export const setStakehListNew=(stakehList)=>dispatch=>{
     fetch(url)
     .then(res=>res.json())
     .then(res=>{
+        // console.log(res.results)
         dispatch({
             type: LIST_STAKEH_ADD,
             payload: res.results
-            })
-            })
+        })
+    })
 
 }
 
