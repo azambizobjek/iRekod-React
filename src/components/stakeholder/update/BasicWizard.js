@@ -2,6 +2,7 @@ import React, { Component,Fragment } from 'react'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
 import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -39,6 +40,20 @@ class basicWizard extends Component {
             })      
         }
     }
+
+    componentWillMount(){
+        const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth} = this.props.item
+        this.setState({
+            stakeh_type_name: stakeh_type_name,            
+            initials: initials,
+            first_name: first_name,
+            last_name: last_name,
+            full_name: full_name,
+            email: email,
+            date_of_birth: date_of_birth,
+            stakeh_type: parseInt(stakeh_type),
+        })
+    }
      
     handleChange=(e)=>{
         const inputName = e.target.getAttribute('name')
@@ -57,7 +72,7 @@ class basicWizard extends Component {
         // console.log(value)
         this.setState({date_of_birth:date})  
         // console.log(date)
-    }  
+    }       
     
     formSubmit=(e)=>{
         const {stakehSel} = this.props.stakeholderlistType  
@@ -172,7 +187,8 @@ class basicWizard extends Component {
                 </div>
                 <div className={active==='basic'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary" onClick={this.ActivePage} data-pagename="viewStakeh">Close</button> */}
                 </div>
             </form>
                 {/* <Loader
@@ -189,6 +205,7 @@ basicWizard.propTypes={
     stakeholderView: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,    
     updStkh: PropTypes.func.isRequired,
+     
    
     
      
@@ -204,6 +221,7 @@ const mapStateToProps= state =>({
     
 export default connect(mapStateToProps,{
     updStkh,
+     
     
 
     

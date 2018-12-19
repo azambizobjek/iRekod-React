@@ -5,6 +5,7 @@ import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../.
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -85,6 +86,7 @@ class index extends Component {
             stakeholderlistType: newStakeholderList             
         })
     }
+
     pageBreadCrumb=(e)=>{
         e.preventDefault()
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -178,19 +180,102 @@ class index extends Component {
     }    
 
     //change page to New Stakeholder
-    pageChange=(param)=>{
-        this.props.setActivePage(param)
+    addStakeh=(e)=>{
+        e.preventDefault()
+        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+        // console.log(e.target.getAttribute('data-pagename'))
     }
 
-  
-   
+    
+    //Change page to 'Update'
+    activePage=(param)=>{         
+
+        this.props.setActivePage("edit")
+        this.props.setWizardPage(param)
+        // console.log(param)
+
+        const {user:{bio_access_id:idAccess}} = this.props.session
+        const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+        // console.log(stakehNumb)      
+       
+        //Role List
+        const RoleObj={
+            action: "ITEM_LIST",
+            bio_access_id: idAccess      
+        }
+        this.props.setRoleStore(RoleObj)
+        
+          //Stakeholder List
+        const stakehList={
+            action:"ITEM_LIST",
+            bio_access_id:idAccess
+        }
+        this.props.setStakehList(stakehList)
+
+          //stkh Detail
+        const stakehDet={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_DETAIL',            
+        }
+        this.props.setStkhAccDetail(stakehDet)   
+
+        //Ancestor Group
+        const listAncestor={
+            bio_access_id: idAccess,
+            stakeholder_id: stakehSel,
+            action: "ITEM_LIST_ANCESTOR",
+            stakeh_type: parseInt(stakehNumb)      
+        }
+        this.props.setAncestor(listAncestor)
+
+        //Descendant Member
+        const listDescendant={
+            bio_access_id: idAccess,
+            stakeholder_id: stakehSel,
+            action: "ITEM_LIST_DESCENDANT",
+            stakeh_type: parseInt(stakehNumb)      
+        }
+        this.props.setDescendant(listDescendant)
+
+        //Security Level
+         const SecurityObj={
+            action: "ITEM_LIST",
+            bio_access_id: idAccess      
+        }
+        this.props.setSecLevel(SecurityObj)
+
+        //List Group
+        const stakehGroup={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_GROUP',             
+        }
+        this.props.viewStakehGroup(stakehGroup)
+
+         //Member
+        const stakehMember={
+            stakeholder_id:stakehSel,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_MEMBER',             
+        }
+        this.props.viewStakehMember(stakehMember)
+
+        const customFieldObj={
+            action:"ITEM_LIST_ATTRIBUTE",
+            bio_access_id: idAccess
+        }
+        this.props.setcustomField(customFieldObj)
+         
+    }
+
     render() {
         
         const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
-        const {stakeholderlistType,current}=this.state         
+        const {stakeholderlistType}=this.state         
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        // console.log(stakeholderlistType)
+        // console.log(stakeholderDetail)
         
         return (
             <Fragment>  
@@ -216,9 +301,18 @@ class index extends Component {
 
                                     <Tooltip
                                         placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Create New Stakeholder</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <button className="btn btn-sm btn-primary" data-pagename="addStakeholder" onClick={this.addStakeh}>
+                                            <i className="fa fa-user-plus" data-pagename="addStakeholder"></i>
+                                        </button>                            
+                                    </Tooltip>
+
+                                    <Tooltip
+                                        placement="top"
                                         overlay={<div style={{ height: 20, width: '100%' }}>List View</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                                        <button className="btn btn-sm btn-primary" onClick={this.stakehViewList}>
+                                        <button className="btn btn-sm btn-primary ml-2" onClick={this.stakehViewList}>
                                             <i className="fa fa-tasks"></i>
                                         </button>                            
                                     </Tooltip>
@@ -270,8 +364,11 @@ class index extends Component {
                                     delBtn={this.delBtn}                                   
                                     stakehNumb={stakehNumb} 
                                     addChild={this.child}
-                                    addStakeh={this.pageChange}/>:""
+                                    pageWizard={this.activePage} />:
+                                                                        
+                                    <MainFab
                                     
+                                    />                                 
                                 }
 
                                 
@@ -279,8 +376,7 @@ class index extends Component {
                             {/* <div className="modal-footer">
                                 <Pagination onChange={this.pagination} current={current} total={25} />    
                             </div> */}
-                    </div>
-                            
+                    </div>                            
                         
                 </section>           
             </Fragment>
@@ -303,11 +399,15 @@ index.propTypes={
     setDelBtn: PropTypes.func.isRequired,   
     bcDet: PropTypes.func.isRequired,
     bcIndex: PropTypes.func.isRequired,
+    setWizardPage: PropTypes.func.isRequired,
+    setRoleStore: PropTypes.func.isRequired,
+    setStakehList: PropTypes.func.isRequired,
+    setStkhAccDetail: PropTypes.func.isRequired,
+    setAncestor: PropTypes.func.isRequired,
+    setDescendant: PropTypes.func.isRequired,
+    setSecLevel: PropTypes.func.isRequired,
+    setcustomField: PropTypes.func.isRequired,
     
-    
-   
-    
-     
 }
 
 const mapStateToProps= state =>({
@@ -316,7 +416,6 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
        
-         
 })
     
 export default connect(mapStateToProps,{
@@ -331,12 +430,14 @@ export default connect(mapStateToProps,{
     viewStakehAccess,    
     setDelBtn,
     bcDet,
-    bcIndex
-    
+    bcIndex,
+    setWizardPage, 
+    setRoleStore,
+    setStakehList,
+    setStkhAccDetail,
+    setAncestor,
+    setDescendant,
+    setSecLevel,
+    setcustomField
    
-   
-   
-    
-   
-    
 })(index)

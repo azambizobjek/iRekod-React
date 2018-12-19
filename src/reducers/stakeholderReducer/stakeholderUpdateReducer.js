@@ -1,10 +1,10 @@
 import {WIZARD_SELECT,CONTAINER_LINE,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,CUSTOM_FIELD} from '../../actions/types'
 
 const initialState = {   
+    stkhDetail:[],
     wizardPage:'basic',
     containerLine: true,
     roleStore:[],
-    stkhDetail:[],
     listAncestor:[],
     listDescendant:[],
     storeDetail:[],

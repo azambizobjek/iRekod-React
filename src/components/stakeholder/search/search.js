@@ -179,10 +179,8 @@ class search extends Component {
         const {basicKey,stakehlist} = this.props.searchConf        
         const {pageTitle}=this.props.layout
         const {stakeholderlist,current}=this.state
-        // console.log(stakeholderlist)
-      
-       
-       
+        // console.log(stakeholderlist)    
+             
         
         return (
             <Fragment>  

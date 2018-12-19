@@ -15,6 +15,13 @@ export const bcDet=(param)=>{
         payload:param
     }
 }
+
+export const bcUpd=(param)=>{
+    return {
+        type:BC_UPDATE,
+        payload:param
+    }
+}
  
 
 

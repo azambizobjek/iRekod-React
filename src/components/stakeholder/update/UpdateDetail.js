@@ -9,8 +9,7 @@ import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,se
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
-
- 
+import BreadCrumb from '../../layouts/BreadcrumbStakeh' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -109,73 +108,7 @@ class UpdateDetail extends Component {
         // }
     }
 
-    setActivePage=(e)=>{
-        e.preventDefault()     
-        const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
-        // console.log(stakehNumb)   
-       
-        const stakehObj={
-            stakeholder_id:bId,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_TYPE',
-            stakeh_type: parseInt(stakehNumb),
-        }
-        this.props.setStakehType(stakehObj) 
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-
-        const stakehDet={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_DETAIL',            
-        }
-        this.props.setStkhAccDetail(stakehDet)  
-        
-         //Ancestor Group
-         const listAncestor={
-            bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
-            action: "ITEM_LIST_ANCESTOR",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setAncestor(listAncestor)
-
-        //Descendant Member
-        const listDescendant={
-            bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
-            action: "ITEM_LIST_DESCENDANT",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setDescendant(listDescendant)
-
-        //Member
-        const stakehMember={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_MEMBER',             
-        }
-        this.props.viewStakehMember(stakehMember)
-
-         //List Group
-         const stakehGroup={
-            stakeholder_id:stakehSel,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_GROUP',             
-        }
-        this.props.viewStakehGroup(stakehGroup)
-
-        // this.handleWizard()
-         
-        const customFieldObj={
-            action:"ITEM_LIST_ATTRIBUTE",
-            bio_access_id: idAccess
-        }
-        this.props.setcustomField(customFieldObj)
-
-
-
-    }
+  
 
   render() {
 
@@ -193,20 +126,9 @@ class UpdateDetail extends Component {
     return (
          
         <Fragment>
-        {stakeholderDetail.map((item,idx)=>
-  
 
-        <div key={idx} className="breadcrumb-holder">
-            <div className="container-fluid">
-                <div className="breadcrumb">
-                    <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="viewStakeh" onClick={this.setActivePage}>Details</a></div>
-                    <div className="breadcrumb-item">{decodeURIComponent(item.full_name)}</div>
-                </div>
-            </div>
-        </div>     
-)}
+        <BreadCrumb/>
+      
        
 
        {stakeholderDetail.map((item,idx)=>

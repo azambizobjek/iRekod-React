@@ -29,10 +29,10 @@ const addBtn=(e)=>{
         <span className="fab-action-button">
             <Tooltip
                 placement="left"
-                overlay={<div  >View Details</div>}
+                overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Home</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                  >
-                 <img name="view" src={require('../../img/menu.svg')} alt='view' className='img-fluid' onClick={sendActive}    />
+                 <img name="view" src={require('../../img/menu.svg')} alt='home' className='img-fluid' onClick={sendActive}    />
             </Tooltip>
         </span>
 
@@ -41,10 +41,10 @@ const addBtn=(e)=>{
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Delete Stakeholder</div>}
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Delete</div>}
                             arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                             >
-                             <img name="delete" src={require('../../img/trashcan.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}   />
+                             <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}   />
                         </Tooltip> 
                     </span>
                 </li>

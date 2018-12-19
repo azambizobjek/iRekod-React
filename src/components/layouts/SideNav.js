@@ -203,42 +203,42 @@ class SideNav extends React.Component {
                 <li>
                   <a href="/" onClick={this.setActivePage} data-id='0' data-pagetitle="Group" data-pagename="index">
                     <div className="userIcon" data-pagename="index">
-                        <img src={require('../../img/StakeType/Group.svg')} alt="group" className="img-fluid mr-1" data-pagename="Group"/>
+                        <img src={require('../../img/StakeType/Group.svg')} alt="group" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Group"/>
                     </div>Group
                   </a>
                 </li>
                 <li>
                     <a href="/" onClick={this.setActivePage} data-id='1' data-pagetitle="Organization" data-pagename="index">
                     <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/Organization.svg')} alt="organization" className="img-fluid mr-1" data-pagename="index" />
+                    <img src={require('../../img/StakeType/Organization.svg')} alt="organization" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Organization" />
                     </div>Organization
                     </a>
                 </li>   
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='2' data-pagetitle="Branch" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Branch"/>
                       </div>Branch
                       </a>
                 </li> 
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='3' data-pagetitle="Department" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Department"/>
                       </div>Department
                       </a>
                 </li> 
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='4' data-pagetitle="Designation" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Designation" />
                       </div>Designation
                       </a>
                 </li>      
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='5' data-pagetitle="User" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" data-pagetitle="User" />
                       </div>User
                       </a>
                 </li>       

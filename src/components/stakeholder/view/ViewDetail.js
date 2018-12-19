@@ -6,8 +6,9 @@ import AccessView from '../../stakeholder/view/AccessView'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
 import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakeholderAction/stakehTypeAction'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import {setRoleStore,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import BreadCrumb from '../../layouts/BreadcrumbStakeh'
+import {bcDet,bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -81,6 +82,8 @@ class ViewDetail extends Component {
   updDetail=(e)=>{
       e.preventDefault()   
 
+      this.props.bcUpd(true)  //breadcrumb condition
+    //   this.props.bcDet(false) //breadcrumb condition
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       //console.log(('data-pagename'))
 
@@ -93,16 +96,9 @@ class ViewDetail extends Component {
           action: "ITEM_LIST",
           bio_access_id: idAccess      
       }
-      this.props.setRoleStore(RoleObj)
-      
-      //Stakeholder List
-    //   const stakehList={
-    //       action:"ITEM_LIST",
-    //       bio_access_id:idAccess
-    //   }
-    //   this.props.setStakehList(stakehList)
+      this.props.setRoleStore(RoleObj)     
 
-        //stkh Detail
+      //stkh Detail
       const stakehDet={
           stakeholder_id:stakehSel,
           bio_access_id:idAccess,
@@ -317,11 +313,12 @@ ViewDetail.propTypes={
   setStakehSel: PropTypes.func.isRequired,
   setStakehNumb: PropTypes.func.isRequired,
   setRoleStore: PropTypes.func.isRequired,
-  setStakehList: PropTypes.func.isRequired,
   setStkhAccDetail: PropTypes.func.isRequired,
   setAncestor: PropTypes.func.isRequired,
   setDescendant: PropTypes.func.isRequired,
   setSecLevel: PropTypes.func.isRequired,
+  bcDet: PropTypes.func.isRequired,
+  bcUpd: PropTypes.func.isRequired,
   
   
 }
@@ -343,11 +340,12 @@ export default connect(mapStateToProps,{
     setStakehSel,
     setStakehNumb,
     setRoleStore,
-    setStakehList,
     setStkhAccDetail,
     setAncestor,
     setDescendant,
     setSecLevel,
+    bcDet,
+    bcUpd
     
 
 })(ViewDetail)

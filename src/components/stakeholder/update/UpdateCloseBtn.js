@@ -3,38 +3,20 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import {setActivePage} from '../../../actions/layoutInitAction' 
+import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
+import {setStkhAccDetail,setAncestor,setDescendant,setcustomField} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
+import {bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
-import {setActivePage} from '../../actions/layoutInitAction' 
-import {setStakehType} from '../../actions/stakeholderAction/stakehTypeAction'
-import {setStkhAccDetail,setAncestor,setDescendant,setcustomField} from '../../actions/stakeholderAction/stakehUpdateAction'
-import {viewStakehGroup,viewStakehMember} from '../../actions/stakeholderAction/stakehViewDetail'
-import {bcUpd} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 
-class BreadcrumbStakeh extends Component {
+class UpdateCloseBtn extends Component {
 
-    setActivePage=(e)=>{
-        e.preventDefault()     
-        const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehNumb} = this.props.stakeholderlistType
-  
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))        
-       
-        const stakehObj={
-            stakeholder_id:bId,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_TYPE',
-            stakeh_type: parseInt(stakehNumb),
-        }
-        this.props.setStakehType(stakehObj) 
+    ActivePage=(e)=>{
+        e.preventDefault()   
         
-     
-    }    
-
-    DetailPage=(e)=>{
-        e.preventDefault()     
-
-        this.props.bcUpd(false)
-
+        this.props.bcUpd(false) //Breadcrumb Condition
+        
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
         const {stakehSel,stakehNumb} = this.props.stakeholderlistType
         // console.log(stakehNumb)   
@@ -97,34 +79,23 @@ class BreadcrumbStakeh extends Component {
         }
         this.props.setcustomField(customFieldObj)
 
-
-
     }
 
   render() {
-    const {pageTitle}=this.props.layout
-    const {stakeholderDetail} = this.props.stakeholderView
-    const {bcIndex,bcDet,bcUpd} = this.props.stakeholderBreadCrumb
 
+    
+    
     return (
 
-    <div className="breadcrumb-holder">
-        <div className="container-fluid">
-            <ul className="breadcrumb">
-                <a className="breadcrumb-item" href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a> 
-                {stakeholderDetail.map((item,idx)=><a className={bcIndex?"breadcrumb-item active":"breadcrumb-item"} href='/' data-pagename="index" onClick={this.setActivePage}>{bcIndex?decodeURIComponent(item.full_name):pageTitle}</a>)} 
-                <a className={bcDet?"breadcrumb-item":"d-none"} href='/' data-pagename="viewStakeh" onClick={this.DetailPage}>Details</a>
-                {stakeholderDetail.map((item,idx)=><div key={idx} className={bcUpd?"breadcrumb-item active":"d-none"}>{decodeURIComponent(item.full_name)}</div>)}
-            </ul>
-        </div>
-    </div> 
+        <button type="button" className="btn btn-secondary" onClick={this.ActivePage} data-pagename="viewStakeh">Close</button>
+
 
  
  
     )
   }
 }
-BreadcrumbStakeh.propTypes={
+UpdateCloseBtn.propTypes={
     session: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
@@ -132,11 +103,11 @@ BreadcrumbStakeh.propTypes={
     stakeholderView: PropTypes.object.isRequired,
     stakeholderBreadCrumb: PropTypes.object.isRequired,   
     setStakehType: PropTypes.func.isRequired,
-    viewStakehGroup: PropTypes.func.isRequired,
-    viewStakehMember: PropTypes.func.isRequired,
     setStkhAccDetail: PropTypes.func.isRequired,
     setAncestor: PropTypes.func.isRequired,
     setDescendant: PropTypes.func.isRequired,
+    viewStakehMember: PropTypes.func.isRequired,
+    viewStakehGroup: PropTypes.func.isRequired,
     setcustomField: PropTypes.func.isRequired,
     bcUpd: PropTypes.func.isRequired,
     
@@ -146,21 +117,22 @@ BreadcrumbStakeh.propTypes={
     layout:state.layout,
     stakeholderView: state.stakeholderView,
     stakeholderBreadCrumb: state.stakeholderBreadCrumb,
-    stakeholderlistType: state.stakeholderlistType,
-    
+    stakeholderlistType: state.stakeholderlistType
     
 
 
   })
   export default connect(mapStateToProps,{
-    setActivePage,
-    setStakehType,
-    viewStakehGroup,
-    viewStakehMember,
-    setStkhAccDetail,
-    setAncestor,
-    setDescendant,
-    setcustomField,
-    bcUpd
+      setActivePage,
+      setStakehType,
+      setStkhAccDetail,
+      setAncestor,
+      setDescendant,
+      viewStakehMember,
+      viewStakehGroup,
+      setcustomField,
+      bcUpd,
+      
+      
 
-    })(BreadcrumbStakeh)
+    })(UpdateCloseBtn)

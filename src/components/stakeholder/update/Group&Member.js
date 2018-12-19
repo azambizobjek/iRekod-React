@@ -1,6 +1,7 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
 import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,updListMember} from '../../../actions/stakeholderAction/stakehUpdateAction' 
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -253,7 +254,8 @@ class GroupMember extends Component {
                 </div>
                 <div className={active==='group'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary">Close</button> */}
                 </div>
             </form>
                 {/* <Loader

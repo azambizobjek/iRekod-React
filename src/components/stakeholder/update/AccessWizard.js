@@ -1,6 +1,7 @@
 import React,{ Component,Fragment } from 'react' 
 import Select from 'react-select'
 import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -160,9 +161,7 @@ class accessWizard extends Component {
 
     Aclselected=()=>{
         const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
-        // console.log(accViewVal)
-        
-       
+        // console.log(accViewVal)      
         // console.log(accViewVal)
         const viewSource = accViewVal.map(item =>({
             stakeholder_id: item.value,
@@ -226,7 +225,7 @@ class accessWizard extends Component {
         // console.log(selData)         
         // console.log(aclEntries)          
         selData.map(item=>
-           { const TargetItem = aclEntries.findIndex(rec=>rec.stakeholder_id===item.value) 
+           {const TargetItem = aclEntries.findIndex(rec=>rec.stakeholder_id===item.value) 
             // console.log(TargetItem)
             if ( TargetItem!==-1) {
                 aclEntries[TargetItem][type] = true
@@ -277,11 +276,11 @@ class accessWizard extends Component {
         })          
         return aclEntries   
     }
-  
+
+    
  
 
   render() {
-
   
     // console.log(acl_entries)
     const item = this.props.item
@@ -289,10 +288,6 @@ class accessWizard extends Component {
     // const item = this.props.item
     const {accViewVal, accUpdVal, accRmvVal, accModVal, stakehList} = this.state
     // console.log(item)
-
-
-
-
 
     return (
       <Fragment>
@@ -347,7 +342,8 @@ class accessWizard extends Component {
                 </div>
                 <div className={active==='access'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary" onClick={this.ActivePage} data-pagename="viewStakeh">Close</button> */}
                 </div>
             </form>
                 {/* <Loader
@@ -366,6 +362,7 @@ accessWizard.propTypes={
     layout:PropTypes.object.isRequired,
     stakeholderUpdate: PropTypes.object.isRequired,
     updStkh: PropTypes.func.isRequired,
+     
    
     
      
@@ -384,6 +381,7 @@ const mapStateToProps= state =>({
     
 export default connect(mapStateToProps,{
     updStkh,
+     
     
 
     

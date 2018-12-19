@@ -1,4 +1,4 @@
-import {WIZARD_SELECT,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP,STAKEHOLDER_MEMBER,CUSTOM_FIELD,GROUP_ITEM} from '../types'
+import {WIZARD_SELECT,ROLE_STORE,STAKEHOLDER_LIST,STAKEHOLDER_VIEW,ITEM_LIST_ANCESTOR,ITEM_LIST_DESCENDANT,STORE_DETAIL,SECURITY_LEVEL,ADD_GROUP_ITEM,STAKEHOLDER_GROUP,STAKEHOLDER_MEMBER,CUSTOM_FIELD,GROUP_ITEM,ACTIVE_PAGE} from '../types'
 import {biorisUrl} from '../../appConfig'
 
 //Select stakeholder
@@ -220,5 +220,13 @@ export const setcustomField = (param) => dispatch =>{
                 type:CUSTOM_FIELD,payload:res.results
             })
         })
+}
+
+//Set Page Active
+export const ActivePage=(param)=>{
+    return {
+        type:ACTIVE_PAGE,
+        payload:param
+    }
 }
 
