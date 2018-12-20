@@ -16,6 +16,11 @@ export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
 
+//Main Fab action and reducer link
+export const MAIN_FAB = 'MAIN_FAB'
+export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
+export const SET_SEL_ALL = 'SET_SEL_ALL'
+export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
@@ -70,8 +75,8 @@ export const INSERT_NEW_BREADCRUMB = 'INSERT_NEW_BREADCRUMB'
 
 //listworkflow action and reducer link
 export const SET_CARD_VIEW = 'SET_CARD_VIEW'
-export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
-export const SET_SEL_ALL = 'SET_SEL_ALL'
+// export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
+// export const SET_SEL_ALL = 'SET_SEL_ALL'
 export const WORKFLOW_SEL = 'WORKFLOW_SEL'
 // export const SHOW_FAB = 'SHOW_FAB'
 export const SELECT_SEL = 'SELECT_SEL'
@@ -121,7 +126,7 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_STARTPAGE = 'SET_STARTPAGE'
 // export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
 // export const SHOW_FAB = 'SHOW_FAB'
-export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
+// export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 export const SET_ISCONTAINER = 'SET_ISCONTAINER'
 export const REC_ITEM_ACCESS_DEL = 'REC_ITEM_ACCESS_DEL'
 export const REC_ITEM_ACCESS_EDIT = 'REC_ITEM_ACCESS_EDIT'

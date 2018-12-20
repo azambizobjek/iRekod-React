@@ -3,22 +3,17 @@ import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css';
  
 
-export default function mainFab({FabRec,delBtn,addChild,stakehNumb}) {
+export default function mainFab({activeBtn,delBtn,fabMenu}) {
 //    console.log(addChildBtn)
 const sendActive=(e)=>{
     e.preventDefault()
-    FabRec(e.target.name, e.target.alt)      
+    activeBtn(true)      
 }
 
 const deleteBtn=()=>{    
     delBtn()
 }
-
-const addBtn=(e)=>{
-    e.preventDefault()
-    addChild(e.target.name)
-}
-
+ 
  
 
     
@@ -32,13 +27,13 @@ const addBtn=(e)=>{
                 overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Home</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                  >
-                 <img name="view" src={require('../../img/menu.svg')} alt='home' className='img-fluid' onClick={sendActive}    />
+                 <img name="view" src={require('../../img/menu.svg')} alt='home' className='img-fluid' onClick={sendActive} />
             </Tooltip>
         </span>
 
             <ul className="fab-buttons">           
                 <li className="fab-buttons-item">
-                    <span className="fab-buttons-link">
+                    <span className={fabMenu?"fab-buttons-link":"d-none"}>
                         <Tooltip
                             placement="left"
                             overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Delete</div>}

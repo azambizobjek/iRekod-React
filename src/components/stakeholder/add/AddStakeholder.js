@@ -112,8 +112,7 @@ class NewStakeholder extends Component {
                 <div className="breadcrumb">
                     <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
                     <div className="breadcrumb-item"><a href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    <div className="breadcrumb-item active">New Stakeholder</div>
-                   
+                    <div className="breadcrumb-item active">New Stakeholder</div>                   
                 </div>
             </div>
         </div>     

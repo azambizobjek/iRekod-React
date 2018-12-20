@@ -4,7 +4,7 @@ import {LOG_OUT} from '../actions/types'
 import authReducer from './authReducer'
 import layoutInitReducer from './layoutInitReducer'
 import searchReducer from './searchReducer'
-// import fabReducer from './fabReducer'
+import fabReducer from './MainFabReducer'
 
 //stakeholder
 import stakeholderBreadCrumb from '../reducers/stakeholderReducer/stakeholderBreadCrumbReducer'
@@ -37,6 +37,7 @@ import auditReducer from './auditTrailReducer/auditReducer'
 const appReducer = combineReducers({
     session:authReducer,
     layout:layoutInitReducer,
+    fab:fabReducer,
     searchConf:searchReducer,
    
     //stakeholder
