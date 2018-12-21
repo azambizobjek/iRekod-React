@@ -166,7 +166,7 @@ class securityWizard extends Component {
 
     formSubmit=(e)=>{
         e.preventDefault()
-        const {stakehSel} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
@@ -196,7 +196,7 @@ class securityWizard extends Component {
             date_active_to: moment(endDate).format("DD/MM/YYYY"),  
             
             version: 0,           
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             bio_access_id: idAccess,
             acl_id:acl_id,
             acl_entries:acl_entries,

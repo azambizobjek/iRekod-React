@@ -18,7 +18,7 @@ class UpdateDetail extends Component {
 
     handleWizard=(wizardName)=>{        
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
         // console.log(stakehNumb)
         
         this.props.setWizardPage(wizardName)
@@ -40,7 +40,7 @@ class UpdateDetail extends Component {
 
           //stkh Detail
         const stakehDet={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -49,7 +49,7 @@ class UpdateDetail extends Component {
         //Ancestor Group
         const listAncestor={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -58,7 +58,7 @@ class UpdateDetail extends Component {
         //Descendant Member
         const listDescendant={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -73,7 +73,7 @@ class UpdateDetail extends Component {
 
         //List Group
         const stakehGroup={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
         }
@@ -81,7 +81,7 @@ class UpdateDetail extends Component {
 
          //Member
         const stakehMember={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }

@@ -6,7 +6,7 @@ import {setActivePage} from '../../actions/layoutInitAction'
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
-import {activeFab,showMultiFab} from '../../actions/fabAction'
+import {showMultiFab} from '../../actions/fabAction'
  
 
 import {connect} from 'react-redux'
@@ -16,7 +16,6 @@ import BreadCrumb from '../layouts/BreadcrumbStakeh'
 import CardRow from '../stakeholder/CardRow'  
 import DetailCard from '../stakeholder/DetailCard'
 import Fab from '../fab/FabStakeholder'
-import MainFab from '../fab/MainFab'
 import MultiFab from '../fab/MultiFab'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
@@ -44,7 +43,9 @@ class index extends Component {
             this.setState({
                 stakeholderlistType:liststakeh
             })
-        }else if(prevProps.fab.isSelAll===!this.props.fab.isSelAll){
+        }
+        
+        else if(prevProps.fab.isSelAll===!this.props.fab.isSelAll){
             const{isSelAll}=this.props.fab
             if(isSelAll){
                 const{stakeholderlistType}=this.state
@@ -53,29 +54,29 @@ class index extends Component {
             }
         }   
 
-        // else if(prevState.stakeholderlistType !== this.state.stakeholderlistType){
-        //     const{isMultiSel}=this.props.fab
-        //     const{stakeholderlistType}=this.state
-        //     if(isMultiSel){
-        //         const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({stakeholder_id:itm.stakeholder_id}))
-        //         this.props.setStakehSel(listSelStakeh)
-        //     }else{
-        //         const selStakeh=stakeholderlistType.find(itm => itm.isSel === true)
-        //         if(selStakeh!==undefined){
-        //             const{user:{bio_access_id:bId}}=this.props.session 
-        //             const {stakeholder_id:stakeholder_id} = selStakeh
-        //             this.props.setStakehSel({
-        //                 stakeholder_id:stakeholder_id                       
-        //             })
-        //             // this.props.setIsContainer(is_container)
-        //             // this.props.getRecItemAccess({action:'ITEM_ACCESS',record_id:recId,bio_access_id:bId})
-        //         }
-        //     }
-        // }
+        else if(prevState.stakeholderlistType !== this.state.stakeholderlistType){
+            const{isMultiSel}=this.props.fab
+            const{stakeholderlistType}=this.state
+            if(isMultiSel){
+                const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({stakeholder_id:itm.stakeholder_id}))
+                this.props.setStakehSel(listSelStakeh)
+            }
+            else
+            {
+                const selStakeh=stakeholderlistType.find(itm => itm.isSel === true)
+                if(selStakeh!==undefined){
+                    const{user:{bio_access_id:bId}}=this.props.session 
+                    const {stakeholder_id:stakeholder_id} = selStakeh
+                    this.props.setStakehSel({
+                        stakeholder_id:stakeholder_id                       
+                    })
+                    // this.props.setIsContainer(is_container)
+                    // this.props.getRecItemAccess({action:'ITEM_ACCESS',record_id:recId,bio_access_id:bId})
+                }
+            }
+        }
 
-
-
-        if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
+        else if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
             const {stakehSel}=this.props.stakeholderlistType
             this.setState({stakehSelect:stakehSel})
         }   
@@ -114,13 +115,11 @@ class index extends Component {
             if (itmIdx===desIdx){
                 this.props.setShowFab(false)
                 this.props.setStakehSel(null)   
-                this.props.showMultiFab(true)//new
-         
+                this.props.showMultiFab(true)//new         
             }
             else{
                 this.props.setShowFab(true)
                 this.props.showMultiFab(false)//new
-
             }
         }
 
@@ -136,19 +135,21 @@ class index extends Component {
     }
 
     //Fab View Detail
-    setActivePage=(FabRec)=>{         
-        const {stakehSel:bId} = this.props.stakeholderlistType
+    setActivePage=(param)=>{    
+            
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         const {user:{bio_access_id:idAccess}} = this.props.session
+        // console.log(stakeholder_id)
 
-        this.props.bcIndex(false)
+        this.props.bcIndex(false) //breadcrumb Index page 
         this.props.bcDet(true) //breadcrumb Detail page 
        
-        this.props.setActivePage(FabRec)  //direct page to viewDetail
+        this.props.setActivePage(param)  //direct page to viewDetail
         // console.log(FabRec)
 
         //stkh Detail
         const stakehDet={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -156,7 +157,7 @@ class index extends Component {
         
         //Member
        const stakehMember={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
        }
@@ -164,7 +165,7 @@ class index extends Component {
 
        //Group
        const stakehGroup={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
        }
@@ -182,28 +183,26 @@ class index extends Component {
 
     //Delete Btn
     delBtn=()=>{
-        if (window.confirm("Are you sure want to delete it?")){          
-            const {stakehSelect} = this.state
-            const {stakehNumb,stakehType} = this.props.stakeholderlistType
+        if (window.confirm("Are you sure want to delete it?")){        
+            const {stakehNumb,stakehType,stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
             const {activePage,pageTitle} = this.props.layout    
             const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
             //  console.log(stakehNumb)       
 
             const stakehObj={
                 bio_access_id:idAccess,
-                stakeholder_ids:[stakehSelect]        
+                stakeholder_ids:[stakeholder_id]        
             }
             this.props.setDelBtn(stakehObj)
                 alert("Successful Deleted") 
             
-            const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakehSelect) 
+            const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakeholder_id) 
             // console.log(arr)
             this.setState({
                 stakeholderlistType:newStakehList
             })                         
         }
-        else{}     
-       
+        else{}    
     }
 
     //Add Stakeholder Child
@@ -237,7 +236,7 @@ class index extends Component {
         // console.log(param)
 
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
         // console.log(stakehNumb)      
        
         //Role List
@@ -256,7 +255,7 @@ class index extends Component {
 
           //stkh Detail
         const stakehDet={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -265,7 +264,7 @@ class index extends Component {
         //Ancestor Group
         const listAncestor={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -274,7 +273,7 @@ class index extends Component {
         //Descendant Member
         const listDescendant={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -289,7 +288,7 @@ class index extends Component {
 
         //List Group
         const stakehGroup={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
         }
@@ -297,7 +296,7 @@ class index extends Component {
 
          //Member
         const stakehMember={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }
@@ -309,12 +308,7 @@ class index extends Component {
         }
         this.props.setcustomField(customFieldObj)
          
-    }
-
-    activeBtn=(param)=>{
-        this.props.activeFab(param)
-        // console.log(param)
-    }
+    }    
 
     deleteMain=(param)=>{
         console.log(param)
@@ -325,8 +319,7 @@ class index extends Component {
         
         const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
         const {pageTitle}=this.props.layout
-        const {stakeholderlistType}=this.state   
-        const {fabMenu} = this.props.fab      
+        const {stakeholderlistType}=this.state  
         // const {stakeholder_Detail}=this.props.stakeholderView 
         // console.log(fabMenu)
         
@@ -412,19 +405,19 @@ class index extends Component {
                                         markOnSel={this.markOnSel} />                             
                                 )}     
 
-                                {showFab?<Fab
-                                    FabRec={this.setActivePage}
-                                    delBtn={this.delBtn}                                   
-                                    stakehNumb={stakehNumb} 
-                                    addChild={this.child}
-                                    pageWizard={this.activePage} />:
-                                                                        
-                                    // <MainFab
-                                    // fabMenu={fabMenu}
-                                    // activeBtn={this.activeBtn}
-                                    // delBtn={this.deleteMain}  />     
-                                    <MultiFab/>
-                                }
+                                {showFab?
+                                    
+                                    <Fab
+                                        FabRec={this.setActivePage}
+                                        delBtn={this.delBtn}                                   
+                                        stakehNumb={stakehNumb} 
+                                        addChild={this.child}
+                                        pageWizard={this.activePage} />:
+                                    
+                                    <MultiFab
+                                        delete={this.delBtn} />
+                                }                                            
+                                
 
                                 
                             </div>    
@@ -463,7 +456,6 @@ index.propTypes={
     setDescendant: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,
     setcustomField: PropTypes.func.isRequired,
-    activeFab: PropTypes.func.isRequired,
     showMultiFab: PropTypes.func.isRequired,
     
 }
@@ -498,7 +490,6 @@ export default connect(mapStateToProps,{
     setDescendant,
     setSecLevel,
     setcustomField,
-    activeFab,//
     showMultiFab,
    
 })(index)

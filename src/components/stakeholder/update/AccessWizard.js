@@ -118,7 +118,7 @@ class accessWizard extends Component {
 
     formSubmit=(e)=>{
         e.preventDefault()        
-        const {stakehSel} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {acl_id} = this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
@@ -147,7 +147,7 @@ class accessWizard extends Component {
             date_active_to: date_active_to,  
 
             version: 0,           
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             bio_access_id: idAccess,
             acl_id: acl_id,
             acl_entries: this.Aclselected(),

@@ -16,8 +16,7 @@ export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
 
-//Main Fab action and reducer link
-export const MAIN_FAB = 'MAIN_FAB'
+//Main Fab action and reducer link 
 export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
 export const SET_SEL_ALL = 'SET_SEL_ALL'
 export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'

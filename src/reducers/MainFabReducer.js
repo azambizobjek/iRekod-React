@@ -1,7 +1,6 @@
 import{MAIN_FAB,CHANGE_ISMULTI,SHOW_MULTIFAB,SET_SEL_ALL} from '../actions/types'
 
 const initialState={
-    fabMenu:false,
     showMultiFab:true,
     isMultiSel: false,
     isSelAll:false
@@ -9,12 +8,7 @@ const initialState={
 }
 
 export default function(state = initialState, action){
-    switch(action.type){
-        case MAIN_FAB:
-        return {
-            ...state,
-            fabMenu:action.payload,
-        }
+    switch(action.type){        
         case CHANGE_ISMULTI:
         return {
             ...state,

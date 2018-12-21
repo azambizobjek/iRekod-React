@@ -20,7 +20,7 @@ export const addStkh = (param) => dispatch =>{
 }
 
 //Add Child
-export const addChild = (addChildParam,stakehSel) => dispatch =>{
+export const addChild = (addChildParam,stakeholder_id) => dispatch =>{
     // console.log(param)
     const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(addChildParam)}`
         fetch(url,{method:'PUT'})
@@ -37,7 +37,7 @@ export const addChild = (addChildParam,stakehSel) => dispatch =>{
             const memberSource = {
                 action: "ADD_CHILD_ITEM",
                 bio_access_id: addChildParam.bio_access_id,
-                parent_id: stakehSel,  
+                parent_id: stakeholder_id,  
                 child_id: res.stakeholder_id              
             }       
             const url=`${biorisUrl}/stakeholder?param=${encodeURIComponent(JSON.stringify(memberSource))}`

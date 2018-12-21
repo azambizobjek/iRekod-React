@@ -134,7 +134,7 @@ class securityWizard extends Component {
             // custom_field:custom_field,          
         }
         this.props.addStkh(formObj)
-        console.log(formObj)
+        // console.log(formObj)
       
         // for ( const propName in formObj)
         // if (formObj[propName] === "" || formObj[propName] === undefined ){

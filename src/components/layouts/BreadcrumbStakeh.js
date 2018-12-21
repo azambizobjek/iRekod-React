@@ -112,7 +112,7 @@ class BreadcrumbStakeh extends Component {
         <div className="container-fluid">
             <ul className="breadcrumb">
                 <a className="breadcrumb-item" href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a> 
-                {stakeholderDetail.map((item,idx)=><a className={bcIndex?"breadcrumb-item active":"breadcrumb-item"} href='/' data-pagename="index" onClick={this.setActivePage}>{bcIndex?decodeURIComponent(item.full_name):pageTitle}</a>)} 
+                {stakeholderDetail.map((item,idx)=><a key={idx} className={bcIndex?"breadcrumb-item active":"breadcrumb-item"} href='/' data-pagename="index" onClick={this.setActivePage}>{bcIndex?decodeURIComponent(item.full_name):pageTitle}</a>)} 
                 <a className={bcDet?"breadcrumb-item":"d-none"} href='/' data-pagename="viewStakeh" onClick={this.DetailPage}>Details</a>
                 {stakeholderDetail.map((item,idx)=><div key={idx} className={bcUpd?"breadcrumb-item active":"d-none"}>{decodeURIComponent(item.full_name)}</div>)}
             </ul>

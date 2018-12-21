@@ -18,7 +18,7 @@ class UpdateCloseBtn extends Component {
         this.props.bcUpd(false) //Breadcrumb Condition
         
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType
         // console.log(stakehNumb)   
        
         const stakehObj={
@@ -31,7 +31,7 @@ class UpdateCloseBtn extends Component {
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
 
         const stakehDet={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -40,7 +40,7 @@ class UpdateCloseBtn extends Component {
          //Ancestor Group
          const listAncestor={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -49,7 +49,7 @@ class UpdateCloseBtn extends Component {
         //Descendant Member
         const listDescendant={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -57,7 +57,7 @@ class UpdateCloseBtn extends Component {
 
         //Member
         const stakehMember={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }
@@ -65,7 +65,7 @@ class UpdateCloseBtn extends Component {
 
          //List Group
          const stakehGroup={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
         }

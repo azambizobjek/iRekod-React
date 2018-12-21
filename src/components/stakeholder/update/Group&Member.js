@@ -73,7 +73,7 @@ class GroupMember extends Component {
     formSubmit=(e)=>{
         e.preventDefault()
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         const {stakeholderGroup,stakeholderMember} = this.props.stakeholderView
         const {groupVal,memberVal}= this.state
 
@@ -92,7 +92,7 @@ class GroupMember extends Component {
                     action: "ADD_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.value,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -118,7 +118,7 @@ class GroupMember extends Component {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.stakeholder_id,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -134,7 +134,7 @@ class GroupMember extends Component {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.stakeholder_id,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -151,7 +151,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "ADD_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.value               
                 }
                 this.props.setMember(memberSource)
@@ -173,7 +173,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.stakeholder_id                             
                 }
                 this.props.setRmvMember(memberSource)
@@ -188,7 +188,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.stakeholder_id                                
                 }
                 this.props.setRmvMember(memberSource)

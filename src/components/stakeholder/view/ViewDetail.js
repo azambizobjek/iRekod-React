@@ -88,7 +88,7 @@ class ViewDetail extends Component {
       //console.log(('data-pagename'))
 
       const {user:{bio_access_id:idAccess}} = this.props.session
-      const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+      const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
       // console.log(stakehNumb)     
             
       //Role List
@@ -100,7 +100,7 @@ class ViewDetail extends Component {
 
       //stkh Detail
       const stakehDet={
-          stakeholder_id:stakehSel,
+          stakeholder_id:stakeholder_id,
           bio_access_id:idAccess,
           action:'ITEM_DETAIL',            
       }
@@ -109,7 +109,7 @@ class ViewDetail extends Component {
       //Ancestor Group
       const listAncestor={
           bio_access_id: idAccess,
-          stakeholder_id: stakehSel,
+          stakeholder_id: stakeholder_id,
           action: "ITEM_LIST_ANCESTOR",
           stakeh_type: parseInt(stakehNumb)      
       }
@@ -118,7 +118,7 @@ class ViewDetail extends Component {
       //Descendant Member
       const listDescendant={
           bio_access_id: idAccess,
-          stakeholder_id: stakehSel,
+          stakeholder_id: stakeholder_id,
           action: "ITEM_LIST_DESCENDANT",
           stakeh_type: parseInt(stakehNumb)      
       }
@@ -133,7 +133,7 @@ class ViewDetail extends Component {
 
       //List Group
       const stakehGroup={
-        stakeholder_id:stakehSel,
+        stakeholder_id:stakeholder_id,
         bio_access_id:idAccess,
         action:'ITEM_LIST_GROUP',             
     }
@@ -141,7 +141,7 @@ class ViewDetail extends Component {
 
     //Member
      const stakehMember={
-        stakeholder_id:stakehSel,
+        stakeholder_id:stakeholder_id,
         bio_access_id:idAccess,
         action:'ITEM_LIST_MEMBER',             
     }
