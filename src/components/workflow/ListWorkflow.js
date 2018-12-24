@@ -224,7 +224,7 @@ class ListWorkflow extends Component {
                                 overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
                                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                             >
-                            <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-pagename="createNewAct">
+                            <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
                             <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
                             </button>
                             </Tooltip>
