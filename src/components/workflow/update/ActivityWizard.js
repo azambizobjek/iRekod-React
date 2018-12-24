@@ -6,6 +6,7 @@ import 'rc-checkbox/assets/index.css';
 import { Button } from 'reactstrap';
 
 import {setActivePage} from '../../../actions/layoutInitAction'
+import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
 import {setListAddTask, setListTaskResultTitle, setListTaskResultStatus} from '../../../actions/workflowAction/workflowDetailAction'
 import {updateActivity, setActivityDetailsUpdate} from '../../../actions/workflowAction/updateActAction'
 
@@ -26,7 +27,7 @@ class ActivityWizard extends Component {
             default_assignor_id: null,
             default_assignor_name: null,
             default_assignee_id: null,
-            default_assignee_name: [],
+            default_assignee_name: null,
             default_supervisor_id: null,
             default_supervisor_name: null,
             default_manager_id: null,
@@ -41,10 +42,10 @@ class ActivityWizard extends Component {
             task_results: null,
             acl_id: null,
             stakeholder_fields: null,   
-            stakehValAssignor: [],
+            default_assignor_name: [],
             // default_assignee_name: [],
-            stakehValSupervisor: [],
-            stakehValManager: [],
+            default_supervisor_name: [],
+            default_manager_name: [],
             prevTask: [],
             nextTask:[],
             addTaskTitle:[],
@@ -62,104 +63,41 @@ class ActivityWizard extends Component {
         }        
     }  
 
-    componentWillMount(){
-    const {activityDet}=this.props.workflowDetail  
+    // componentWillMount(){
+    // const {activityDet}=this.props.workflowDetail  
    
-    // console.log(activityDet)
-      const {
-        task_id,
-        subject,
-        title,
-        instruction,
-        estimated_duration ,
-         is_important,
-         is_auto_start ,
-         default_assignor_id ,
-         default_assignee_id,
-         default_assignor_name,
-         default_assignee_name,
-         default_supervisor_id ,
-         default_supervisor_name ,
-         default_manager_id ,
-         default_manager_name ,
-         parent_id,
-         prev_task_id ,
-         prev_task_title,
-         additional_tasks ,
-         next_task_id ,
-         next_task_title ,
-         is_decision ,
-         task_results ,
-         acl_id ,
-         stakeholder_fields ,
+    // // console.log(activityDet)
+    //   const {
+    //     task_id,
+    //     subject,
+    //     title,
+    //     instruction,
+    //     estimated_duration ,
+    //      is_important,
+    //      is_auto_start ,
+    //      default_assignor_id ,
+    //      default_assignee_id,
+    //      default_assignor_name,
+    //      default_assignee_name,
+    //      default_supervisor_id ,
+    //      default_supervisor_name ,
+    //      default_manager_id ,
+    //      default_manager_name ,
+    //      parent_id,
+    //      prev_task_id ,
+    //      prev_task_title,
+    //      additional_tasks ,
+    //      next_task_id ,
+    //      next_task_title ,
+    //      is_decision ,
+    //      task_results ,
+    //      acl_id ,
+    //      stakeholder_fields ,
          
-      } = this.props.item
+    //   } = this.props.item
 
       
-        this.setState({
-          task_id: task_id,
-          title: title,
-          subject: subject,
-          instruction: instruction,
-          estimated_duration: estimated_duration,
-          is_important: is_important,
-          is_auto_start: is_auto_start,
-          default_assignor_id: default_assignor_id,
-          default_assignee_id: default_assignee_id,
-          default_assignor_name:default_assignor_name,
-          default_assignee_name: default_assignee_name,
-          default_supervisor_id: default_supervisor_id,
-          default_supervisor_name: default_supervisor_name,
-          default_manager_id: default_manager_id,
-          default_manager_name: default_manager_name,
-          parent_id: parent_id,
-          prev_task_id: prev_task_id,
-          prev_task_title: prev_task_title,
-          additional_tasks: additional_tasks,
-          next_task_id: next_task_id,
-          next_task_title: next_task_title,
-          is_decision: is_decision,
-          task_results: task_results,
-          acl_id: acl_id,
-          stakeholder_fields: stakeholder_fields,
-        })    
-
-    }
-
-    // componentDidUpdate(prevProps){
-    // if(prevProps.workflowDetail.activityDet!==this.props.workflowDetail.activityDet){
-    //         //  console.log(prevProps.workflowDetail.activityDet)   
-    //     const {
-    //         task_id,
-    //         subject,
-    //         title,
-    //         instruction,
-    //         estimated_duration ,
-    //          is_important,
-    //          is_auto_start ,
-    //          default_assignor_id ,
-    //          default_assignee_id,
-    //          default_assignor_name,
-    //          default_assignee_name,
-    //          default_supervisor_id ,
-    //          default_supervisor_name ,
-    //          default_manager_id ,
-    //          default_manager_name ,
-    //          parent_id,
-    //          prev_task_id ,
-    //          prev_task_title,
-    //          additional_tasks ,
-    //          next_task_id ,
-    //          next_task_title ,
-    //          is_decision ,
-    //          task_results ,
-    //          acl_id ,
-    //          acl_entries,
-    //          stakeholder_fields ,
-             
-    //       } = this.props.item
-    //       console.log(acl_entries)
-    //  this.setState({
+    //     this.setState({
     //       task_id: task_id,
     //       title: title,
     //       subject: subject,
@@ -184,17 +122,99 @@ class ActivityWizard extends Component {
     //       is_decision: is_decision,
     //       task_results: task_results,
     //       acl_id: acl_id,
-    //       acl_entries:acl_entries,
     //       stakeholder_fields: stakeholder_fields,
     //     })    
-    //     }
-  
-       
-       
-    //     // if(prevProps.updActReducer.activityDet!==this.props.updActReducer.activityDet){
-    //     //     console.log(prevProps.updActReducer)
-    //     // }
+
     // }
+
+    componentDidUpdate(prevProps){
+    if(prevProps.workflowDetail.activityDet!==this.props.workflowDetail.activityDet){
+        console.log('1111')
+        const {activityDet} = this.props.workflowDetail
+        const {stakehList} = this.props.listWrkFlw
+        const {itemListSubject} = this.props.workflowDetail
+        const {
+            default_assignee_name, default_assignee_id, 
+            default_assignor_name,  default_assignor_id,
+            default_manager_name, default_manager_id,
+            prev_task_title, prev_task_id, 
+            default_supervisor_name, default_supervisor_id, 
+            next_task_title, next_task_id } = this.props.item
+        // const stakehOptionsAssignor = stakehList.filter(itm => itm.full_name === default_assignor_name)
+        // const stakehOptionManager = stakehList.filter(itm => itm.full_name === default_manager_name)
+        // const stakehOptionSupervisor = stakehList.filter(itm => itm.full_name === default_supervisor_name)
+        // const listOptionPrev = itemListSubject.filter(itm => itm.title=== prev_task_title)
+        // const listOptionNext = itemListSubject.filter(itm => itm.title=== next_task_title)
+       
+        const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
+        const assignorValue=({value: default_assignor_id, label:default_assignor_name})
+        const managerValue=({value: default_manager_id, label:default_manager_name})
+        const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
+        const nextTitleValue=({value: next_task_id, label:next_task_title})
+        const prevTitleValue=({value: prev_task_id, label:prev_task_title})
+        
+
+       const {
+        task_id,
+        subject,
+        title,
+        instruction,
+        estimated_duration ,
+         is_important,
+         is_auto_start ,
+        //  default_assignor_id ,
+        //  default_assignee_id,
+        //  default_assignor_name,
+        //  default_assignee_name,
+        //  default_supervisor_id ,
+        
+        //  default_supervisor_name ,
+        //  default_manager_id ,
+        //  default_manager_name ,
+         parent_id,
+        //  prev_task_id ,
+        //  prev_task_title,
+        //  additional_tasks ,
+        //  next_task_id ,
+        //  next_task_title ,
+         is_decision ,
+         task_results ,
+         acl_id ,
+         stakeholder_fields ,
+         
+      } = this.props.item
+
+      
+        this.setState({
+          task_id: task_id,
+          title: title,
+          subject: subject,
+          instruction: instruction,
+          estimated_duration: estimated_duration,
+          is_important: is_important,
+          is_auto_start: is_auto_start,
+          default_assignor_id: assignorValue,
+          default_assignee_id: assigneeValue,
+          default_assignor_name:assignorValue,
+          default_assignee_name: assigneeValue,
+          default_supervisor_id: supervisorValue,
+          default_supervisor_name: supervisorValue,
+          default_manager_id: managerValue,
+          default_manager_name: managerValue,
+          parent_id: parent_id,
+          prev_task_id: prevTitleValue,
+          prev_task_title: prevTitleValue,
+        //   additional_tasks: additional_tasks,
+          next_task_id: nextTitleValue,
+          next_task_title: nextTitleValue,
+          is_decision: is_decision,
+          task_results: task_results,
+          acl_id: acl_id,
+          stakeholder_fields: stakeholder_fields,
+        })    
+        }
+//  console.log(this.state.instruction)
+    }
 
      
     handleChange=(event)=>{
@@ -209,9 +229,10 @@ class ActivityWizard extends Component {
         console.log(input)
     } 
 
+
     handleAssignorChange=(value)=>{
       this.setState({
-        stakehValAssignor:value,
+        default_assignor_name:value,
       })
       // console.log(value)
   }
@@ -224,13 +245,13 @@ class ActivityWizard extends Component {
 
 handleManagerChange=(value)=>{
   this.setState({
-    stakehValManager:value
+    default_manager_name:value
   })
 }
 
 handleSupervisorChange=(value)=>{
   this.setState({
-    stakehValSupervisor:value
+    default_supervisor_name:value
   })
 }
 
@@ -319,18 +340,8 @@ handleViewChange=(value)=>{
     } 
 
 componentDidMount() {
-    const {stakehList} = this.props.listWrkFlw
-    const {itemListSubject} = this.props.workflowDetail
-    const {default_assignee_name, default_assignor_name, default_manager_name, prev_task_title, default_supervisor_name, next_task_title, additional_tasks} = this.props.item
-    const stakehOptionsAssignee = stakehList.filter(itm => itm.full_name === default_assignee_name)
-    const stakehOptionsAssignor = stakehList.filter(itm => itm.full_name === default_assignor_name)
-    const stakehOptionManager = stakehList.filter(itm => itm.full_name === default_manager_name)
-    const stakehOptionSupervisor = stakehList.filter(itm => itm.full_name === default_supervisor_name)
-    const listOptionPrev = itemListSubject.filter(itm => itm.title=== prev_task_title)
-    const listOptionNext = itemListSubject.filter(itm => itm.title=== next_task_title)
-
-  
-    // console.log(listOptionNext.task_id)
+    console.log('9999')
+    //aclEntries. When change tab header, remain its value
     const {acl_entries} = this.props.item
 
                 if(acl_entries!==undefined){
@@ -382,71 +393,38 @@ componentDidMount() {
                     accRmvVal:accRmv,
                     accModVal:accMod,
                 })       
-            }    
-    
-    
-    
-    
-    {default_assignor_name === "" ?
-    this.setState({
-        stakehValAssignor:[{label : "", value: ""}]
-    }) : 
-    this.setState({
-        stakehValAssignor:[{label : stakehOptionsAssignor[0].full_name, value: stakehOptionsAssignor[0].stakeholder_id}]
-            })
-    }
+            }
 
-
-    // set state for assignee name selection
-    {default_assignee_name === "" ?
-    this.setState({
-        default_assignee_name:({label : "", value: ""}),
-    }) : 
-    this.setState({
-        default_assignee_name:({label : stakehOptionsAssignee[0].full_name, value: stakehOptionsAssignee[0].stakeholder_id})
-            })
-    }
-
-    // set state for manager name selection
-    {default_manager_name === "" ?
-    this.setState({
+    //assignee, assignor, supervisor, manager, previous task, next task. When change tab header, remain its value    
+    const {
+        default_assignee_name, default_assignee_id, 
+        default_assignor_name,  default_assignor_id,
+        default_manager_name, default_manager_id,
+        prev_task_title, prev_task_id, 
+        default_supervisor_name, default_supervisor_id, 
+        next_task_title, next_task_id 
+        } = this.props.item
+       
         
-        stakehValManager:[{label : "", value: ""}],
-    }) : 
-    this.setState({
-        stakehValManager:[{label : stakehOptionManager[0].full_name, value: stakehOptionManager[0].stakeholder_id}]
-            })
-    }
+    const {updAct} = this.props.updActReducer
+    
+console.log(updAct)
+    const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
+    const assignorValue=({value: default_assignor_id, label:default_assignor_name})
+    const managerValue=({value: default_manager_id, label:default_manager_name})
+    const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
+    const nextTitleValue=({value: next_task_id, label:next_task_title})
+    const prevTitleValue=({value: prev_task_id, label:prev_task_title})
 
-    {default_supervisor_name === "" ?
+  
     this.setState({
-        
-        stakehValSupervisor:[{label : "", value: ""}],
-    }) : 
-    this.setState({
-        stakehValSupervisor:[{label : stakehOptionSupervisor[0].full_name, value: stakehOptionSupervisor[0].stakeholder_id}]
+        default_assignee_name:assigneeValue,
+        default_assignor_name:assignorValue,
+        default_manager_name:managerValue,
+        default_supervisor_name:supervisorValue,
+        prev_task_title:prevTitleValue,
+        next_task_title:nextTitleValue
             })
-    }
-
-    // set state for prev task name selection
-    {prev_task_title === ""  ?
-    this.setState({
-        prev_task_title:({label : "", value: ""}),
-    }) : 
-    this.setState({
-        prev_task_title:({label : listOptionPrev[0].title, value: listOptionPrev[0].task_id}),
-            })
-    }
-
-    {next_task_title === "" ?
-    this.setState({
-        next_task_title:({label : "", value: ""}),
-    }) : 
-    this.setState({
-        next_task_title:({label : listOptionNext[0].title, value: listOptionNext[0].task_id}),
-            })
-    }
-
   }
 
 
@@ -460,9 +438,9 @@ componentDidMount() {
   
     const { 
     
-    stakehValAssignor,
-    stakehValManager,
-    stakehValSupervisor,
+    default_assignor_name,
+    default_manager_name,
+    default_supervisor_name,
     title,
     subject,
     instruction,
@@ -497,20 +475,21 @@ componentDidMount() {
       estimated_duration: estimated_duration,
       is_important: is_important,
       is_auto_start: is_auto_start,
-      default_assignor_id: stakehValAssignor.value,
-      default_assignor_name: stakehValAssignor.label,
+      default_assignor_id: default_assignor_name.value,
+      default_assignor_name: default_assignor_name.label,
       default_assignee_id:default_assignee_name.value,
       default_assignee_name: default_assignee_name.label,
-      default_supervisor_id: stakehValSupervisor.value,
-      default_supervisor_name: stakehValSupervisor.label,
-      default_manager_id: stakehValManager.value,
-      default_manager_name: stakehValManager.label,
+      default_supervisor_id: default_supervisor_name.value,
+      default_supervisor_name: default_supervisor_name.label,
+      default_manager_id: default_manager_name.value,
+      default_manager_name: default_manager_name.label,
       parent_id: null,
       prev_task_id: prev_task_title.value,
       prev_task_title: prev_task_title.label,
       additional_tasks: null,
       next_task_id: next_task_title.value,
-      next_task_title: next_task_title.label,
+      next_task_title
+      : next_task_title.label,
       is_decision: is_decision,
       task_results: null,
       acl_id: acl_id,
@@ -532,8 +511,16 @@ componentDidMount() {
     }
 
     this.props.updateActivity(updateObj)
+    this.props.setActivityDetailsUpdate(updateObj)
     console.log(updateObj)
     alert("Successful Update")
+
+    const selDetails={
+        task_id: wrkflSel,
+        action: "ITEM_DETAIL",
+        bio_access_id: bId       
+    }
+    this.props.setSelDetails(selDetails)
 
 }
 
@@ -663,25 +650,17 @@ componentDidMount() {
 
   
     const {stakehList} = this.props.listWrkFlw
-    const {itemListSubject, addTask, taskResulStatusObj, tskRsltTitle, tskRsltStatus} = this.props.workflowDetail
-    const { default_assignee_name, stakehValAssignor, stakehValSupervisor, stakehValManager, addTaskTitle, prev_task_title,taskResStat, accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title} = this.state
+    const {itemListSubject, addTask, taskResulStatusObj } = this.props.workflowDetail
+    const { default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle, prev_task_title,taskResStat, 
+        accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title} = this.state
+           
+    const {subject,title,instruction,estimated_duration,is_important,is_auto_start,is_decision} = this.props.item
+
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     const optionListItemBySubject = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
     const optionResultTask= itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.title)})))
     const optionTaskResultStatus = taskResulStatusObj.map((itm => ({ label:decodeURIComponent(itm.lovi_value), value:decodeURIComponent(itm.lov_item_id)})))
     
-    
-    const {
-      task_id,
-      title,
-      subject,
-      instruction,
-      estimated_duration,
-      is_important,
-      is_auto_start,
-      additional_tasks,
-      is_decision,
-     } = this.state
     
     return (
       <Fragment>
@@ -749,7 +728,7 @@ componentDidMount() {
                               className="basic-single"
                               onChange={this.handleAssignorChange}
                               options={optionStakehList}
-                              value={stakehValAssignor}
+                              value={default_assignor_name}
                               isClearable
                             />
                             </div>
@@ -775,7 +754,7 @@ componentDidMount() {
                               className="basic-single"
                               onChange={this.handleSupervisorChange}
                               options={optionStakehList}
-                              value={stakehValSupervisor}
+                              value={default_supervisor_name}
                               isClearable
                             />
                             </div>
@@ -787,7 +766,7 @@ componentDidMount() {
                               className="basic-single"
                               onChange={this.handleManagerChange}
                               options={optionStakehList}
-                              value={stakehValManager}
+                              value={default_manager_name}
                               isClearable
                             />
                             </div>
@@ -980,6 +959,7 @@ ActivityWizard.propTypes={
     updActReducer: PropTypes.object.isRequired,
     setActivityDetailsUpdate: PropTypes.func.isRequired,
     setActivePage: PropTypes.func.isRequired,
+    setSelDetails: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -991,4 +971,4 @@ const mapStateToProps= state =>({
 })
     
 export default connect(mapStateToProps, {setListAddTask, setListTaskResultTitle, setListTaskResultStatus, 
-    updateActivity, setActivityDetailsUpdate, setActivePage})(ActivityWizard)
+    updateActivity, setActivityDetailsUpdate, setActivePage, setSelDetails})(ActivityWizard)
