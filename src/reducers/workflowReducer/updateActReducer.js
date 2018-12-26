@@ -1,11 +1,12 @@
-import {UPDATE_ACTIVITY, LIST_UPDATE_ACTIVITY, SELECTED_RECIPIENTS, SELECTED_INC_STAKEH, LIST_EMAIL_RECIPIENTS} from '../../actions/types'
+import {UPDATE_ACTIVITY, LIST_UPDATE_ACTIVITY, SELECTED_RECIPIENTS, SELECTED_INC_STAKEH, LIST_EMAIL_RECIPIENTS, VIEW_RECIPIENTS} from '../../actions/types'
 
 const initialState={
     updAct:[],
     det : [],
-    recipients: [],
+    selRecipients: [],
     incStakehObj:[],
-    emailRecipients:[]
+    emailRecipients:[],
+    rec:[]
 }
 
 export default function(state = initialState, action){
@@ -25,7 +26,7 @@ export default function(state = initialState, action){
         case SELECTED_RECIPIENTS:
         return {
             ...state,
-            recipients:action.payload,
+            selRecipients:action.payload,
         }
         case LIST_EMAIL_RECIPIENTS:
         return {
@@ -36,6 +37,12 @@ export default function(state = initialState, action){
         return {
             ...state,
             incStakehObj:action.payload,
+        }
+
+        case VIEW_RECIPIENTS:
+        return {
+            ...state,
+            rec:action.payload,
         }
 
         default:
