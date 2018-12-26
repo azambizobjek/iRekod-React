@@ -7,6 +7,7 @@ import FolTabHead from '../../workflow/update/TabWorkflowDet'
 import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
 
 import {setWizardPage, setActivityStore} from '../../../actions/workflowAction/workflowDetailAction'
+// import {viewRecipients} from '../../../actions/workflowAction/updateActAction'
 import Breadcrumb from '../../layouts/Breadcrumb'
 
 import {connect} from 'react-redux'
@@ -29,6 +30,7 @@ class WorkflowDetails extends Component {
         bio_access_id: bId      
     }
     this.props.setActivityStore(activityObj)
+    // this.props.viewRecipients(activityObj)
     // console.log(activityObj)
 
     const selDetails={
@@ -123,6 +125,7 @@ WorkflowDetails.propTypes={
   workflowDetail: PropTypes.object.isRequired,
   listWrkFlw: PropTypes.object.isRequired,
   setSelDetails: PropTypes.func.isRequired,
+//   viewRecipients: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
