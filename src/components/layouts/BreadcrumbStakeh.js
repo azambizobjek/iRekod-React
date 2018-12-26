@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+// import ViewDetail from '../components/stakeholder/view/ViewDetail'
 
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakehType} from '../../actions/stakeholderAction/stakehTypeAction'
@@ -10,7 +11,7 @@ import {setStkhAccDetail,setAncestor,setDescendant,setcustomField} from '../../a
 import {viewStakehGroup,viewStakehMember} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcUpd} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 
-class BreadcrumbStakeh extends Component {
+class BreadcrumbStakeh extends Component {     
 
     setActivePage=(e)=>{
         e.preventDefault()     
@@ -34,9 +35,11 @@ class BreadcrumbStakeh extends Component {
         e.preventDefault()     
 
         this.props.bcUpd(false)
+        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+
 
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType
         // console.log(stakehNumb)   
        
         const stakehObj={
@@ -46,10 +49,9 @@ class BreadcrumbStakeh extends Component {
             stakeh_type: parseInt(stakehNumb),
         }
         this.props.setStakehType(stakehObj) 
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
 
         const stakehDet={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -58,7 +60,7 @@ class BreadcrumbStakeh extends Component {
          //Ancestor Group
          const listAncestor={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -67,7 +69,7 @@ class BreadcrumbStakeh extends Component {
         //Descendant Member
         const listDescendant={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -75,7 +77,7 @@ class BreadcrumbStakeh extends Component {
 
         //Member
         const stakehMember={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }
@@ -83,7 +85,7 @@ class BreadcrumbStakeh extends Component {
 
          //List Group
          const stakehGroup={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
         }
@@ -99,12 +101,18 @@ class BreadcrumbStakeh extends Component {
 
 
 
-    }
+    }  
+    
+    // components={
+    //     'viewStakeh': ViewDetail
+    // }
+
 
   render() {
     const {pageTitle}=this.props.layout
-    const {stakeholderDetail} = this.props.stakeholderView
+    const {stakeholderDetail} = this.props.stakeholderView     
     const {bcIndex,bcDet,bcUpd} = this.props.stakeholderBreadCrumb
+    // const Page=this.components[pName]   
 
     return (
 

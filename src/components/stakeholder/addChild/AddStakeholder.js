@@ -3,7 +3,6 @@ import BasicWizard from '../../stakeholder/addChild/BasicWizard'
 import SecurityWizard from '../../stakeholder/addChild/SecurityWizard' 
 import FolTabHead from '../../stakeholder/addChild/FolTabHeadAdd'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
-// import {setWizardPage} from '../../../actions/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction' 
 
@@ -15,7 +14,7 @@ class NewStakeholder extends Component {
     handleWizard=(wizardName)=>{        
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
-        // console.log(stakehNumb)
+        // console.log(stakeholder_id)
         
         this.props.setWizardPage(wizardName)
         // console.log(e.target.getAttribute('data-wizardname'))  

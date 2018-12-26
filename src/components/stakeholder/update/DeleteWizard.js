@@ -1,5 +1,6 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
+import { Alert } from "reactstrap"
 import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
 
 import {connect} from 'react-redux'
@@ -7,7 +8,7 @@ import PropTypes from 'prop-types'
 
 import "react-datepicker/dist/react-datepicker.css"
 
-class customField extends Component {
+class deleteWizard extends Component {
     constructor(){
         super()
         this.state={
@@ -108,7 +109,7 @@ class customField extends Component {
     
     return (
       <Fragment>
-        <h1 className="h3 display text-primary text-center">Custom Field</h1>
+        <h1 className="h3 display text-primary text-center">Delete</h1>
             <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
@@ -119,47 +120,25 @@ class customField extends Component {
                         <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
                         
                         <div className="row">
-
-                            <table className="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Field</th>
-                                        <th scope="col">Value</th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    {rows.map((item, idx)  => (
-                                       
-                                    <tr id="addr0" key={idx}>
-                                        <th scope="row">{idx}</th>                                          
-                                            <td>                                               
-                                            <Select
-                                                options={listCustomField}
-                                                name="field"
-                                                onChange={this.handleChange(idx)}
-                                                value={rows[idx].field}                                             
-                                                placeholder="Custom Field"/>   
-                                            </td>
-                                            <td>
-                                                <input name="value" type="text" onChange={this.handleChange(idx)}  className="form-control" value={rows[idx].value}  />
-                                            </td>
-                                            <td>                                               
-                                                <button type="submit" onClick={this.handleRemoveSpecificRow(idx)} className="btn btn-danger">Delete</button>
-                                            </td>
-                                    </tr>                                      
-                                    ))}
-                                </tbody>
-                            </table>
-                            </div>
+                            <p className='mt-4'>Warning: this cannot be undone.</p>
+                                <p className='mt-4'>Once you delete this folder, there is no getting back.</p>
+                                <p className='mt-4'>Make sure you want to do this.</p>
+                                {/* {delError !== null ? ( */}
+                                    <Alert color='danger'>
+                                        <p className='mb-0 text-danger'> Test </p>
+                                    </Alert>
+                                {/* ) : ( */}
+                                {/* "" */}
+                                {/* )} */}
+                       
+                        </div>
                         
                         </div>
                 </div>
-                <div className="modal-footer">   
+                {/* <div className="modal-footer">   
                     <button type="submit" className="btn btn-primary">Save</button>                 
                     <button type="button" className="btn btn-secondary">Close</button>
-                </div>
+                </div> */}
             </form>
                 {/* <Loader
                     modalIsOpen={this.state.openLoader}
@@ -169,7 +148,7 @@ class customField extends Component {
     )
   }
 }
-customField.propTypes={
+deleteWizard.propTypes={
     session: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
@@ -196,4 +175,4 @@ export default connect(mapStateToProps,{
     
 
     
-})(customField)
+})(deleteWizard)

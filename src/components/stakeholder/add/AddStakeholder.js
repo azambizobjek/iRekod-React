@@ -13,12 +13,12 @@ import PropTypes from 'prop-types'
 class NewStakeholder extends Component {
 
     handleWizard=(wizardName)=>{        
-        const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
+        const {user:{bio_access_id:idAccess}} = this.props.session       
+        const {stakehNumb} = this.props.stakeholderlistType  
         // console.log(stakehNumb)
         
         this.props.setWizardPage(wizardName)
-        // console.log(e.target.getAttribute('data-wizardname'))  
+        // console.log(wizardName)  
         
         //Role List
         const RoleObj={
@@ -34,31 +34,31 @@ class NewStakeholder extends Component {
         }
         this.props.setStakehList(stakehList)
 
-          //stkh Detail
-        const stakehDet={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
-            action:'ITEM_DETAIL',            
-        }
-        this.props.setStkhAccDetail(stakehDet)   
+        //stkh Detail
+        // const stakehDet={
+        //     stakeholder_id:stakeholder_id,
+        //     bio_access_id:idAccess,
+        //     action:'ITEM_DETAIL',            
+        // }
+        // this.props.setStkhAccDetail(stakehDet)   
 
         //Ancestor Group
-        const listAncestor={
-            bio_access_id: idAccess,
-            stakeholder_id: stakeholder_id,
-            action: "ITEM_LIST_ANCESTOR",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setAncestor(listAncestor)
+        // const listAncestor={
+        //     bio_access_id: idAccess,
+        //     stakeholder_id: stakeholder_id,
+        //     action: "ITEM_LIST_ANCESTOR",
+        //     stakeh_type: parseInt(stakehNumb)      
+        // }
+        // this.props.setAncestor(listAncestor)
 
         //Descendant Member
-        const listDescendant={
-            bio_access_id: idAccess,
-            stakeholder_id: stakeholder_id,
-            action: "ITEM_LIST_DESCENDANT",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setDescendant(listDescendant)
+        // const listDescendant={
+        //     bio_access_id: idAccess,
+        //     stakeholder_id: stakeholder_id,
+        //     action: "ITEM_LIST_DESCENDANT",
+        //     stakeh_type: parseInt(stakehNumb)      
+        // }
+        // this.props.setDescendant(listDescendant)
 
         //Security Level
          const SecurityObj={

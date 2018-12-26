@@ -145,7 +145,7 @@ class index extends Component {
         this.props.bcDet(true) //breadcrumb Detail page 
        
         this.props.setActivePage(param)  //direct page to viewDetail
-        // console.log(FabRec)
+        // console.log(param)
 
         //stkh Detail
         const stakehDet={

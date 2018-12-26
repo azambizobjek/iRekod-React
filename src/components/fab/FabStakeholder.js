@@ -73,6 +73,28 @@ const updSecBtn=(e)=>{
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Group & Associate Info</div>}
+                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                             <img name="group" data-wizardpage="group" src={require('../../img/share.svg')} alt='group' className='img-fluid' onClick={updSecBtn}  /> 
+                        </Tooltip>
+                    </span>
+                </li>
+
+                <li className= "fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                            placement="left"
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Access Info</div>}
+                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                             <img name="access" data-wizardpage="access" src={require('../../img/access.svg')} alt='access' className='img-fluid' onClick={updSecBtn}  /> 
+                        </Tooltip>
+                    </span>
+                </li>
+
+                <li className= "fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                            placement="left"
                             overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Security Info</div>}
                             arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
                              <img name="security" data-wizardpage="security" src={require('../../img/padlock.svg')} alt='security' className='img-fluid' onClick={updSecBtn}  /> 

@@ -3,7 +3,7 @@ import BasicWizard from '../../stakeholder/update/BasicWizard'
 import SecurityWizard from '../../stakeholder/update/SecurityWizard'
 import AccessWizard from '../../stakeholder/update/AccessWizard'
 import GrpMberWizard from '../../stakeholder/update/Group&Member'
-import CustomField from '../../stakeholder/update/CustomField'
+import DeleteWizard from '../../stakeholder/update/DeleteWizard'
 import FolTabHead from '../../stakeholder/update/FolTabHead'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
@@ -100,7 +100,7 @@ class UpdateDetail extends Component {
         security:SecurityWizard,        
         access:AccessWizard,
         group:GrpMberWizard,
-        custom:CustomField     
+        delete:DeleteWizard     
 
         // icon:{
         //     delete:`fab-trash.svg`,
@@ -127,9 +127,7 @@ class UpdateDetail extends Component {
          
         <Fragment>
 
-        <BreadCrumb/>
-      
-       
+        <BreadCrumb/>    
 
        {stakeholderDetail.map((item,idx)=>
         <section key={idx} className="forms">

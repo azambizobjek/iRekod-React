@@ -1,9 +1,10 @@
 import React, { Component,Fragment } from 'react' 
-import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker"
 import moment from 'moment'
+import CloseBtn from '../../stakeholder/addChild/AddCloseBtn'
 import {addChild} from '../../../actions/stakeholderAction/stakehAddAction'
 import {setMember} from '../../../actions/stakeholderAction/stakehUpdateAction'
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -207,7 +208,7 @@ class basicWizard extends Component {
                 </div>
                 <div className={active==='basic'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
                 </div>
             </form>
                 {/* <Loader
