@@ -63,88 +63,28 @@ class ActivityWizard extends Component {
         }        
     }  
 
-    // componentWillMount(){
-    // const {activityDet}=this.props.workflowDetail  
-   
-    // // console.log(activityDet)
-    //   const {
-    //     task_id,
-    //     subject,
-    //     title,
-    //     instruction,
-    //     estimated_duration ,
-    //      is_important,
-    //      is_auto_start ,
-    //      default_assignor_id ,
-    //      default_assignee_id,
-    //      default_assignor_name,
-    //      default_assignee_name,
-    //      default_supervisor_id ,
-    //      default_supervisor_name ,
-    //      default_manager_id ,
-    //      default_manager_name ,
-    //      parent_id,
-    //      prev_task_id ,
-    //      prev_task_title,
-    //      additional_tasks ,
-    //      next_task_id ,
-    //      next_task_title ,
-    //      is_decision ,
-    //      task_results ,
-    //      acl_id ,
-    //      stakeholder_fields ,
-         
-    //   } = this.props.item
-
-      
-    //     this.setState({
-    //       task_id: task_id,
-    //       title: title,
-    //       subject: subject,
-    //       instruction: instruction,
-    //       estimated_duration: estimated_duration,
-    //       is_important: is_important,
-    //       is_auto_start: is_auto_start,
-    //       default_assignor_id: default_assignor_id,
-    //       default_assignee_id: default_assignee_id,
-    //       default_assignor_name:default_assignor_name,
-    //       default_assignee_name: default_assignee_name,
-    //       default_supervisor_id: default_supervisor_id,
-    //       default_supervisor_name: default_supervisor_name,
-    //       default_manager_id: default_manager_id,
-    //       default_manager_name: default_manager_name,
-    //       parent_id: parent_id,
-    //       prev_task_id: prev_task_id,
-    //       prev_task_title: prev_task_title,
-    //       additional_tasks: additional_tasks,
-    //       next_task_id: next_task_id,
-    //       next_task_title: next_task_title,
-    //       is_decision: is_decision,
-    //       task_results: task_results,
-    //       acl_id: acl_id,
-    //       stakeholder_fields: stakeholder_fields,
-    //     })    
-
-    // }
-
     componentDidUpdate(prevProps){
-    if(prevProps.workflowDetail.activityDet!==this.props.workflowDetail.activityDet){
-        console.log('1111')
-        const {activityDet} = this.props.workflowDetail
-        const {stakehList} = this.props.listWrkFlw
-        const {itemListSubject} = this.props.workflowDetail
+    if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
+
         const {
             default_assignee_name, default_assignee_id, 
             default_assignor_name,  default_assignor_id,
             default_manager_name, default_manager_id,
             prev_task_title, prev_task_id, 
             default_supervisor_name, default_supervisor_id, 
-            next_task_title, next_task_id } = this.props.item
-        // const stakehOptionsAssignor = stakehList.filter(itm => itm.full_name === default_assignor_name)
-        // const stakehOptionManager = stakehList.filter(itm => itm.full_name === default_manager_name)
-        // const stakehOptionSupervisor = stakehList.filter(itm => itm.full_name === default_supervisor_name)
-        // const listOptionPrev = itemListSubject.filter(itm => itm.title=== prev_task_title)
-        // const listOptionNext = itemListSubject.filter(itm => itm.title=== next_task_title)
+            next_task_title, next_task_id,
+            task_id,
+            subject,
+            title,
+            instruction,
+            estimated_duration ,
+             is_important,
+             is_auto_start ,
+             parent_id,
+             is_decision ,
+             task_results ,
+             acl_id ,
+             stakeholder_fields} = this.props.item
        
         const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
         const assignorValue=({value: default_assignor_id, label:default_assignor_name})
@@ -154,35 +94,21 @@ class ActivityWizard extends Component {
         const prevTitleValue=({value: prev_task_id, label:prev_task_title})
         
 
-       const {
-        task_id,
-        subject,
-        title,
-        instruction,
-        estimated_duration ,
-         is_important,
-         is_auto_start ,
-        //  default_assignor_id ,
-        //  default_assignee_id,
-        //  default_assignor_name,
-        //  default_assignee_name,
-        //  default_supervisor_id ,
-        
-        //  default_supervisor_name ,
-        //  default_manager_id ,
-        //  default_manager_name ,
-         parent_id,
-        //  prev_task_id ,
-        //  prev_task_title,
-        //  additional_tasks ,
-        //  next_task_id ,
-        //  next_task_title ,
-         is_decision ,
-         task_results ,
-         acl_id ,
-         stakeholder_fields ,
+    //    const {
+    //     task_id,
+    //     subject,
+    //     title,
+    //     instruction,
+    //     estimated_duration ,
+    //      is_important,
+    //      is_auto_start ,
+    //      parent_id,
+    //      is_decision ,
+    //      task_results ,
+    //      acl_id ,
+    //      stakeholder_fields ,
          
-      } = this.props.item
+    //   } = this.props.item
 
       
         this.setState({
@@ -204,7 +130,6 @@ class ActivityWizard extends Component {
           parent_id: parent_id,
           prev_task_id: prevTitleValue,
           prev_task_title: prevTitleValue,
-        //   additional_tasks: additional_tasks,
           next_task_id: nextTitleValue,
           next_task_title: nextTitleValue,
           is_decision: is_decision,
@@ -213,7 +138,6 @@ class ActivityWizard extends Component {
           stakeholder_fields: stakeholder_fields,
         })    
         }
-//  console.log(this.state.instruction)
     }
 
      
@@ -228,6 +152,20 @@ class ActivityWizard extends Component {
         console.log(inputVal)
         console.log(input)
     } 
+
+    handleTextChange=(e)=>{
+        const inputName = e.target.getAttribute('name')
+        const inputVal =  e.target.value
+        // ===""?e.target.value=null:e.target.value  
+        // console.log(e.target.value)    
+    
+      this.setState({
+          [inputName]:inputVal
+        })  
+         console.log(inputName)   
+         console.log(inputVal)
+    }
+    
 
 
     handleAssignorChange=(value)=>{
@@ -341,6 +279,8 @@ handleViewChange=(value)=>{
 
 componentDidMount() {
     console.log('9999')
+
+
     //aclEntries. When change tab header, remain its value
     const {acl_entries} = this.props.item
 
@@ -402,29 +342,39 @@ componentDidMount() {
         default_manager_name, default_manager_id,
         prev_task_title, prev_task_id, 
         default_supervisor_name, default_supervisor_id, 
-        next_task_title, next_task_id 
-        } = this.props.item
+        next_task_title, next_task_id,
+        task_id,subject,title,instruction,estimated_duration,
+        is_important,is_auto_start,parent_id,is_decision,
+        task_results,acl_id,stakeholder_fields} = this.props.item
        
         
-    const {updAct} = this.props.updActReducer
-    
-console.log(updAct)
     const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
     const assignorValue=({value: default_assignor_id, label:default_assignor_name})
     const managerValue=({value: default_manager_id, label:default_manager_name})
     const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
     const nextTitleValue=({value: next_task_id, label:next_task_title})
-    const prevTitleValue=({value: prev_task_id, label:prev_task_title})
-
-  
+    const prevTitleValue=({value: prev_task_id, label:prev_task_title})         
+    
     this.setState({
-        default_assignee_name:assigneeValue,
-        default_assignor_name:assignorValue,
-        default_manager_name:managerValue,
-        default_supervisor_name:supervisorValue,
-        prev_task_title:prevTitleValue,
-        next_task_title:nextTitleValue
-            })
+            task_id: task_id,
+            title: title,
+            subject: subject,
+            instruction: instruction,
+            estimated_duration: estimated_duration,
+            is_important: is_important,
+            is_auto_start: is_auto_start,
+            is_decision: is_decision,
+            task_results: task_results,
+            acl_id: acl_id,
+            stakeholder_fields: stakeholder_fields,
+            default_assignee_name:assigneeValue,
+            default_assignor_name:assignorValue,
+            default_manager_name:managerValue,
+            default_supervisor_name:supervisorValue,
+            prev_task_title:prevTitleValue,
+            next_task_title:nextTitleValue
+          })    
+          
   }
 
 
@@ -654,7 +604,7 @@ console.log(updAct)
     const { default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle, prev_task_title,taskResStat, 
         accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title} = this.state
            
-    const {subject,title,instruction,estimated_duration,is_important,is_auto_start,is_decision} = this.props.item
+    const {subject,title,instruction,estimated_duration,is_important,is_auto_start,is_decision} = this.state
 
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     const optionListItemBySubject = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
@@ -697,23 +647,23 @@ console.log(updAct)
                     <div className="row" >
                         <div className="form-group col">
                           <label>Subject</label>
-                            <input  name="subject" type="text" className="form-control" onChange={this.handleChange} value={decodeURIComponent(subject)}/> 
+                            <input  name="subject" type="text" className="form-control" onChange={this.handleTextChange} value={decodeURIComponent(subject)}/> 
                         </div>
                 </div>
 
                         <div className="form-group">
                           <label>Title</label>
-                            <input  name="title" type="text" className="form-control" onChange={this.handleChange} value={decodeURIComponent(title)}/> 
+                            <input  name="title" type="text" className="form-control" value={decodeURIComponent(title)} onChange={this.handleTextChange}/> 
                         </div>
 
                         <div className="form-group">
                           <label>Instruction</label>
-                            <textarea name="instruction" rows="4" cols="50" className="form-control" onChange={this.handleChange} value={decodeURIComponent(instruction)}/> 
+                            <textarea name="instruction" rows="4" cols="50" className="form-control" onChange={this.handleTextChange} value={decodeURIComponent(instruction)}/> 
                         </div>
 
                         <div className="form-group">
                           <label>Duration</label>
-                            <input name="estimated_duration"  type="text" className="form-control" onChange={this.handleChange} value={decodeURIComponent(estimated_duration)}/> 
+                            <input name="estimated_duration"  type="text" className="form-control" onChange={this.handleTextChange} value={decodeURIComponent(estimated_duration)}/> 
                         </div>
 
                       
