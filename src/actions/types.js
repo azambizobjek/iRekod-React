@@ -107,7 +107,7 @@ export const LIST_UPDATE_ACTIVITY = 'LIST_UPDATE_ACTIVITY'
 export const SELECTED_RECIPIENTS = 'SELECTED_RECIPIENTS'
 export const LIST_EMAIL_RECIPIENTS = 'LIST_EMAIL_RECIPIENTS'
 export const SELECTED_INC_STAKEH = 'SELECTED_INC_STAKEH'
-
+export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
 
 /////////////////////////////////////////////////////AuditTrail//////////////////////////////////////////////////////
 
