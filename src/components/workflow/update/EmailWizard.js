@@ -27,8 +27,10 @@ class EmailWizard extends Component {
         emailTempName: "",
         receipientDetails:"",
         email_template_id:null,
-        stakeholder_fields:[]
-        
+        stakeholder_fields:[],
+        reciValue: null,
+        emailValue:null,
+        optionEmailTemp:[]
     }        
 }  
 
@@ -38,6 +40,7 @@ componentDidUpdate(prevProps){
   if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
   const {
      recipients,
+     email_template_id,
      include_assignee ,
      include_home ,
      include_owner ,
@@ -46,28 +49,44 @@ componentDidUpdate(prevProps){
      default_assignee_name
   } = this.props.item
 
-  const recpnts = recipients.map(itm=>({ value: itm.recipient_id, label:decodeURIComponent(itm.recipient_name)} ))
+  const {selDetails} = this.props.listWrkFlw
+  const v = selDetails[0].recipients
+  const {emailObj} = this.props.workflowDetail
+  const emailOpt = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  const emailVal = emailObj.filter(itm => itm.email_template_id === selDetails[0].email_template_id)
+  console.log(emailVal)
+  
+  const recpnts = v.map(itm=>({ value: itm.recipient_id, label:decodeURIComponent(itm.recipient_name)} ))
   const stakehF = stakeholder_fields.map(itm=>({ value: itm.stakeholder_field_id, label:decodeURIComponent(itm.stakeholder_field_label)} ))
+ 
+  if (selDetails[0].email_template_id!==""){
 
+    this.setState({
+      emailValue:[{label : emailVal[0].name, value:emailVal[0].email_template_id}]
+          })
+  }
 
     this.setState({
       default_assignee_name:default_assignee_name,
-      recipients: recpnts,
+      optionEmailTemp:emailOpt,
+      // emailValue:[{label : emailVal[0].name, value:emailVal[0].email_template_id}],
+      reciValue: recpnts,
       include_assignee: include_assignee,
       include_home: include_home,
       include_owner: include_owner,
       include_stakeholders: include_stakeholders,
       stakeholder_fields:stakehF
     })
+    }
     
-  }
   }
 
 
 handleEmailTempChange=(value)=>{
   console.log(value)
+ 
   this.setState({
-    email_template_id:value,
+    emailValue:value,
   })
 }
 
@@ -78,10 +97,10 @@ handleReceipientsChange=(value)=>{
     recipient_name: item.label
 }))
 
-this.props.setRecipients(viewSource)
-
+// this.props.setRecipients(viewSource)
+console.log(viewSource)
   this.setState({
-    recipients:value,
+    reciValue:value,
   })
 }
 
@@ -114,13 +133,20 @@ this.setState({
 componentDidMount() {
   const {activityDet} = this.props.workflowDetail
   const {emailObj} = this.props.workflowDetail
+  const {selDetails} = this.props.listWrkFlw
+  console.log(selDetails[0].email_template_id)
+  const emailOpt = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  const emailTemplateName = emailObj.filter(itm => itm.email_template_id === selDetails[0].email_template_id)
+  
+  this.setState({
+    optionEmailTemp:emailOpt,
+    
+  })
 
-  const emailTemplateName = emailObj.filter(itm => itm.email_template_id === activityDet[0].email_template_id)
-
-if (activityDet[0].email_template_id!==""){
+if (selDetails[0].email_template_id!==""){
 
   this.setState({
-    email_template_id:[{label : emailTemplateName[0].name, value:emailTemplateName[0].email_template_id}]
+    emailValue:[{label : emailTemplateName[0].name, value:emailTemplateName[0].email_template_id}]
         })
 }
 
@@ -131,6 +157,12 @@ formSubmit=(e)=>{
 
     const {user:{bio_access_id:bId}} = this.props.session
     // const {recipients, incStakehObj} = this.props.updActReducer
+
+    const {selDetails} = this.props.listWrkFlw
+    // const {recipients} = this.state
+    console.log(selDetails[0].recipients)
+    
+
 
     const {
       task_id,
@@ -164,15 +196,32 @@ formSubmit=(e)=>{
       recipients
     } = this.props.item
 
-    
+    console.log(recipients)
      const { 
-      email_template_id ,
+     emailValue:{value:email_template_id,label:name},
      include_assignee ,
      include_home ,
      include_owner ,
      include_stakeholders,
+     reciValue
      } = this.state
+    // console.log(email_template_id.value)
 
+  const recipientsSources = reciValue.map( x=>({
+    recipient_id: x.value,
+    recipient_name: x.label, 
+  }))
+
+
+  {email_template_id===null || email_template_id === ''? 
+  // console.log(object)
+  this.setState({
+    emailValue:''
+  })
+  :
+  this.setState({
+    emailValue:email_template_id
+  })}
 
     const updateObj={
       task_id:task_id,
@@ -201,8 +250,8 @@ formSubmit=(e)=>{
       acl_id: acl_id,
       acl_entries: acl_entries,
 
-      email_template_id: email_template_id.value,
-      recipients: recipients,
+      email_template_id: email_template_id,
+      recipients: recipientsSources,
       include_assignee: include_assignee,
       include_home: include_home,
       include_owner: include_owner,
@@ -219,13 +268,13 @@ formSubmit=(e)=>{
     console.log(updateObj)
     alert("Successful Update")
 
-    const selDetails={
+    const itemDetails={
       task_id: task_id,
       action: "ITEM_DETAIL",
       bio_access_id: bId       
   }
-  this.props.setSelDetails(selDetails)
-console.log(this.state.stakeholder_fields)
+  this.props.setSelDetails(itemDetails)
+// console.log(this.state.stakeholder_fields)
 }
 
 setActivePage=(e)=>{
@@ -245,9 +294,9 @@ setActivePage=(e)=>{
    
 
   const {emailObj,customFieldObj} = this.props.workflowDetail
-  const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  // const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const optionCstmFldStkhObj = customFieldObj.map((itm => ({ value: decodeURIComponent(itm.custom_field_id), label:decodeURIComponent(itm.custom_field_name)})))
-  const { recipients, stakeholder_fields, email_template_id} = this.state
+  const { reciValue, stakeholder_fields, emailValue, optionEmailTemp} = this.state
 
   const {stakehList} = this.props.listWrkFlw
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
@@ -271,7 +320,7 @@ setActivePage=(e)=>{
                               onChange={this.handleEmailTempChange}
                               options={optionEmailTemp}
                               // value={email_template_id}
-                              value={email_template_id==='' || email_template_id === null ? '':email_template_id}
+                              value={emailValue}
                               isClearable
                             />
                     </div>
@@ -281,7 +330,7 @@ setActivePage=(e)=>{
                                 <Select
                               onChange={this.handleReceipientsChange}
                               options={stakehOptions}
-                              value={recipients}
+                              value={reciValue}
                               isMulti
                               isClearable
                             />
@@ -350,6 +399,7 @@ EmailWizard.propTypes={
   setIncStakeh:PropTypes.func.isRequired,
   setActivePage: PropTypes.func.isRequired,
   setSelDetails: PropTypes.func.isRequired,
+  // viewRecipients: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
