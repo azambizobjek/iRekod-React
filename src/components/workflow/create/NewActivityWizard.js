@@ -262,7 +262,7 @@ class NewActivityWizard extends Component {
         title: title,
         subject: subject.value,
         instruction: instruction,
-        estimated_duration: estimated_duration,
+        estimated_duration: parseInt(estimated_duration),
         is_important: is_important,
         is_auto_start: is_auto_start,
         default_assignor_id: stakehValAssignorNew.value,
@@ -494,27 +494,15 @@ acl_builder=(selData,aclEntries,type)=>{
                         </div>
 
                         <div className="form-group">
-                          <label>Duration</label>
-                            <input name="estimated_duration"  type="text" className="form-control" onChange={this.handleTextChange}/> 
+                          <label>Duration(days)</label>
+                            <input name="estimated_duration"  type="number" className="form-control" min="0" onChange={this.handleTextChange}/> 
                         </div>
 
                       
                         {/* stakeholder */}
-                        <div className="row form-group">
-                            
+                        <div className="row">
 
-                            <div className="col form-group">
-                                <label>Assignor</label>
-                                <Select
-                              className="basic-single"
-                              onChange={this.handleAssignorChange}
-                              options={optionStakehList}
-                              value={stakehValAssignorNew}
-                              isClearable
-                            />
-                            </div>
-
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Assignee</label>
                                 <Select
                               className="basic-single"
@@ -524,10 +512,8 @@ acl_builder=(selData,aclEntries,type)=>{
                               isClearable
                             />
                             </div>
-                    </div>
-                    
-                    <div className="row form-group">
-                            <div className="col form-group">
+
+                            <div className="col-sm-4 form-group">
                                 <label>Supervisor</label>
                                 <Select
                               className="basic-single"
@@ -538,7 +524,7 @@ acl_builder=(selData,aclEntries,type)=>{
                             />
                             </div>
 
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Manager</label>
                                 <Select
                               className="basic-single"
