@@ -38,7 +38,7 @@ class ActivityWizard extends Component {
             additional_tasks: null,
             next_task_id: null,
             next_task_title: null,
-            is_decision: null,
+            is_decision: false,
             task_results: null,
             acl_id: null,
             stakeholder_fields: null,   
@@ -65,7 +65,7 @@ class ActivityWizard extends Component {
 
     componentDidUpdate(prevProps){
     if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
-
+        console.log('11111')
         const {
             default_assignee_name, default_assignee_id, 
             default_assignor_name,  default_assignor_id,
@@ -92,24 +92,7 @@ class ActivityWizard extends Component {
         const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
         const nextTitleValue=({value: next_task_id, label:next_task_title})
         const prevTitleValue=({value: prev_task_id, label:prev_task_title})
-        
-
-    //    const {
-    //     task_id,
-    //     subject,
-    //     title,
-    //     instruction,
-    //     estimated_duration ,
-    //      is_important,
-    //      is_auto_start ,
-    //      parent_id,
-    //      is_decision ,
-    //      task_results ,
-    //      acl_id ,
-    //      stakeholder_fields ,
-         
-    //   } = this.props.item
-
+    
       
         this.setState({
           task_id: task_id,
@@ -422,7 +405,7 @@ componentDidMount() {
       title: title,
       subject: subject,
       instruction: instruction,
-      estimated_duration: estimated_duration,
+      estimated_duration: parseInt(estimated_duration),
       is_important: is_important,
       is_auto_start: is_auto_start,
       default_assignor_id: default_assignor_name.value,
@@ -662,28 +645,14 @@ componentDidMount() {
                         </div>
 
                         <div className="form-group">
-                          <label>Duration</label>
-                            <input name="estimated_duration"  type="text" className="form-control" onChange={this.handleTextChange} value={decodeURIComponent(estimated_duration)}/> 
+                          <label>Duration (days)</label>
+                            <input name="estimated_duration" type="number" className="form-control" min="0" onChange={this.handleTextChange} value={decodeURIComponent(estimated_duration)}/> 
                         </div>
 
                       
                         {/* stakeholder */}
                         <div className="row form-group">
-                            
-
-                            <div className="col form-group">
-                                <label>Assignor</label>
-                                {/* <input name="default_assignor_name" type="text" className="form-control" onChange={this.handleChange} value={decodeURIComponent(default_assignor_name)}/>  */}
-                                <Select
-                              className="basic-single"
-                              onChange={this.handleAssignorChange}
-                              options={optionStakehList}
-                              value={default_assignor_name}
-                              isClearable
-                            />
-                            </div>
-
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Assignee</label>
                                 {/* <input name="default_assignee_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} value={decodeURIComponent(default_assignee_name)}/> */}
                                 <Select
@@ -694,10 +663,8 @@ componentDidMount() {
                               isClearable
                             />
                             </div>
-                    </div>
-                    
-                    <div className="row form-group">
-                            <div className="col form-group">
+
+                            <div className="col-sm-4 form-group">
                                 <label>Supervisor</label>
                                 {/* <input name="default_supervisor_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={decodeURIComponent(default_supervisor_name)}/> */}
                                 <Select
@@ -709,7 +676,7 @@ componentDidMount() {
                             />
                             </div>
 
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Manager</label>
                                 {/* <input name="default_manager_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange} value={decodeURIComponent(default_manager_name)}/> */}
                                 <Select
