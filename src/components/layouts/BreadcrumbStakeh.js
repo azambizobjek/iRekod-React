@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 import {setActivePage} from '../../actions/layoutInitAction' 
 import {setStakehType} from '../../actions/stakeholderAction/stakehTypeAction'
-import {setStkhAccDetail,setAncestor,setDescendant,setcustomField} from '../../actions/stakeholderAction/stakehUpdateAction'
+import {setStkhAccDetail,setAncestor,setDescendant} from '../../actions/stakeholderAction/stakehUpdateAction'
 import {viewStakehGroup,viewStakehMember} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcUpd} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 
@@ -93,12 +93,7 @@ class BreadcrumbStakeh extends Component {
 
         // this.handleWizard()
          
-        const customFieldObj={
-            action:"ITEM_LIST_ATTRIBUTE",
-            bio_access_id: idAccess
-        }
-        this.props.setcustomField(customFieldObj)
-
+       
 
 
     }  
@@ -144,8 +139,7 @@ BreadcrumbStakeh.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     setStkhAccDetail: PropTypes.func.isRequired,
     setAncestor: PropTypes.func.isRequired,
-    setDescendant: PropTypes.func.isRequired,
-    setcustomField: PropTypes.func.isRequired,
+    setDescendant: PropTypes.func.isRequired,    
     bcUpd: PropTypes.func.isRequired,
     
   }
@@ -167,8 +161,7 @@ BreadcrumbStakeh.propTypes={
     viewStakehMember,
     setStkhAccDetail,
     setAncestor,
-    setDescendant,
-    setcustomField,
+    setDescendant,    
     bcUpd
 
     })(BreadcrumbStakeh)

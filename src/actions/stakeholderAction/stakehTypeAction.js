@@ -38,6 +38,7 @@ export const setStakehViewTrue=(param)=>{
         payload:param
     }
 }
+
 export const setStakehViewFalse=(param)=>{
     return {
         type:STAKEH_VIEW,

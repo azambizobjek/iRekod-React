@@ -26,7 +26,7 @@ export const setNavToggle=(toggleVal, pageClass, navClass)=>dispatch=>{
  }
 
 //Set page active
-export const setActivePage=(pageName)=>{     
+export const setActivePage=(pageName)=>{ 
     return {
         type:ACTIVE_PAGE,
         payload:pageName

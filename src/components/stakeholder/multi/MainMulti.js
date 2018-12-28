@@ -1,10 +1,6 @@
-import React, { Component,Fragment } from 'react'
-import BasicWizard from '../../stakeholder/update/BasicWizard'
-import SecurityWizard from '../../stakeholder/update/SecurityWizard'
-import AccessWizard from '../../stakeholder/update/AccessWizard'
-import GrpMberWizard from '../../stakeholder/update/Group&Member'
-import DeleteWizard from '../../stakeholder/update/DeleteWizard'
-import FolTabHead from '../../stakeholder/update/FolTabHead'
+import React, { Component,Fragment } from 'react' 
+import DeleteWizard from '../../stakeholder/multi/DeleteWizard'
+import FolTabHead from '../../stakeholder/multi/FolTabHead'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
@@ -14,7 +10,7 @@ import BreadCrumb from '../../layouts/BreadcrumbStakeh'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-class UpdateDetail extends Component {
+class MainMulti extends Component {
 
     handleWizard=(wizardName)=>{        
         const {user:{bio_access_id:idAccess}} = this.props.session
@@ -89,12 +85,8 @@ class UpdateDetail extends Component {
 
     }
  
-    components={
-        basic:BasicWizard,
-        security:SecurityWizard,        
-        access:AccessWizard,
-        group:GrpMberWizard,
-        delete:DeleteWizard     
+    components={        
+        "deleteMulti":DeleteWizard     
 
         // icon:{
         //     delete:`fab-trash.svg`,
@@ -123,11 +115,10 @@ class UpdateDetail extends Component {
 
         <BreadCrumb/>    
 
-       {stakeholderDetail.map((item,idx)=>
-        <section key={idx} className="forms">
+        <section className="forms">
            <div className="container-fluid">
                <header>
-                  <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
+                  <h1 className="h3 display">Delete Stakeholder</h1>
                </header>
                <div className=" row">
                    <div className="col-lg-12">
@@ -142,19 +133,18 @@ class UpdateDetail extends Component {
                         </div>
                             <div className="card-body">
                                <Body                                     
-                                    item={item}                                     
                                     active={wzdPage}/>                                   
                            </div>
                        </div>
                    </div>
                </div>
            </div>
-       </section>)}
+       </section>
    </Fragment>
     )
   }
 }
-UpdateDetail.propTypes={
+MainMulti.propTypes={
     session: PropTypes.object.isRequired,  
     layout:PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired, 
@@ -199,4 +189,4 @@ UpdateDetail.propTypes={
     
        
   
-  })(UpdateDetail)
+  })(MainMulti)

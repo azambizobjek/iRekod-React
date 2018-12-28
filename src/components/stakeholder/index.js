@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
 import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
-import {setActivePage} from '../../actions/layoutInitAction' 
+import {setActivePage} from '../../actions/layoutInitAction'  
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setcustomField,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
+import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
 import {showMultiFab} from '../../actions/fabAction'
  
 
@@ -33,6 +33,11 @@ class index extends Component {
         };
     }   
 
+    componentWillMount(){
+        const {stakehType} = this.props.stakeholderlistType
+        this.setState({stakeholderlistType:stakehType})
+    }
+
     componentDidUpdate(prevProps,prevState){
         if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){                   
             const {stakehType}=this.props.stakeholderlistType 
@@ -57,27 +62,27 @@ class index extends Component {
         else if(prevState.stakeholderlistType !== this.state.stakeholderlistType){
             const{isMultiSel}=this.props.fab
             const{stakeholderlistType}=this.state
+            // console.log(stakeholderlistType)
             if(isMultiSel){
-                const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({stakeholder_id:itm.stakeholder_id}))
+                const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({stakeholder_id:itm.stakeholder_id,full_name:itm.full_name}))
                 this.props.setStakehSel(listSelStakeh)
             }
             else
             {
                 const selStakeh=stakeholderlistType.find(itm => itm.isSel === true)
+                // console.log(selStakeh)
                 if(selStakeh!==undefined){
-                    const{user:{bio_access_id:bId}}=this.props.session 
                     const {stakeholder_id:stakeholder_id} = selStakeh
                     this.props.setStakehSel({
                         stakeholder_id:stakeholder_id                       
-                    })
-                    // this.props.setIsContainer(is_container)
-                    // this.props.getRecItemAccess({action:'ITEM_ACCESS',record_id:recId,bio_access_id:bId})
+                    })                   
                 }
             }
         }
 
         else if(prevProps.stakeholderlistType.stakehSel!==this.props.stakeholderlistType.stakehSel){
             const {stakehSel}=this.props.stakeholderlistType
+            // console.log(stakehSel)
             this.setState({stakehSelect:stakehSel})
         }   
              
@@ -92,17 +97,19 @@ class index extends Component {
         const{isMultiSel}=this.props.fab
         const {stakeholderlistType} = this.state
         // console.log(stakeholderlistType)
-        const itmIdx = stakeholderlistType.findIndex(itm=>itm.stakeholder_id === sId)
-        const desIdx = stakeholderlistType.findIndex(itm=>itm.isSel===true),
+        const itmIdx = stakeholderlistType.findIndex(itm=>itm.stakeholder_id === sId),
+            desIdx = stakeholderlistType.findIndex(itm=>itm.isSel===true),
             {isSel:selStakehIsSel}=stakeholderlistType.find(itm=>itm.stakeholder_id===sId)
       
-
         // console.log(itmIdx)
         // console.log(desIdx)
 
-        const newStakeholderList = desIdx === -1?update(stakeholderlistType,{[itmIdx]:{isSel:{$set:true}}})
-        :isMultiSel?update(stakeholderlistType,{[itmIdx]: {isSel:{$set:true}}})
-        :selStakehIsSel? update(stakeholderlistType,{[itmIdx]: {isSel:{$set:false}}})
+        const newStakeholderList = selStakehIsSel 
+        ? update(stakeholderlistType,{[itmIdx]: {isSel:{$set:false}}})
+        :isMultiSel
+        ?update(stakeholderlistType,{[itmIdx]: {isSel:{$set:true}}})
+        :desIdx === -1
+        ?update(stakeholderlistType,{[itmIdx]:{isSel:{$set:true}}})
         :update(stakeholderlistType,{
           [itmIdx]:{isSel:{$set:true}},
           [desIdx]:{isSel:{$set:false}}
@@ -128,6 +135,7 @@ class index extends Component {
         })
     }
 
+    //BreadCrumb
     pageBreadCrumb=(e)=>{
         e.preventDefault()
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -181,29 +189,34 @@ class index extends Component {
       
     } 
 
-    //Delete Btn
-    delBtn=()=>{
-        if (window.confirm("Are you sure want to delete it?")){        
-            const {stakehNumb,stakehType,stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
-            const {activePage,pageTitle} = this.props.layout    
-            const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
-            //  console.log(stakehNumb)       
+    deleteMulti=(param)=>{
+        this.props.setActivePage(param)
+        this.props.setWizardPage(param)       
 
-            const stakehObj={
-                bio_access_id:idAccess,
-                stakeholder_ids:[stakeholder_id]        
-            }
-            this.props.setDelBtn(stakehObj)
-                alert("Successful Deleted") 
-            
-            const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakeholder_id) 
-            // console.log(arr)
-            this.setState({
-                stakeholderlistType:newStakehList
-            })                         
-        }
-        else{}    
     }
+
+
+    // //Delete Btn
+    // delBtn=()=>{
+    //     if (window.confirm("Are you sure want to delete it?")){        
+    //         const {stakehNumb,stakehType,stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
+    //         const {activePage,pageTitle} = this.props.layout    
+    //         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
+    //         //  console.log(stakehNumb)       
+
+    //         const stakehObj={
+    //             bio_access_id:idAccess,
+    //             stakeholder_ids:[stakeholder_id]        
+    //         }
+    //         this.props.setDelBtn(stakehObj)
+    //             alert("Successful Deleted") 
+            
+    //         const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakeholder_id) 
+    //         // console.log(arr)
+    //         this.setState({stakeholderlistType:newStakehList})                         
+    //     }
+    //     else{}    
+    // }    
 
     //Add Stakeholder Child
     child=(page)=>{
@@ -231,13 +244,16 @@ class index extends Component {
     //Change page to 'Update'
     activePage=(param)=>{         
 
+        // console.log(param)
+        // this.props.setActivePage(param==="deleteMulti"?"deleteMulti":"edit")
         this.props.setActivePage("edit")
+        // this.props.setActivePage(param==="basic"?"edit":param==="security"?"edit":param==="access"?"edit":param==="group"?"edit":"multi")
         this.props.setWizardPage(param)
         // console.log(param)
 
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
-        // console.log(stakehNumb)      
+        // console.log(stakeholder_id)      
        
         //Role List
         const RoleObj={
@@ -300,19 +316,10 @@ class index extends Component {
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }
-        this.props.viewStakehMember(stakehMember)
-
-        const customFieldObj={
-            action:"ITEM_LIST_ATTRIBUTE",
-            bio_access_id: idAccess
-        }
-        this.props.setcustomField(customFieldObj)
-         
+        this.props.viewStakehMember(stakehMember)         
     }    
 
-    deleteMain=(param)=>{
-        console.log(param)
-    }
+     
 
     
     render() {
@@ -408,14 +415,13 @@ class index extends Component {
                                 {showFab?
                                     
                                     <Fab
-                                        FabRec={this.setActivePage}
-                                        delBtn={this.delBtn}                                   
+                                        FabRec={this.setActivePage}                                 
                                         stakehNumb={stakehNumb} 
                                         addChild={this.child}
-                                        pageWizard={this.activePage} />:
-                                    
+                                        pageWizard={this.activePage} />: 
+
                                     <MultiFab
-                                        delete={this.delBtn} />
+                                        stakehAction={this.deleteMulti}/>
                                 }                                            
                                 
 
@@ -454,8 +460,7 @@ index.propTypes={
     setStkhAccDetail: PropTypes.func.isRequired,
     setAncestor: PropTypes.func.isRequired,
     setDescendant: PropTypes.func.isRequired,
-    setSecLevel: PropTypes.func.isRequired,
-    setcustomField: PropTypes.func.isRequired,
+    setSecLevel: PropTypes.func.isRequired,   
     showMultiFab: PropTypes.func.isRequired,
     
 }
@@ -488,8 +493,7 @@ export default connect(mapStateToProps,{
     setStkhAccDetail,
     setAncestor,
     setDescendant,
-    setSecLevel,
-    setcustomField,
+    setSecLevel,    
     showMultiFab,
    
 })(index)

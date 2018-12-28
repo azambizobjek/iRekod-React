@@ -5,8 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { changeMultiSel,setSelAll } from '../../actions/fabAction'
-import {setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
+import {setDelBtn,viewStakehMember,viewStakehGroup} from '../../actions/stakeholderAction/stakehViewDetail'
 import {newStakehType} from '../../actions/stakeholderAction/stakehTypeAction'
+import {setActivePage} from '../../actions/layoutInitAction'
+import {setWizardPage,setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../actions/stakeholderAction/stakehUpdateAction'  
+
  
 
 class MultiFab extends Component {
@@ -31,35 +34,42 @@ class MultiFab extends Component {
                 this.props.setSelAll(true)
             break
 
-            case 'delete':
-                if (window.confirm("Are you sure want to delete it?")){  
-                    const {stakehType,stakehSel,stakehNumb} = this.props.stakeholderlistType       
-                    const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session  
+            // case 'delete':
+            //     if (window.confirm("Are you sure want to delete it?")){  
+            //         const {stakehType,stakehSel,stakehNumb} = this.props.stakeholderlistType       
+            //         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session  
                     
-                    const Sid = stakehSel.map(itm=>itm.stakeholder_id)
-                    // console.log(Sid)
-                    // console.log(stakehType)
+            //         const Sid = stakehSel.map(itm=>itm.stakeholder_id)
+            //         // console.log(Sid)
+            //         // console.log(stakehType)
 
-                    const stakehObj={
-                        bio_access_id:idAccess,
-                        stakeholder_ids:Sid      
-                    }
-                    this.props.setDelBtn(stakehObj)
-                    alert("Successful Deleted")      
+            //         const stakehObj={
+            //             bio_access_id:idAccess,
+            //             stakeholder_ids:Sid      
+            //         }
+            //         this.props.setDelBtn(stakehObj)
+            //         alert("Successful Deleted")      
                 
-                    const newStakehType = stakehType.filter(itm=> !Sid.includes(itm.stakeholder_id)) 
-                    // console.log(newStakehType)  
+            //         const newStakehType = stakehType.filter(itm=> !Sid.includes(itm.stakeholder_id)) 
+            //         // console.log(newStakehType)  
 
-                    this.props.newStakehType(newStakehType)     
-                }           
-            break    
+            //         this.props.newStakehType(newStakehType)     
+            //     }   
+
+            //     this.props.setActivePage("edit")
+            //     this.props.setWizardPage(e.target.name)
+            //     console.log(e.target.name)
+               
+            // break    
 
             default:
-                // console.log(e.target.name,e.target.alt)
+                this.props.stakehAction(e.target.name)                 
             break
 
         }
     } 
+
+   
 
      
 
@@ -96,7 +106,7 @@ class MultiFab extends Component {
                     placement="left"
                     overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Delete Stakeholder</div>}
                     arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                        <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={this.setIsMulti} />
+                        <img name="deleteMulti" src={require('../../img/fab-trash.svg')} alt='deleteMulti' className='img-fluid' onClick={this.setIsMulti} />
                     </Tooltip>
                 </span>
             </li>
@@ -128,13 +138,39 @@ MultiFab.propTypes={
     setSelAll:PropTypes.func.isRequired,
     setDelBtn:PropTypes.func.isRequired,
     newStakehType:PropTypes.func.isRequired,
+    setWizardPage:PropTypes.func.isRequired,
+    setActivePage:PropTypes.func.isRequired,
+    setRoleStore:PropTypes.func.isRequired,
+    setStakehList:PropTypes.func.isRequired,
+    setStkhAccDetail:PropTypes.func.isRequired,
+    setAncestor:PropTypes.func.isRequired,
+    setDescendant:PropTypes.func.isRequired,
+    setSecLevel:PropTypes.func.isRequired,  
+    viewStakehMember:PropTypes.func.isRequired,
+    viewStakehGroup:PropTypes.func.isRequired,
      
   }
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     fab:state.fab,
     layout:state.layout,
     stakeholderlistType:state.stakeholderlistType,
     session:state.session
 })
 
-export default connect(mapStateToProps,{changeMultiSel,setSelAll,setDelBtn,newStakehType})(MultiFab)
+export default connect(mapStateToProps,{
+    changeMultiSel,
+    setSelAll,
+    setDelBtn,
+    newStakehType,
+    setWizardPage,
+    setActivePage,
+    setRoleStore,
+    setStakehList,
+    setStkhAccDetail,
+    setAncestor,
+    setDescendant,
+    setSecLevel,  
+    viewStakehMember,
+    viewStakehGroup,
+
+})(MultiFab)

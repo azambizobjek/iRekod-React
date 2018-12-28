@@ -2,6 +2,7 @@ import {SET_SEL_ALL,CHANGE_ISMULTI,SHOW_MULTIFAB} from './types'
 
 
 export const changeMultiSel=(multiStatus)=>dispatch=>{
+    console.log(multiStatus)
     dispatch({
         type:CHANGE_ISMULTI,
         payload:multiStatus

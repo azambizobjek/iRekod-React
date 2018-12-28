@@ -53,7 +53,6 @@ export const ITEM_LIST_ANCESTOR = 'ITEM_LIST_ANCESTOR'
 export const ITEM_LIST_DESCENDANT = 'ITEM_LIST_DESCENDANT'
 export const STORE_DETAIL = 'STORE_DETAIL'
 export const SECURITY_LEVEL = 'SECURITY_LEVEL' 
-export const CUSTOM_FIELD = 'CUSTOM_FIELD'
 
 //Stakeholeder Add
 export const ADD_STAKEH = 'ADD_STAKEH'

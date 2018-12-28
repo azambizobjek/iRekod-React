@@ -3,15 +3,16 @@ import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css';
  
 
-export default function Fab({FabRec,delBtn,addChild,stakehNumb,pageWizard}) {
+export default function Fab({FabRec,addChild,stakehNumb,pageWizard}) {
 //    console.log(addChildBtn)
 const sendActive=(e)=>{
     e.preventDefault()
     FabRec(e.target.name, e.target.alt)      
 }
 
-const deleteBtn=()=>{    
-    delBtn()
+const deleteBtn=(e)=>{    
+    e.preventDefault()
+    pageWizard(e.target.name)
 }
 
 const addChildBtn=(e)=>{

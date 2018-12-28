@@ -13,3 +13,11 @@ export const setStakehList = (param) => dispatch =>{
             })
         })
 }
+
+//Update Stakeh List
+export const newStakehList=(param)=>{
+    return {
+        type:STAKEHOLDER_LIST,
+        payload:param
+    }
+}

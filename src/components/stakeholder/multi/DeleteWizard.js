@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
-import { Alert } from "reactstrap"
+import { Alert,FormGroup } from "reactstrap"
 import {updStkh,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import {setDelBtn} from '../../../actions/stakeholderAction/stakehViewDetail'
 import {newStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
@@ -14,42 +14,67 @@ import PropTypes from 'prop-types'
 import "react-datepicker/dist/react-datepicker.css"
 
 class deleteWizard extends Component {  
+    constructor(){
+        super()
+        this.state={
+          listDel:[],
+          delItem:[]                            
+        }
+    }
+
+    componentDidMount(){
+        const {stakehSel} = this.props.stakeholderlistType
+        const stakehItem = stakehSel.map(itm=>({value:itm.stakeholder_id,label:itm.full_name}))
+        // console.log(stakehItem)
+        this.setState({
+            listDel:stakehItem,
+            delItem:stakehItem,            
+        })
+    }    
+
+    handleDelChange=(value)=>{
+        // console.log(value)
+        this.setState({delItem:value})
+    }
     
     formSubmit=(e)=>{
         e.preventDefault()
-        const {stakehNumb,stakehType,stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
-        const {activePage,pageTitle} = this.props.layout    
+        const {delItem} = this.state
+        const {stakehType} = this.props.stakeholderlistType   
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session    
         const {stakehList} = this.props.stakeholderList  
-        //  console.log(stakehNumb)       
+        // console.log(delItem)       
+
+        const Sid = delItem.map(itm=>itm.value) 
+        // console.log(Sid)                 
 
         const stakehObj={
             bio_access_id:idAccess,
-            stakeholder_ids:[stakeholder_id]        
+            stakeholder_ids:Sid       
         }
         this.props.setDelBtn(stakehObj)
             alert("Successful Deleted") 
         
-        const updStakehType = stakehType.filter(x=>x.stakeholder_id !== stakeholder_id) 
+        const updStakehType = stakehType.filter(itm=> !Sid.includes(itm.stakeholder_id)) 
         this.props.newStakehType(updStakehType) //Update Stakeh Type      
 
-        const updStakehList = stakehList.filter(x=>x.stakeholder_id !== stakeholder_id) 
+        const updStakehList = stakehList.filter(itm=> !Sid.includes(itm.stakeholder_id))  
         this.props.newStakehList(updStakehList) //Update Stakeh List
         
         this.props.setActivePage("index") //return to page index
         this.props.setWizardPage("basic")    
+
                           
     }
       
   render() {     
-    const {pageTitle} = this.props.layout
-    const item = this.props.item
-    const active = this.props.active    
-    // console.log(rows)
+     
+   
+   
     
     return (
       <Fragment>
-        <h1 className="h3 display text-danger text-center">Delete ({item.full_name})</h1>
+        <h1 className="h3 display text-danger text-center">Delete Stakeholder</h1>
             <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
@@ -60,9 +85,18 @@ class deleteWizard extends Component {
                         <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">                       
                        
                             <p className='h3 display mt-4'>Warning: this cannot be undone.</p>
-                            <p className='mt-4'>Once you delete stakeholder ({item.full_name}), there is no getting back.</p>
+                            <p className='mt-4'>Once you delete stakeholder , there is no getting back.</p>
                             <p>Make sure you want to do this.</p>
-                                                  
+                                <FormGroup>
+                                    <Select
+                                    name='delItem'
+                                    placeholder='Selected Items'                                   
+                                    value={this.state.delItem}
+                                    options={this.state.listDel}
+                                    onChange={this.handleDelChange}                                    
+                                    isMulti
+                                    />
+                                </FormGroup>                   
                         </div>
                 </div>
                 <div className="modal-footer">   
