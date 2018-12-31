@@ -45,21 +45,21 @@ class ViewDetail extends Component {
     }
     this.props.setStakeholderItemDetail(stakehDet)    
 
-//      //Member
-//      const stakehMember={
-//         stakeholder_id:stkhId,
-//         bio_access_id:idAccess,
-//         action:'ITEM_LIST_MEMBER',             
-//    }
-//    this.props.viewStakehMember(stakehMember)
+     //Member
+     const stakehMember={
+        stakeholder_id:stkhId,
+        bio_access_id:idAccess,
+        action:'ITEM_LIST_MEMBER',             
+   }
+   this.props.viewStakehMember(stakehMember)
 
-//     //Group
-//     const stakehGroup={
-//             stakeholder_id:stkhId,
-//             bio_access_id:idAccess,
-//             action:'ITEM_LIST_GROUP',             
-//     }
-//     this.props.viewStakehGroup(stakehGroup)
+    //Group
+    const stakehGroup={
+            stakeholder_id:stkhId,
+            bio_access_id:idAccess,
+            action:'ITEM_LIST_GROUP',             
+    }
+    this.props.viewStakehGroup(stakehGroup)
   }  
 
   componentDidUpdate(prevProps){
