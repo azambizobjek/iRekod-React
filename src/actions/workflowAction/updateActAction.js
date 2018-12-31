@@ -1,4 +1,4 @@
-import {UPDATE_ACTIVITY, LIST_UPDATE_ACTIVITY,SELECTED_RECIPIENTS, LIST_EMAIL_RECIPIENTS, SELECTED_INC_STAKEH} from '../types'
+import {UPDATE_ACTIVITY, LIST_UPDATE_ACTIVITY,SELECTED_RECIPIENTS, LIST_EMAIL_RECIPIENTS, SELECTED_INC_STAKEH, VIEW_RECIPIENTS} from '../types'
 
 import {biorisUrl} from '../../appConfig'
 
@@ -7,6 +7,7 @@ export const updateActivity = (param) => dispatch =>{
         fetch(url,{method:'POST'})
         .then(res=>res.json())
         .then(res=>{
+            console.log(res)
             dispatch({
                 type:UPDATE_ACTIVITY,
                 payload:param
@@ -14,14 +15,15 @@ export const updateActivity = (param) => dispatch =>{
         })
 }
 
-export const setActivityDetailsUpdate=(activityDet)=>dispatch=>{
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(activityDet)}`
+export const setActivityDetailsUpdate=(det)=>dispatch=>{
+    const url=`${biorisUrl}/tasks?param=${JSON.stringify(det)}`
     fetch(url)
     .then(res=>res.json())
     .then(res=>{
+        // console.log(res)
         dispatch({
             type: LIST_UPDATE_ACTIVITY,
-            payload: res.results
+            payload: det
             })
             })
 
@@ -47,6 +49,8 @@ export const taskEmailRecipients=(param)=>{
         payload:param
     }
 }
+
+
 
 
 

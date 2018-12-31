@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
+import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
 
 import {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh} from '../../../actions/workflowAction/updateActAction'
 
@@ -20,127 +21,74 @@ class EmailWizard extends Component {
         include_home: null,
         include_owner: null,
         include_stakeholders: null,
-        email_template_id: null,
+        emailName: null,
         recipients: null,
         incStakeh:[],
         emailTempName: "",
         receipientDetails:"",
-       
-        
+        email_template_id:null,
+        stakeholder_fields:[],
+        reciValue: null,
+        emailValue:null,
+        optionEmailTemp:[],
+        incStakehValue: null
     }        
 }  
 
 
 
-componentWillMount(){
-
+componentDidUpdate(prevProps){
+  if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
   const {
-     email_template_id ,
      recipients,
+     email_template_id,
      include_assignee ,
      include_home ,
      include_owner ,
      include_stakeholders,
      stakeholder_fields,
+     default_assignee_name
   } = this.props.item
 
-  const recpnts = recipients.map(itm=>({ value: itm.recipient_id, label:decodeURIComponent(itm.recipient_name)} ))
-  const stakehF = stakeholder_fields.map(itm=>({ value: itm.stakeholder_field_id, label:decodeURIComponent(itm.stakeholder_field_label)} ))
+  const {emailValue} = this.state
+  const {selDetails} = this.props.listWrkFlw
+  const recipientList = selDetails[0].recipients
+  const {emailObj} = this.props.workflowDetail
+  const emailOpt = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  const emailVal = emailObj.filter(itm => itm.email_template_id === selDetails[0].email_template_id)
+  console.log(emailVal)
   
+  const recpnts = recipientList.map(itm=>({ value: itm.recipient_id, label:decodeURIComponent(itm.recipient_name)} ))
+  const stakehF = stakeholder_fields.map(itm=>({ value: itm.stakeholder_field_id, label:decodeURIComponent(itm.stakeholder_field_label)} ))
+
+  if (selDetails[0].email_template_id!==""){
+
     this.setState({
-      email_template_id: email_template_id,
-      receipientDetails: recpnts,
+      emailValue:[{label : emailVal[0].name, value:emailVal[0].email_template_id}]
+          })
+  }
+
+    this.setState({
+      default_assignee_name:default_assignee_name,
+      optionEmailTemp:emailOpt,
+      emailValue:emailValue,
+      reciValue: recpnts,
       include_assignee: include_assignee,
       include_home: include_home,
       include_owner: include_owner,
       include_stakeholders: include_stakeholders,
-      incStakeh:stakehF
-    })    
-
-}
-
-// componentDidUpdate(prevProps){
-//   if(prevProps.workflowDetail.activityDet!==this.props.workflowDetail.activityDet){
-//               console.log(prevProps.workflowDetail.activityDet)
-              
-//       const {
-//           task_id,
-//           subject,
-//           title,
-//           instruction,
-//           estimated_duration ,
-//            is_important,
-//            is_auto_start ,
-//            default_assignor_id ,
-//            default_assignee_id,
-//            default_assignor_name,
-//            default_assignee_name,
-//            default_supervisor_id ,
-//            default_supervisor_name ,
-//            default_manager_id ,
-//            default_manager_name ,
-//            parent_id,
-//            prev_task_id ,
-//            prev_task_title,
-//            additional_tasks ,
-//            next_task_id ,
-//            next_task_title ,
-//            is_decision ,
-//            task_results ,
-//            acl_id ,
-//            stakeholder_fields ,
-
-//                 email_template_id ,
-//      recipients ,
-//      include_assignee ,
-//      include_home ,
-//      include_owner ,
-//      include_stakeholders,
-           
-//         } = this.props.item
-        
-//    this.setState({
-//         task_id: task_id,
-//         title: title,
-//         subject: subject,
-//         instruction: instruction,
-//         estimated_duration: estimated_duration,
-//         is_important: is_important,
-//         is_auto_start: is_auto_start,
-//         default_assignor_id: default_assignor_id,
-//         default_assignee_id: default_assignee_id,
-//         default_assignor_name:default_assignor_name,
-//         default_assignee_name: default_assignee_name,
-//         default_supervisor_id: default_supervisor_id,
-//         default_supervisor_name: default_supervisor_name,
-//         default_manager_id: default_manager_id,
-//         default_manager_name: default_manager_name,
-//         parent_id: parent_id,
-//         prev_task_id: prev_task_id,
-//         prev_task_title: prev_task_title,
-//         additional_tasks: additional_tasks,
-//         next_task_id: next_task_id,
-//         next_task_title: next_task_title,
-//         is_decision: is_decision,
-//         task_results: task_results,
-//         acl_id: acl_id,
-//         stakeholder_fields: stakeholder_fields,
-
-//               email_template_id: email_template_id,
-//       recipients: recipients,
-//       include_assignee: include_assignee,
-//       include_home: include_home,
-//       include_owner: include_owner,
-//       include_stakeholders: include_stakeholders,
-//       })    
-//       }
-//   }
+      incStakehValue:stakehF
+    })
+    }
+    
+  }
 
 
 handleEmailTempChange=(value)=>{
   console.log(value)
+ 
   this.setState({
-    email_template_id:value,
+    emailValue:value,
   })
 }
 
@@ -151,10 +99,10 @@ handleReceipientsChange=(value)=>{
     recipient_name: item.label
 }))
 
-this.props.setRecipients(viewSource)
-
+// this.props.setRecipients(viewSource)
+console.log(viewSource)
   this.setState({
-    receipientDetails:value,
+    reciValue:value,
   })
 }
 
@@ -168,7 +116,7 @@ handleIncStakehsChange=(value)=>{
 this.props.setIncStakeh(incStake)
 
   this.setState({
-    incStakeh:value,
+    incStakehValue:value,
   })
 }
 
@@ -187,15 +135,20 @@ this.setState({
 componentDidMount() {
   const {activityDet} = this.props.workflowDetail
   const {emailObj} = this.props.workflowDetail
-  const {recipients} = this.props.item
-  const {stakehList} = this.props.stakeholderList
+  const {selDetails} = this.props.listWrkFlw
+  console.log(selDetails[0].email_template_id)
+  const emailOpt = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  const emailTemplateName = emailObj.filter(itm => itm.email_template_id === selDetails[0].email_template_id)
+  
+  this.setState({
+    optionEmailTemp:emailOpt,
+    
+  })
 
-  const emailTemplateName = emailObj.filter(itm => itm.email_template_id === activityDet[0].email_template_id)
-
-if (activityDet[0].email_template_id!==""){
+if (selDetails[0].email_template_id!==""){
 
   this.setState({
-    email_template_id:[{label : emailTemplateName[0].name, value:emailTemplateName[0].email_template_id}]
+    emailValue:[{label : emailTemplateName[0].name, value:emailTemplateName[0].email_template_id}]
         })
 }
 
@@ -205,54 +158,147 @@ formSubmit=(e)=>{
     e.preventDefault()
 
     const {user:{bio_access_id:bId}} = this.props.session
-    const {activity_Store} = this.props.workflowDetail
-    const {recipients, incStakehObj} = this.props.updActReducer
+    // const {recipients, incStakehObj} = this.props.updActReducer
+
+    const {selDetails} = this.props.listWrkFlw
+    // const {recipients} = this.state
+    console.log(selDetails[0].recipients)
     
 
+
+    const {
+      task_id,
+      title,
+      subject,
+      instruction,
+      estimated_duration,
+      is_important,
+      is_auto_start,
+      default_assignor_id,
+      default_assignor_name,
+      default_assignee_id,
+      default_assignee_name,
+      default_supervisor_id,
+      default_supervisor_name,
+      default_manager_id,
+      default_manager_name,
+      parent_id,
+      prev_task_id,
+      prev_task_title,
+      additional_tasks,
+      next_task_id,
+      next_task_title,
+      is_decision,
+      task_results,
+      acl_id: acl_id,
+      acl_entries,
+      is_enable_auto_scripting,
+      auto_scripting,
+      recipients
+    } = this.props.item
+
+    // console.log(recipients)
      const { 
-     email_template_id ,
+     emailValue:{value:email_template_id,label:name},
      include_assignee ,
      include_home ,
      include_owner ,
-     include_stakeholders} = this.state
+     include_stakeholders,
+     reciValue,
+     incStakehValue,
+     stakeholder_fields,
+     } = this.state
+
+  console.log(stakeholder_fields)
+  console.log(selDetails[0].email_template_id.length)
+  
+  if (selDetails[0].email_template_id.length !== 0){
+    console.log('email_template_id not null')
+     this.setState({
+      email_template_id:email_template_id
+     })
+   }else{
+     console.log('email_template_id null')
+     this.setState({
+      email_template_id:''
+     })
+   }
+
+   //recipients field
+  const recipientsSources = reciValue.map( x=>({
+    recipient_id: x.value,
+    recipient_name: x.label, 
+  }))
+
+  if (recipients===null || recipients ===''){
+   console.log('Recipients null')
+    this.setState({
+      recipients:''
+    })
+  }else{
+    console.log('Recipients not null')
+    this.setState({
+      recipients:recipientsSources
+    })
+  }
+
+  //stakeholer fields
+  const incStakehSource = incStakehValue.map(x => ({
+    stakeholder_field_id: x.value,
+    stakeholder_field_label: x.label
+  }))
+
+  if (selDetails[0].stakeholder_fields.length === 0){
+    console.log('stakeholder_fields null')
+     this.setState({
+      stakeholder_fields:''
+     })
+   }else{
+     console.log('stakeholder_fields not null')
+     this.setState({
+      stakeholder_fields:incStakehSource
+     })
+   }
 
 
+
+console.log(email_template_id)
     const updateObj={
-      task_id:activity_Store[0].task_id,
-      title: activity_Store[0].title,
-      subject: activity_Store[0].subject,
-      instruction: activity_Store[0].instruction,
-      estimated_duration: activity_Store[0].estimated_duration,
-      is_important: activity_Store[0].is_important,
-      is_auto_start: activity_Store[0].is_auto_start,
-      default_assignor_id: activity_Store[0].default_assignor_id,
-      default_assignor_name: activity_Store[0].default_assignor_name,
-      default_assignee_id:activity_Store[0].default_assignee_id,
-      default_assignee_name: activity_Store[0].default_assignee_name,
-      default_supervisor_id: activity_Store[0].default_supervisor_id,
-      default_supervisor_name: activity_Store[0].default_supervisor_name,
-      default_manager_id: activity_Store[0].default_manager_id,
-      default_manager_name: activity_Store[0].default_manager_name,
-      parent_id: null,
-      prev_task_id: activity_Store[0].prev_task_id,
-      prev_task_title: activity_Store[0].prev_task_title,
-      additional_tasks: null,
-      next_task_id: activity_Store[0].next_task_id,
-      next_task_title: activity_Store[0].next_task_title,
-      is_decision: activity_Store[0].is_decision,
-      task_results: null,
-      acl_id: activity_Store[0].acl_id,
-      acl_entries: activity_Store[0].acl_entries,
+      task_id:task_id,
+      title: title,
+      subject: subject,
+      instruction: instruction,
+      estimated_duration: estimated_duration,
+      is_important: is_important,
+      is_auto_start: is_auto_start,
+      default_assignor_id: default_assignor_id,
+      default_assignor_name: default_assignor_name,
+      default_assignee_id:default_assignee_id,
+      default_assignee_name: default_assignee_name,
+      default_supervisor_id: default_supervisor_id,
+      default_supervisor_name: default_supervisor_name,
+      default_manager_id: default_manager_id,
+      default_manager_name: default_manager_name,
+      parent_id: parent_id,
+      prev_task_id: prev_task_id,
+      prev_task_title: prev_task_title,
+      additional_tasks: additional_tasks,
+      next_task_id: next_task_id,
+      next_task_title: next_task_title,
+      is_decision: is_decision,
+      task_results: task_results,
+      acl_id: acl_id,
+      acl_entries: acl_entries,
 
-      email_template_id: email_template_id.value,
-      recipients: recipients,
+      email_template_id: email_template_id,
+      recipients: recipientsSources,
       include_assignee: include_assignee,
       include_home: include_home,
       include_owner: include_owner,
       include_stakeholders: include_stakeholders,
-      stakeholder_fields: incStakehObj,
-      is_enable_auto_scripting: activity_Store[0].is_enable_auto_scripting,
-      auto_scripting: activity_Store[0].auto_scripting,
+      stakeholder_fields: incStakehSource,
+      is_enable_auto_scripting: is_enable_auto_scripting,
+      auto_scripting: auto_scripting,
 
       bio_access_id: bId,
       action: "SAVE_TASK" 
@@ -262,6 +308,13 @@ formSubmit=(e)=>{
     console.log(updateObj)
     alert("Successful Update")
 
+    const itemDetails={
+      task_id: task_id,
+      action: "ITEM_DETAIL",
+      bio_access_id: bId       
+  }
+  this.props.setSelDetails(itemDetails)
+// console.log(this.state.stakeholder_fields)
 }
 
 setActivePage=(e)=>{
@@ -281,10 +334,11 @@ setActivePage=(e)=>{
    
 
   const {emailObj,customFieldObj} = this.props.workflowDetail
-  const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
+  // const optionEmailTemp = emailObj.map((itm => ({ value: itm.email_template_id, label:decodeURIComponent(itm.name)})))
   const optionCstmFldStkhObj = customFieldObj.map((itm => ({ value: decodeURIComponent(itm.custom_field_id), label:decodeURIComponent(itm.custom_field_name)})))
-  const { receipientDetails, incStakeh, email_template_id} = this.state
-  const {stakehList} = this.props.stakeholderList
+  const { reciValue, incStakehValue, emailValue, optionEmailTemp} = this.state
+
+  const {stakehList} = this.props.listWrkFlw
   const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
 
     return (
@@ -305,7 +359,8 @@ setActivePage=(e)=>{
                                 className="basic-single"
                               onChange={this.handleEmailTempChange}
                               options={optionEmailTemp}
-                              value={email_template_id}
+                              // value={email_template_id}
+                              value={emailValue}
                               isClearable
                             />
                     </div>
@@ -315,7 +370,7 @@ setActivePage=(e)=>{
                                 <Select
                               onChange={this.handleReceipientsChange}
                               options={stakehOptions}
-                              value={receipientDetails}
+                              value={reciValue}
                               isMulti
                               isClearable
                             />
@@ -353,7 +408,7 @@ setActivePage=(e)=>{
                           <Select
                               onChange={this.handleIncStakehsChange}
                               options={optionCstmFldStkhObj}
-                              value={incStakeh}
+                              value={incStakehValue}
                               isMulti
                               isClearable
                             />
@@ -384,6 +439,8 @@ EmailWizard.propTypes={
   taskEmailRecipients:PropTypes.func.isRequired,
   setIncStakeh:PropTypes.func.isRequired,
   setActivePage: PropTypes.func.isRequired,
+  setSelDetails: PropTypes.func.isRequired,
+  // viewRecipients: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -395,4 +452,4 @@ const mapStateToProps= state =>({
       stakeholderList: state.stakeholderList,
 })
   
-export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh, setActivePage})(EmailWizard)
+export default connect(mapStateToProps, {updateActivity, setRecipients, taskEmailRecipients, setIncStakeh, setActivePage, setSelDetails})(EmailWizard)

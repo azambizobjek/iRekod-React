@@ -193,30 +193,7 @@ class index extends Component {
         this.props.setActivePage(param)
         this.props.setWizardPage(param)       
 
-    }
-
-
-    // //Delete Btn
-    // delBtn=()=>{
-    //     if (window.confirm("Are you sure want to delete it?")){        
-    //         const {stakehNumb,stakehType,stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
-    //         const {activePage,pageTitle} = this.props.layout    
-    //         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session      
-    //         //  console.log(stakehNumb)       
-
-    //         const stakehObj={
-    //             bio_access_id:idAccess,
-    //             stakeholder_ids:[stakeholder_id]        
-    //         }
-    //         this.props.setDelBtn(stakehObj)
-    //             alert("Successful Deleted") 
-            
-    //         const newStakehList = stakehType.filter(x=>x.stakeholder_id !== stakeholder_id) 
-    //         // console.log(arr)
-    //         this.setState({stakeholderlistType:newStakehList})                         
-    //     }
-    //     else{}    
-    // }    
+    }      
 
     //Add Stakeholder Child
     child=(page)=>{
@@ -225,13 +202,20 @@ class index extends Component {
         // console.log(page)
     }
     
-    //LayoutView
-    stakehViewList=()=>{        
-        this.props.setStakehViewTrue(true)        
+    // //LayoutView
+    // stakehViewList=()=>{        
+    //     this.props.setStakehViewTrue(true)        
+    // }
+    // stakehViewCard=()=>{       
+    //     this.props.setStakehViewFalse(false)
+    // }  
+    
+    stakehView=()=>{       
+        const { stakehView } = this.props.stakeholderlistType
+        this.props.setStakehViewFalse(!stakehView)
     }
-    stakehViewCard=()=>{       
-        this.props.setStakehViewFalse(false)
-    }    
+
+
 
     //change page to New Stakeholder
     addStakeh=(e)=>{
@@ -362,6 +346,16 @@ class index extends Component {
                                     </Tooltip>
 
                                     <Tooltip
+                                        placement='top'
+                                        overlay={<div style={{ height: 20, width: "100%" }}>Toggle View</div>}
+                                        arrowContent={<div className='rc-tooltip-arrow-inner' />}
+                                    >
+                                        <button className='btn btn-sm btn-primary ml-2' onClick={this.stakehView}>
+                                        <i className={stakehView ? "fa fa-th-list" : "fa fa-th"} aria-hidden='true' />
+                                        </button>
+                                    </Tooltip>
+
+                                    {/* <Tooltip
                                         placement="top"
                                         overlay={<div style={{ height: 20, width: '100%' }}>List View</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
@@ -377,7 +371,7 @@ class index extends Component {
                                         <button className="btn btn-sm btn-primary ml-2" onClick={this.stakehViewCard}>
                                             <i className="fa fa-th" aria-hidden="true"></i>
                                         </button>
-                                    </Tooltip>
+                                    </Tooltip> */}
 
                                     <Tooltip
                                         placement="top"

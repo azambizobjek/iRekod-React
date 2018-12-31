@@ -7,6 +7,7 @@ import NewEmailWizard from './NewEmailTemplate'
 import NewAutoScript from './NewAutoScript'
 
 import {setWizardPageNew} from '../../../actions/workflowAction/createNewActAction'
+import {setActivePage, setPageSubject} from '../../../actions/layoutInitAction'
 
 
 class NewActivity extends Component {
@@ -23,6 +24,13 @@ class NewActivity extends Component {
   prevPage=(param)=>{
       this.props.setWizardPageNew(param)
   }
+
+  setActivePage=(e)=>{
+    e.preventDefault()       
+
+    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+    this.props.setPageSubject('')
+}
 
     
   render() {
@@ -89,6 +97,8 @@ NewActivity.propTypes={
   layout:PropTypes.object.isRequired,
   setWizardPageNew:PropTypes.func.isRequired,
   crtNewReducer:PropTypes.object.isRequired,
+  setActivePage:PropTypes.func.isRequired,
+  setPageSubject:PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -98,4 +108,4 @@ const mapStateToProps= state =>({
   
 })
   
-export default connect(mapStateToProps,{setWizardPageNew})(NewActivity)
+export default connect(mapStateToProps,{setWizardPageNew, setActivePage, setPageSubject})(NewActivity)

@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import Select from 'react-select'
+// import FormHelperText from "@material-ui/core/FormHelperText";
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {setItemListSubject, setListAddTask, addNewActivity} from '../../../actions/workflowAction/createNewActAction'
@@ -61,6 +63,8 @@ class NewActivityWizard extends Component {
         is_enable_auto_scripting: false,
         auto_scripting: null,
 
+        hasError: false
+
     }        
   }  
 
@@ -100,9 +104,10 @@ class NewActivityWizard extends Component {
   
   handleSubjectChange=(value)=>{
     const {user:{bio_access_id:bId}}=this.props.session
-    // const {subject}= this.state
+
     this.setState({
-      subject:value
+      subject:value,
+      hasError: false
       })
 
   
@@ -216,12 +221,18 @@ class NewActivityWizard extends Component {
     e.preventDefault()       
     this.props.setActivePage(e.target.getAttribute('data-pagename'))
 }
-  
 
     formSubmit=(e)=>{
-       
+      e.preventDefault()  
+      const sb = this.state.subject
+      if (sb === null){
+        alert("Please insert/ select subject for your new activity")
+        // <Alert color="warning">This is a warning alert — check it out!</Alert>
+        // this.alert()
+      }
+      else{
+
       const {user:{bio_access_id:bId}} = this.props.session
-    
       const { 
         stakehValAssignorNew,
         stakehValAssigneeNew,
@@ -251,7 +262,7 @@ class NewActivityWizard extends Component {
         title: title,
         subject: subject.value,
         instruction: instruction,
-        estimated_duration: estimated_duration,
+        estimated_duration: parseInt(estimated_duration),
         is_important: is_important,
         is_auto_start: is_auto_start,
         default_assignor_id: stakehValAssignorNew.value,
@@ -289,7 +300,7 @@ class NewActivityWizard extends Component {
       this.props.addNewActivity(newActObj)
       console.log(newActObj)
       alert("Successful Created")
-
+    }
   }
 
   Aclselected=()=>{
@@ -419,7 +430,7 @@ acl_builder=(selData,aclEntries,type)=>{
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     
     const {subject, stakehValAssigneeNew, stakehValAssignorNew, stakehValManagerNew, stakehValSupervisorNew, hasDecision, 
-      accViewVal,accUpdVal,accRmvVal,accModVal, prevTaskNew, addTaskTitle, nextTaskNew} = this.state
+      accViewVal,accUpdVal,accRmvVal,accModVal, prevTaskNew, hasError, nextTaskNew} = this.state
     const {listofSubjectObj} = this.props.listWrkFlw
     const optionListItemBySubject = listofSubjectObj.map((itm => ({ value: decodeURIComponent(itm.subject), label:decodeURIComponent(itm.subject)})))
     const listbySubject = listWorflowbySub.map((itm => ({ value: decodeURIComponent(itm.task_id), label:decodeURIComponent(itm.title)})))
@@ -461,19 +472,21 @@ acl_builder=(selData,aclEntries,type)=>{
                         <div className="form-group col">
                           <label>Subject</label>
                           <Select
+                              // required={true}
                               className="basic-single"
                               onChange={this.handleSubjectChange}
                               options={optionListItemBySubject}
                               value={subject}
                               isClearable
                               isSearchable
-                            />                        
-                            </div>
+                              isRequired/>   
+                              
+                              </div>
                         </div>
 
                         <div className="form-group">
                           <label>Title</label>
-                            <input  name="title" type="text" className="form-control" onChange={this.handleTextChange}/> 
+                            <input  name="title" type="text" className="form-control" onChange={this.handleTextChange} required/> 
                         </div>
 
                         <div className="form-group">
@@ -482,27 +495,15 @@ acl_builder=(selData,aclEntries,type)=>{
                         </div>
 
                         <div className="form-group">
-                          <label>Duration</label>
-                            <input name="estimated_duration"  type="text" className="form-control" onChange={this.handleTextChange}/> 
+                          <label>Duration(days)</label>
+                            <input name="estimated_duration"  type="number" className="form-control" min="0" onChange={this.handleTextChange}/> 
                         </div>
 
                       
                         {/* stakeholder */}
-                        <div className="row form-group">
-                            
+                        <div className="row">
 
-                            <div className="col form-group">
-                                <label>Assignor</label>
-                                <Select
-                              className="basic-single"
-                              onChange={this.handleAssignorChange}
-                              options={optionStakehList}
-                              value={stakehValAssignorNew}
-                              isClearable
-                            />
-                            </div>
-
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Assignee</label>
                                 <Select
                               className="basic-single"
@@ -512,10 +513,8 @@ acl_builder=(selData,aclEntries,type)=>{
                               isClearable
                             />
                             </div>
-                    </div>
-                    
-                    <div className="row form-group">
-                            <div className="col form-group">
+
+                            <div className="col-sm-4 form-group">
                                 <label>Supervisor</label>
                                 <Select
                               className="basic-single"
@@ -526,7 +525,7 @@ acl_builder=(selData,aclEntries,type)=>{
                             />
                             </div>
 
-                            <div className="col form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Manager</label>
                                 <Select
                               className="basic-single"

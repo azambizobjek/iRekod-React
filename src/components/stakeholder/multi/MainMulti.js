@@ -97,15 +97,8 @@ class MainMulti extends Component {
   
 
   render() {
-
-    const {pageTitle}=this.props.layout
-    const {stakehSel} = this.props.stakeholderlistType
-    const {wizardPage:wzdPage,containerLine} = this.props.stakeholderUpdate
-    const {stakeholderDetail} = this.props.stakeholderView      
-    // const item = stakeholderDetail.find(rec=>rec.stakeholder_id===stakehSel) //iterate
-    // console.log(stakeholderDetail)
-    // console.log(active_Wizard)   
-  
+     
+    const {wizardPage:wzdPage,containerLine} = this.props.stakeholderUpdate     
     const Body=this.components[wzdPage]
     // const icon = this.components.icon[type]      
     

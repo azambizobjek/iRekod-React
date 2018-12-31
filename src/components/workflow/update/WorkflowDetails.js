@@ -4,7 +4,10 @@ import EmailWizard from '../../workflow/update/EmailWizard'
 import AutoScriptWizard from '../../workflow/update/AutoScriptWizard'
 import FolTabHead from '../../workflow/update/TabWorkflowDet'
 // import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant} from '../actions/stakehUpdateAction'
+import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
+
 import {setWizardPage, setActivityStore} from '../../../actions/workflowAction/workflowDetailAction'
+// import {viewRecipients} from '../../../actions/workflowAction/updateActAction'
 import Breadcrumb from '../../layouts/Breadcrumb'
 
 import {connect} from 'react-redux'
@@ -27,8 +30,19 @@ class WorkflowDetails extends Component {
         bio_access_id: bId      
     }
     this.props.setActivityStore(activityObj)
+    // this.props.viewRecipients(activityObj)
     // console.log(activityObj)
+
+    const selDetails={
+        task_id: wrkflSel,
+        action: "ITEM_DETAIL",
+        bio_access_id: bId       
     }
+    this.props.setSelDetails(selDetails)
+
+    }
+
+    
 
     nextPage=(param)=>{
         this.props.setWizardPage(param)
@@ -66,7 +80,7 @@ render() {
         </div>
         </div>
 
-        {selDetails.map((item,idx)=>   
+        {selDetails.map((item,idx) =>   
 
        <section key={idx} className="forms">
            <div className="container-fluid">
@@ -97,7 +111,7 @@ render() {
                    </div>
                </div>
            </div>
-       </section>
+       </section> 
          ) } </Fragment>
   )
 }
@@ -110,6 +124,8 @@ WorkflowDetails.propTypes={
   setActivityStore: PropTypes.func.isRequired,
   workflowDetail: PropTypes.object.isRequired,
   listWrkFlw: PropTypes.object.isRequired,
+  setSelDetails: PropTypes.func.isRequired,
+//   viewRecipients: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -119,4 +135,4 @@ const mapStateToProps= state =>({
       listWrkFlw:state.listWrkFlw,
 })
   
-export default connect(mapStateToProps, { setWizardPage, setActivityStore})(WorkflowDetails)
+export default connect(mapStateToProps, { setWizardPage, setActivityStore,setSelDetails})(WorkflowDetails)

@@ -32,35 +32,7 @@ class MultiFab extends Component {
             case 'selectAll':
                 // console.log('select all rec')
                 this.props.setSelAll(true)
-            break
-
-            // case 'delete':
-            //     if (window.confirm("Are you sure want to delete it?")){  
-            //         const {stakehType,stakehSel,stakehNumb} = this.props.stakeholderlistType       
-            //         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session  
-                    
-            //         const Sid = stakehSel.map(itm=>itm.stakeholder_id)
-            //         // console.log(Sid)
-            //         // console.log(stakehType)
-
-            //         const stakehObj={
-            //             bio_access_id:idAccess,
-            //             stakeholder_ids:Sid      
-            //         }
-            //         this.props.setDelBtn(stakehObj)
-            //         alert("Successful Deleted")      
-                
-            //         const newStakehType = stakehType.filter(itm=> !Sid.includes(itm.stakeholder_id)) 
-            //         // console.log(newStakehType)  
-
-            //         this.props.newStakehType(newStakehType)     
-            //     }   
-
-            //     this.props.setActivePage("edit")
-            //     this.props.setWizardPage(e.target.name)
-            //     console.log(e.target.name)
-               
-            // break    
+            break   
 
             default:
                 this.props.stakehAction(e.target.name)                 

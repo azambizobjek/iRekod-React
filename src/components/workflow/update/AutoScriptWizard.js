@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {updateActivity} from '../../../actions/workflowAction/updateActAction'
+import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
 
 class AutoScriptWizard extends Component {
 
@@ -33,17 +34,17 @@ this.setState({
 }
 
 
-// componentDidUpdate(prevProps){
-//   if(prevProps.workflowDetail.activityDet!==this.props.workflowDetail.activityDet){
-//     console.log(prevProps.workflowDetail.activityDet)
-//       const {is_enable_auto_scripting,auto_scripting} = this.props.item
+componentDidUpdate(prevProps){
+  if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
+    // console.log(prevProps.workflowDetail.activityDet)
+      const {is_enable_auto_scripting,auto_scripting} = this.props.item
 
-//       this.setState({
-//           is_enable_auto_scripting: is_enable_auto_scripting,            
-//           auto_scripting: auto_scripting   
-//       })      
-//   }
-// }
+      this.setState({
+          is_enable_auto_scripting: is_enable_auto_scripting,            
+          auto_scripting: auto_scripting   
+      })      
+  }
+}
 
 handleChange=(event)=>{
   // e.preventDefault()
@@ -65,47 +66,78 @@ formSubmit=(e)=>{
   e.preventDefault()
 
   const {user:{bio_access_id:bId}} = this.props.session
-  const {activity_Store} = this.props.workflowDetail
-  
+  const {
+    task_id,
+    title,
+    subject,
+    instruction,
+    estimated_duration,
+    is_important,
+    is_auto_start,
+    default_assignor_id,
+    default_assignor_name,
+    default_assignee_id,
+    default_assignee_name,
+    default_supervisor_id,
+    default_supervisor_name,
+    default_manager_id,
+    default_manager_name,
+    parent_id,
+    prev_task_id,
+    prev_task_title,
+    additional_tasks,
+    next_task_id,
+    next_task_title,
+    is_decision,
+    task_results,
+    acl_id: acl_id,
+    acl_entries,
+    email_template_id,
+    recipients:recipients,
+    include_assignee,
+    include_home,
+    include_owner,
+    include_stakeholders,
+    stakeholder_fields,
+  } = this.props.item
 
    const { 
     is_enable_auto_scripting ,
-    auto_scripting ,} = this.state
+    auto_scripting } = this.state
 
   const updateObj={
-    task_id:activity_Store[0].task_id,
-    title: activity_Store[0].title,
-    subject: activity_Store[0].subject,
-    instruction: activity_Store[0].instruction,
-    estimated_duration: activity_Store[0].estimated_duration,
-    is_important: activity_Store[0].is_important,
-    is_auto_start: activity_Store[0].is_auto_start,
-    default_assignor_id: activity_Store[0].default_assignor_id,
-    default_assignor_name: activity_Store[0].default_assignor_name,
-    default_assignee_id:activity_Store[0].default_assignee_id,
-    default_assignee_name: activity_Store[0].default_assignee_name,
-    default_supervisor_id: activity_Store[0].default_supervisor_id,
-    default_supervisor_name: activity_Store[0].default_supervisor_name,
-    default_manager_id: activity_Store[0].default_manager_id,
-    default_manager_name: activity_Store[0].default_manager_name,
-    parent_id: activity_Store[0].parent_id,
-    prev_task_id: activity_Store[0].prev_task_id,
-    prev_task_title: activity_Store[0].prev_task_title,
-    additional_tasks: null,
-    next_task_id: activity_Store[0].next_task_id,
-    next_task_title: activity_Store[0].next_task_title,
-    is_decision: activity_Store[0].is_decision,
-    task_results: null,
-    acl_id: activity_Store[0].acl_id,
-    acl_entries: activity_Store[0].acl_entries,
-
-    email_template_id: activity_Store[0].email_template_id,
-    recipients: activity_Store[0].recipients,
-    include_assignee: activity_Store[0].include_assignee,
-    include_home: activity_Store[0].include_home,
-    include_owner: activity_Store[0].include_owner,
-    include_stakeholders: activity_Store[0].include_stakeholders,
-    stakeholder_fields: activity_Store[0].stakeholder_fields,
+    task_id:task_id,
+    title: title,
+    subject: subject,
+    instruction: instruction,
+    estimated_duration: estimated_duration,
+    is_important: is_important,
+    is_auto_start: is_auto_start,
+    default_assignor_id: default_assignor_id,
+    default_assignor_name: default_assignor_name,
+    default_assignee_id:default_assignee_id,
+    default_assignee_name: default_assignee_name,
+    default_supervisor_id: default_supervisor_id,
+    default_supervisor_name: default_supervisor_name,
+    default_manager_id: default_manager_id,
+    default_manager_name: default_manager_name,
+    parent_id: parent_id,
+    prev_task_id: prev_task_id,
+    prev_task_title: prev_task_title,
+    additional_tasks: additional_tasks,
+    next_task_id: next_task_id,
+    next_task_title: next_task_title,
+    is_decision: is_decision,
+    task_results: task_results,
+    acl_id: acl_id,
+    acl_entries: acl_entries,
+    email_template_id: email_template_id,
+    recipients:recipients,
+    include_assignee: include_assignee,
+    include_home: include_home,
+    include_owner: include_owner,
+    include_stakeholders: include_stakeholders,
+    stakeholder_fields: stakeholder_fields,
 
     is_enable_auto_scripting: is_enable_auto_scripting,
     auto_scripting: auto_scripting,
@@ -117,6 +149,13 @@ formSubmit=(e)=>{
   this.props.updateActivity(updateObj)
   console.log(updateObj)
   alert("Successful Update")
+
+  const selDetails={
+    task_id: task_id,
+    action: "ITEM_DETAIL",
+    bio_access_id: bId       
+}
+this.props.setSelDetails(selDetails)
 
 }
 
@@ -162,13 +201,16 @@ AutoScriptWizard.propTypes={
   workflowDetail:PropTypes.object.isRequired, 
   updateActivity:PropTypes.func.isRequired, 
   setActivePage: PropTypes.func.isRequired,
+  listWrkFlw:PropTypes.object.isRequired, 
+  setSelDetails:PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
       session:state.session,
       layout:state.layout,
       workflowDetail:state.workflowDetail,
+      listWrkFlw:state.listWrkFlw,
 })
   
-export default connect(mapStateToProps, {updateActivity, setActivePage})(AutoScriptWizard)
+export default connect(mapStateToProps, {updateActivity, setActivePage, setSelDetails})(AutoScriptWizard)
 
