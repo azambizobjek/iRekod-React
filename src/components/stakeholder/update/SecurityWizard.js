@@ -4,6 +4,8 @@ import Checkbox from 'rc-checkbox';
 import DatePicker from "react-datepicker";
 import moment from 'moment'
 import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -37,6 +39,32 @@ class securityWizard extends Component {
              
         }
     }    
+
+    componentWillMount(){
+        const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value,date_active_from,date_active_to} = this.props.item
+        const security =({value: security_level_id, label:security_level_value})
+        const roleValue = ({value: role_id, label:role_value})
+        this.setState({
+            stakeh_type_name: stakeh_type_name,            
+            initials: initials,
+            first_name: first_name,
+            last_name: last_name,
+            full_name: full_name,
+            email: email,
+            date_of_birth: date_of_birth,
+            stakeh_type: parseInt(stakeh_type),     
+            active: active,
+            internal: internal,
+            is_blocked: is_blocked,
+            can_login: can_login,
+            login_username:login_username,
+            password:password,
+            secVal: security,
+            roleVal: roleValue,
+            startDate: date_active_from,
+            endDate: date_active_to, 
+        })
+    }
     
     handleChange=(event)=>{
         // e.preventDefault()
@@ -138,7 +166,7 @@ class securityWizard extends Component {
 
     formSubmit=(e)=>{
         e.preventDefault()
-        const {stakehSel} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
@@ -168,7 +196,7 @@ class securityWizard extends Component {
             date_active_to: moment(endDate).format("DD/MM/YYYY"),  
             
             version: 0,           
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             bio_access_id: idAccess,
             acl_id:acl_id,
             acl_entries:acl_entries,
@@ -276,7 +304,8 @@ class securityWizard extends Component {
                 </div>
                 <div className={active1==='security'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>                   
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary">Close</button>                    */}
                 </div>
             </form>
                 {/* <Loader

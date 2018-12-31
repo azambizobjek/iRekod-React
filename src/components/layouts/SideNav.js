@@ -6,7 +6,7 @@ import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
 import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
 import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
 import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
-import {setStakehListNew} from '../../actions/workflowAction/createNewActAction'
+import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 import {toggleErr} from '../../actions/auditTrailAction/modalAction'
 import {bcIndex,bcDet} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
@@ -64,6 +64,7 @@ class SideNav extends React.Component {
       }
 
       this.props.setStakehType(stakehObj) 
+
       this.props.bcIndex(true)  // Breadcrumb in index page   
       this.props.bcDet(false)   // Breadcrumb in detail page
       this.props.setStakehSel(null)  // ID stakeholder select
@@ -105,7 +106,7 @@ class SideNav extends React.Component {
     }
    
       const pageSubject= ""
-      this.props.setStakehListNew(stakehList)
+      this.props.setStakehList(stakehList)
       this.props.setListWorkFlow(listWrkFlwObj)
       this.props.setListofSubject(listofSubjectObj)
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
@@ -116,7 +117,7 @@ class SideNav extends React.Component {
       this.props.setSelWorkFlow(null)     //ID select for workflow  
 
 
-      ////////////////////////////////workflow////////////////////////////////////
+      ////////////////////////////////Audit Trail////////////////////////////////////
 
       const pgName = e.target.getAttribute('data-pagename')
         this.props.setActivePage(pgName)
@@ -202,42 +203,42 @@ class SideNav extends React.Component {
                 <li>
                   <a href="/" onClick={this.setActivePage} data-id='0' data-pagetitle="Group" data-pagename="index">
                     <div className="userIcon" data-pagename="index">
-                        <img src={require('../../img/StakeType/Group.svg')} alt="group" className="img-fluid mr-1" data-pagename="Group"/>
+                        <img src={require('../../img/StakeType/Group.svg')} alt="group" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Group"/>
                     </div>Group
                   </a>
                 </li>
                 <li>
                     <a href="/" onClick={this.setActivePage} data-id='1' data-pagetitle="Organization" data-pagename="index">
                     <div className="userIcon" data-pagename="index">
-                    <img src={require('../../img/StakeType/Organization.svg')} alt="organization" className="img-fluid mr-1" data-pagename="index" />
+                    <img src={require('../../img/StakeType/Organization.svg')} alt="organization" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Organization" />
                     </div>Organization
                     </a>
                 </li>   
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='2' data-pagetitle="Branch" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Branch.svg')} alt="branch" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Branch"/>
                       </div>Branch
                       </a>
                 </li> 
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='3' data-pagetitle="Department" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Department.svg')} alt="department" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Department"/>
                       </div>Department
                       </a>
                 </li> 
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='4' data-pagetitle="Designation" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/Designation.svg')} alt="designation" className="img-fluid mr-1" data-pagename="index" data-pagetitle="Designation" />
                       </div>Designation
                       </a>
                 </li>      
                 <li>
                       <a href="/" onClick={this.setActivePage} data-id='5' data-pagetitle="User" data-pagename="index">
                       <div className="userIcon" data-pagename="index">
-                      <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" />
+                      <img src={require('../../img/StakeType/User.svg')} alt="user" className="img-fluid mr-1" data-pagename="index" data-pagetitle="User" />
                       </div>User
                       </a>
                 </li>       
@@ -290,7 +291,7 @@ SideNav.propTypes={
     setStakehNumb: PropTypes.func.isRequired,
     setListWorkFlow: PropTypes.func.isRequired,
     setListofSubject: PropTypes.func.isRequired,
-    setStakehListNew: PropTypes.func.isRequired,
+    setStakehList: PropTypes.func.isRequired,
     setCustomField: PropTypes.func.isRequired,
     setPageSubject: PropTypes.func.isRequired, 
     toggleErr: PropTypes.func.isRequired,
@@ -318,7 +319,7 @@ SideNav.propTypes={
     setStakehNumb,
     setListWorkFlow,
     setListofSubject,
-    setStakehListNew,
+    setStakehList,
     setCustomField,
     setPageSubject,
     toggleErr,

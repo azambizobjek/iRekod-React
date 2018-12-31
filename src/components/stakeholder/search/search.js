@@ -90,7 +90,7 @@ class search extends Component {
 
     //Fab View Detail
     setActivePage=(FabRec)=>{         
-        const {stakehSel:bId} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         const {user:{bio_access_id:idAccess}} = this.props.session
 
       
@@ -100,7 +100,7 @@ class search extends Component {
 
         //stkh Detail
         const stakehDet={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -108,7 +108,7 @@ class search extends Component {
         
         //Member
        const stakehMember={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
        }
@@ -116,7 +116,7 @@ class search extends Component {
 
        //Group
        const stakehGroup={
-            stakeholder_id:bId,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
        }
@@ -134,13 +134,13 @@ class search extends Component {
 
     //Delete Btn
     delBtn=()=>{
-        const {stakehSelect} = this.state
+        const  {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         const {user:{bio_access_id:idAccess}} = this.props.session      
         //  console.log(stakehSelect)       
 
         const stakehObj={
             bio_access_id:idAccess,
-            stakeholder_ids:[stakehSelect]        
+            stakeholder_ids:[stakeholder_id]        
         }
         this.props.setDelBtn(stakehObj)
 
@@ -179,10 +179,8 @@ class search extends Component {
         const {basicKey,stakehlist} = this.props.searchConf        
         const {pageTitle}=this.props.layout
         const {stakeholderlist,current}=this.state
-        // console.log(stakeholderlist)
-      
-       
-       
+        // console.log(stakeholderlist)    
+             
         
         return (
             <Fragment>  

@@ -1,6 +1,7 @@
 import React,{ Component,Fragment } from 'react' 
 import Select from 'react-select'
 import {updStkh} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -42,8 +43,8 @@ class accessWizard extends Component {
     }     
 
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderUpdate.stakehList!==this.props.stakeholderUpdate.stakehList){
-            const {stakehList}=this.props.stakeholderUpdate      
+        if(prevProps.stakeholderList.stakehList!==this.props.stakeholderList.stakehList){
+            const {stakehList}=this.props.stakeholderList      
                 // console.log(stakehList)                     
             const stakehOptions = stakehList.map(itm=>({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name), status: true}))
                 // console.log(stakehOptions)                
@@ -117,7 +118,7 @@ class accessWizard extends Component {
 
     formSubmit=(e)=>{
         e.preventDefault()        
-        const {stakehSel} = this.props.stakeholderlistType  
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
         const {acl_id} = this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
@@ -146,7 +147,7 @@ class accessWizard extends Component {
             date_active_to: date_active_to,  
 
             version: 0,           
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             bio_access_id: idAccess,
             acl_id: acl_id,
             acl_entries: this.Aclselected(),
@@ -160,9 +161,7 @@ class accessWizard extends Component {
 
     Aclselected=()=>{
         const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
-        // console.log(accViewVal)
-        
-       
+        // console.log(accViewVal)      
         // console.log(accViewVal)
         const viewSource = accViewVal.map(item =>({
             stakeholder_id: item.value,
@@ -226,7 +225,7 @@ class accessWizard extends Component {
         // console.log(selData)         
         // console.log(aclEntries)          
         selData.map(item=>
-           { const TargetItem = aclEntries.findIndex(rec=>rec.stakeholder_id===item.value) 
+           {const TargetItem = aclEntries.findIndex(rec=>rec.stakeholder_id===item.value) 
             // console.log(TargetItem)
             if ( TargetItem!==-1) {
                 aclEntries[TargetItem][type] = true
@@ -277,11 +276,11 @@ class accessWizard extends Component {
         })          
         return aclEntries   
     }
-  
+
+    
  
 
   render() {
-
   
     // console.log(acl_entries)
     const item = this.props.item
@@ -289,10 +288,6 @@ class accessWizard extends Component {
     // const item = this.props.item
     const {accViewVal, accUpdVal, accRmvVal, accModVal, stakehList} = this.state
     // console.log(item)
-
-
-
-
 
     return (
       <Fragment>
@@ -347,7 +342,8 @@ class accessWizard extends Component {
                 </div>
                 <div className={active==='access'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary" onClick={this.ActivePage} data-pagename="viewStakeh">Close</button> */}
                 </div>
             </form>
                 {/* <Loader
@@ -360,11 +356,13 @@ class accessWizard extends Component {
 }
 accessWizard.propTypes={
     session: PropTypes.object.isRequired,
+    stakeholderList: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout:PropTypes.object.isRequired,
     stakeholderUpdate: PropTypes.object.isRequired,
     updStkh: PropTypes.func.isRequired,
+     
    
     
      
@@ -376,12 +374,14 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         stakeholderUpdate: state.stakeholderUpdate,
+        stakeholderList: state.stakeholderList
         
          
 })
     
 export default connect(mapStateToProps,{
     updStkh,
+     
     
 
     

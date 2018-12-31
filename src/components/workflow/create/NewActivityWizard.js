@@ -425,7 +425,8 @@ acl_builder=(selData,aclEntries,type)=>{
     
 
   render() {
-    const {stakehList, listWorflowbySub, addTask} = this.props.crtNewReducer
+    const {stakehList} = this.props.stakeholderList
+    const {listWorflowbySub, addTask} = this.props.crtNewReducer
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     
     const {subject, stakehValAssigneeNew, stakehValAssignorNew, stakehValManagerNew, stakehValSupervisorNew, hasDecision, 
@@ -690,6 +691,7 @@ acl_builder=(selData,aclEntries,type)=>{
 NewActivityWizard.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,  
+  stakeholderList: PropTypes.object.isRequired,
   workflowDetail:PropTypes.object.isRequired,  
   crtNewReducer:PropTypes.object.isRequired, 
   listWrkFlw:PropTypes.object.isRequired, 
@@ -704,7 +706,8 @@ const mapStateToProps= state =>({
       layout:state.layout,
       workflowDetail:state.workflowDetail,
       crtNewReducer:state.crtNewReducer,
-      listWrkFlw:state.listWrkFlw
+      listWrkFlw:state.listWrkFlw,
+      stakeholderList: state.stakeholderList,
 })
   
 export default connect(mapStateToProps, {setItemListSubject, setListAddTask, addNewActivity, setActivePage})(NewActivityWizard)

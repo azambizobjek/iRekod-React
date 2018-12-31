@@ -6,6 +6,7 @@ import addStakeholder from '../components/stakeholder/add/AddStakeholder'
 import index from '../components/stakeholder/index'
 import ViewDetail from '../components/stakeholder/view/ViewDetail'
 import UpdateDetail from '../components/stakeholder/update/UpdateDetail'
+import MainMulti from '../components/stakeholder/multi/MainMulti'
 import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
@@ -22,6 +23,7 @@ import PropTypes from 'prop-types'
 
 import {setNavToggle,setPageClass, setSideNavClass} from '../actions/layoutInitAction'
 import {Footer, SideNav, TopNav} from '../components/layouts'
+
 
 const RouteContainer = posed.div({
     enter: {
@@ -64,6 +66,7 @@ class Home extends Component {
         'index' : index,
         'viewStakeh': ViewDetail,
         'edit': UpdateDetail, 
+        'deleteMulti': MainMulti,
         'addChild': addChild,  
         'search': search,   
 

@@ -6,7 +6,7 @@ import ListSubject from './ListSubject'
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
-import {setCardView, setSelWorkFlow, setShowFab, setSelDetails, setStakehList, listWorkFlowSub} from '../../actions/workflowAction/authListWorkFlow'
+import {setCardView, setSelWorkFlow, setShowFab, setSelDetails,  listWorkFlowSub} from '../../actions/workflowAction/authListWorkFlow'
 import {setItemListSubject, setEmailStore, setListActivityDetails,setDelBtn, setTaskResult} from '../../actions/workflowAction/workflowDetailAction'
 import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
 import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
@@ -109,11 +109,11 @@ class ListWorkflow extends Component {
         }
         this.props.setSelDetails(selDetails)
 
-        const stakehList={
-            action: "ITEM_LIST",
-            bio_access_id: bId       
-        }
-        this.props.setStakehList(stakehList)
+        // const stakehList={
+        //     action: "ITEM_LIST",
+        //     bio_access_id: bId       
+        // }
+        // this.props.setStakehList(stakehList)
 
         const itemListSubject={
             action: "ITEM_LIST_BY_SUBJECT",
@@ -281,7 +281,7 @@ ListWorkflow.propTypes={
     setShowFab:PropTypes.func.isRequired,
     setListActivityDetails:PropTypes.func.isRequired,
     setSelDetails: PropTypes.func.isRequired,
-    setStakehList:PropTypes.func.isRequired,
+    // setStakehList:PropTypes.func.isRequired,
     setItemListSubject:PropTypes.func.isRequired,
     setEmailStore:PropTypes.func.isRequired,
     setEmailStoreNew:PropTypes.func.isRequired,
@@ -306,7 +306,7 @@ export default connect(mapStateToProps,
     setShowFab, 
     setListActivityDetails, 
     setSelDetails, 
-    setStakehList,
+    // setStakehList,
     setItemListSubject,
     setEmailStore, setEmailStoreNew, setDelBtn, setTaskResult,
     setPageTitle,

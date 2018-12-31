@@ -1,9 +1,10 @@
 import React, { Component,Fragment } from 'react' 
-import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker"
 import moment from 'moment'
+import CloseBtn from '../../stakeholder/addChild/AddCloseBtn'
 import {addChild} from '../../../actions/stakeholderAction/stakehAddAction'
 import {setMember} from '../../../actions/stakeholderAction/stakehUpdateAction'
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -93,7 +94,7 @@ class basicWizard extends Component {
     formSubmit=(e)=>{
        
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         // const {internal,is_blocked,can_login,login_username,password,role_value,role_id,security_level_value,security_level_id,active,date_active_from,date_active_to} = this.props.item
         const {stakeh_type,initials,full_name,email,date_of_birth} = this.state
         e.preventDefault()
@@ -131,7 +132,7 @@ class basicWizard extends Component {
             // custom_field:custom_field,     
 
         }             
-        this.props.addChild(formObj,stakehSel)
+        this.props.addChild(formObj,stakeholder_id)
         // console.log(formObj)
         
         alert("Successful Created")
@@ -207,7 +208,7 @@ class basicWizard extends Component {
                 </div>
                 <div className={active==='basic'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
                 </div>
             </form>
                 {/* <Loader

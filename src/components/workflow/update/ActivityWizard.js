@@ -869,6 +869,7 @@ ActivityWizard.propTypes={
     layout: PropTypes.object.isRequired,  
     workflowDetail:PropTypes.object.isRequired,  
     listWrkFlw:PropTypes.object.isRequired,
+    stakeholderList: PropTypes.object.isRequired,
     setListAddTask:PropTypes.func.isRequired,
     setListTaskResultTitle:PropTypes.func.isRequired,
     setListTaskResultStatus:PropTypes.func.isRequired,
@@ -885,6 +886,7 @@ const mapStateToProps= state =>({
         workflowDetail:state.workflowDetail,
         listWrkFlw:state.listWrkFlw,
         updActReducer:state.updActReducer,
+        stakeholderList: state.stakeholderList,
 })
     
 export default connect(mapStateToProps, {setListAddTask, setListTaskResultTitle, setListTaskResultStatus, 

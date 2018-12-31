@@ -16,6 +16,10 @@ export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
 
+//Main Fab action and reducer link 
+export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
+export const SET_SEL_ALL = 'SET_SEL_ALL'
+export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
@@ -24,6 +28,9 @@ export const BC_DETAIL = 'BC_DETAIL'
 export const BC_UPDATE = 'BC_UPDATE'
 export const BC_INDEX = 'BC_INDEX'
 
+//Stakeholder List
+export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
+
 //Stakeholder List Type
 export const STAKEH_TYPE = 'STAKEH_TYPE'
 export const STAKEH_SEL = 'STAKEH_SEL'
@@ -31,7 +38,6 @@ export const STAKEH_VIEW = 'STAKEH_VIEW'
 export const SHOW_FAB = 'SHOW_FAB'
 export const STAKEH_NUMB = 'STAKEH_NUMB'
 export const DELETE_STAKEHOLDER = 'DELETE_STAKEHOLDER'
-export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
 
 //Stakeholder Viewer
 export const STAKEHOLDER_VIEW = 'STAKEHOLDER_VIEW'
@@ -47,7 +53,6 @@ export const ITEM_LIST_ANCESTOR = 'ITEM_LIST_ANCESTOR'
 export const ITEM_LIST_DESCENDANT = 'ITEM_LIST_DESCENDANT'
 export const STORE_DETAIL = 'STORE_DETAIL'
 export const SECURITY_LEVEL = 'SECURITY_LEVEL' 
-export const CUSTOM_FIELD = 'CUSTOM_FIELD'
 
 //Stakeholeder Add
 export const ADD_STAKEH = 'ADD_STAKEH'
@@ -68,8 +73,8 @@ export const INSERT_NEW_BREADCRUMB = 'INSERT_NEW_BREADCRUMB'
 
 //listworkflow action and reducer link
 export const SET_CARD_VIEW = 'SET_CARD_VIEW'
-export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
-export const SET_SEL_ALL = 'SET_SEL_ALL'
+// export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
+// export const SET_SEL_ALL = 'SET_SEL_ALL'
 export const WORKFLOW_SEL = 'WORKFLOW_SEL'
 // export const SHOW_FAB = 'SHOW_FAB'
 export const SELECT_SEL = 'SELECT_SEL'
@@ -81,7 +86,6 @@ export const WIZARD_PAGE = 'WIZARD_PAGE'
 export const SET_ACTIVITY_STORE = 'SET_ACTIVITY_STORE'
 export const SET_EMAIL_STORE = 'SET_EMAIL_STORE'
 export const LIST_ACTIVITY_DETAIL = 'LIST_ACTIVITY_DETAIL'
-export const LIST_STAKEHOLDER = 'LIST_STAKEHOLDER'
 export const LIST_SUBJECT_ITEM = 'LIST_SUBJECT_ITEM'
 export const SET_CONTAINER_LINE = 'SET_CONTAINER_LINE'
 export const DELETE_WORKFLOW = 'DELETE_WORKFLOW'
@@ -94,7 +98,6 @@ export const LIST_SELECTED_TASK_RESULT_STATUS = 'LIST_SELECTED_TASK_RESULT_STATU
 //create new activity action and reducer link
 export const WIZARD_PAGE_ADD = 'WIZARD_PAGE_ADD'
 export const SET_CONTAINER_LINE_ADD = 'SET_CONTAINER_LINE_ADD'
-export const LIST_STAKEH_ADD = 'LIST_STAKEH_ADD'
 export const LIST_WORKFLOWBY_SUBJECT = 'LIST_WORKFLOWBY_SUBJECT'
 export const LIST_EMAIL_ADD = 'LIST_EMAIL_ADD'
 export const LIST_ADD_TASK_NEW = 'LIST_ADD_TASK_NEW'
@@ -121,7 +124,7 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_STARTPAGE = 'SET_STARTPAGE'
 // export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
 // export const SHOW_FAB = 'SHOW_FAB'
-export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
+// export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 export const SET_ISCONTAINER = 'SET_ISCONTAINER'
 export const REC_ITEM_ACCESS_DEL = 'REC_ITEM_ACCESS_DEL'
 export const REC_ITEM_ACCESS_EDIT = 'REC_ITEM_ACCESS_EDIT'

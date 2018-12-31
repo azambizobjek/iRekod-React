@@ -1,6 +1,7 @@
 import React, { Component,Fragment } from 'react' 
 import Select from 'react-select'
 import {setGroup,setRmvGroup,updListGroup,setAncestor,setMember,setRmvMember,updListMember} from '../../../actions/stakeholderAction/stakehUpdateAction' 
+import CloseBtn from '../../stakeholder/update/UpdateCloseBtn'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -72,7 +73,7 @@ class GroupMember extends Component {
     formSubmit=(e)=>{
         e.preventDefault()
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel} = this.props.stakeholderlistType
+        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
         const {stakeholderGroup,stakeholderMember} = this.props.stakeholderView
         const {groupVal,memberVal}= this.state
 
@@ -91,7 +92,7 @@ class GroupMember extends Component {
                     action: "ADD_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.value,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -117,7 +118,7 @@ class GroupMember extends Component {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.stakeholder_id,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -133,7 +134,7 @@ class GroupMember extends Component {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
                     parent_id: x.stakeholder_id,  
-                    child_id: stakehSel,
+                    child_id: stakeholder_id,
                     def_organization: false,
                     def_group: false,
                     def_department: false,
@@ -150,7 +151,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "ADD_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.value               
                 }
                 this.props.setMember(memberSource)
@@ -172,7 +173,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.stakeholder_id                             
                 }
                 this.props.setRmvMember(memberSource)
@@ -187,7 +188,7 @@ class GroupMember extends Component {
                 const memberSource = {
                     action: "REMOVE_CHILD_ITEM",
                     bio_access_id: idAccess,
-                    parent_id: stakehSel,  
+                    parent_id: stakeholder_id,  
                     child_id: x.stakeholder_id                                
                 }
                 this.props.setRmvMember(memberSource)
@@ -253,7 +254,8 @@ class GroupMember extends Component {
                 </div>
                 <div className={active==='group'?"modal-footer":""}>
                     <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <CloseBtn/>
+                    {/* <button type="button" className="btn btn-secondary">Close</button> */}
                 </div>
             </form>
                 {/* <Loader

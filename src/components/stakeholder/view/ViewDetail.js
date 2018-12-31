@@ -6,8 +6,9 @@ import AccessView from '../../stakeholder/view/AccessView'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
 import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakeholderAction/stakehTypeAction'
-import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
+import {setRoleStore,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import BreadCrumb from '../../layouts/BreadcrumbStakeh'
+import {bcDet,bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -81,11 +82,13 @@ class ViewDetail extends Component {
   updDetail=(e)=>{
       e.preventDefault()   
 
+      this.props.bcUpd(true)  //breadcrumb condition
+    //   this.props.bcDet(false) //breadcrumb condition
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       //console.log(('data-pagename'))
 
       const {user:{bio_access_id:idAccess}} = this.props.session
-      const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
+      const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
       // console.log(stakehNumb)     
             
       //Role List
@@ -93,18 +96,11 @@ class ViewDetail extends Component {
           action: "ITEM_LIST",
           bio_access_id: idAccess      
       }
-      this.props.setRoleStore(RoleObj)
-      
-        //Stakeholder List
-      const stakehList={
-          action:"ITEM_LIST",
-          bio_access_id:idAccess
-      }
-      this.props.setStakehList(stakehList)
+      this.props.setRoleStore(RoleObj)     
 
-        //stkh Detail
+      //stkh Detail
       const stakehDet={
-          stakeholder_id:stakehSel,
+          stakeholder_id:stakeholder_id,
           bio_access_id:idAccess,
           action:'ITEM_DETAIL',            
       }
@@ -113,7 +109,7 @@ class ViewDetail extends Component {
       //Ancestor Group
       const listAncestor={
           bio_access_id: idAccess,
-          stakeholder_id: stakehSel,
+          stakeholder_id: stakeholder_id,
           action: "ITEM_LIST_ANCESTOR",
           stakeh_type: parseInt(stakehNumb)      
       }
@@ -122,7 +118,7 @@ class ViewDetail extends Component {
       //Descendant Member
       const listDescendant={
           bio_access_id: idAccess,
-          stakeholder_id: stakehSel,
+          stakeholder_id: stakeholder_id,
           action: "ITEM_LIST_DESCENDANT",
           stakeh_type: parseInt(stakehNumb)      
       }
@@ -137,7 +133,7 @@ class ViewDetail extends Component {
 
       //List Group
       const stakehGroup={
-        stakeholder_id:stakehSel,
+        stakeholder_id:stakeholder_id,
         bio_access_id:idAccess,
         action:'ITEM_LIST_GROUP',             
     }
@@ -145,7 +141,7 @@ class ViewDetail extends Component {
 
     //Member
      const stakehMember={
-        stakeholder_id:stakehSel,
+        stakeholder_id:stakeholder_id,
         bio_access_id:idAccess,
         action:'ITEM_LIST_MEMBER',             
     }
@@ -317,11 +313,12 @@ ViewDetail.propTypes={
   setStakehSel: PropTypes.func.isRequired,
   setStakehNumb: PropTypes.func.isRequired,
   setRoleStore: PropTypes.func.isRequired,
-  setStakehList: PropTypes.func.isRequired,
   setStkhAccDetail: PropTypes.func.isRequired,
   setAncestor: PropTypes.func.isRequired,
   setDescendant: PropTypes.func.isRequired,
   setSecLevel: PropTypes.func.isRequired,
+  bcDet: PropTypes.func.isRequired,
+  bcUpd: PropTypes.func.isRequired,
   
   
 }
@@ -343,11 +340,12 @@ export default connect(mapStateToProps,{
     setStakehSel,
     setStakehNumb,
     setRoleStore,
-    setStakehList,
     setStkhAccDetail,
     setAncestor,
     setDescendant,
     setSecLevel,
+    bcDet,
+    bcUpd
     
 
 })(ViewDetail)

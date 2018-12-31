@@ -56,9 +56,11 @@ export const viewStakehAccess = (param) => dispatch => {
         })
     })
 } 
+
+//Delete Function
 export const setDelBtn=(param)=>dispatch=>{
     // console.log(param)
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`    
     fetch(url,{method:'DELETE'})
     .then(res=>res.json())
     .then(res=>{

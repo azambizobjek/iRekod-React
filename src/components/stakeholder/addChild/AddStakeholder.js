@@ -3,7 +3,6 @@ import BasicWizard from '../../stakeholder/addChild/BasicWizard'
 import SecurityWizard from '../../stakeholder/addChild/SecurityWizard' 
 import FolTabHead from '../../stakeholder/addChild/FolTabHeadAdd'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../../actions/stakeholderAction/stakehUpdateAction'
-// import {setWizardPage} from '../../../actions/stakehUpdateAction'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction' 
 
@@ -14,8 +13,8 @@ class NewStakeholder extends Component {
 
     handleWizard=(wizardName)=>{        
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel,stakehNumb} = this.props.stakeholderlistType  
-        // console.log(stakehNumb)
+        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
+        // console.log(stakeholder_id)
         
         this.props.setWizardPage(wizardName)
         // console.log(e.target.getAttribute('data-wizardname'))  
@@ -36,7 +35,7 @@ class NewStakeholder extends Component {
 
           //stkh Detail
         const stakehDet={
-            stakeholder_id:stakehSel,
+            stakeholder_id:stakeholder_id,
             bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
@@ -45,7 +44,7 @@ class NewStakeholder extends Component {
         //Ancestor Group
         const listAncestor={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -54,7 +53,7 @@ class NewStakeholder extends Component {
         //Descendant Member
         const listDescendant={
             bio_access_id: idAccess,
-            stakeholder_id: stakehSel,
+            stakeholder_id: stakeholder_id,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }

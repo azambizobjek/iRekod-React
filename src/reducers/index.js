@@ -4,10 +4,11 @@ import {LOG_OUT} from '../actions/types'
 import authReducer from './authReducer'
 import layoutInitReducer from './layoutInitReducer'
 import searchReducer from './searchReducer'
-// import fabReducer from './fabReducer'
+import fabReducer from './MainFabReducer'
 
 //stakeholder
 import stakeholderBreadCrumb from '../reducers/stakeholderReducer/stakeholderBreadCrumbReducer'
+import stakeholderList from '../reducers/stakeholderReducer/stakeholderListReducer'
 import stakeholderReducer from './stakeholderReducer/stakeholderListTypeReducer'
 import stakeholderView from './stakeholderReducer/stakeholderViewReducer'
 import stakeholderUpdate from './stakeholderReducer/stakeholderUpdateReducer'
@@ -36,10 +37,12 @@ import auditReducer from './auditTrailReducer/auditReducer'
 const appReducer = combineReducers({
     session:authReducer,
     layout:layoutInitReducer,
+    fab:fabReducer,
     searchConf:searchReducer,
    
     //stakeholder
     stakeholderBreadCrumb:stakeholderBreadCrumb,
+    stakeholderList:stakeholderList,
     stakeholderlistType:stakeholderReducer,    
     stakeholderView:stakeholderView,
     stakeholderUpdate:stakeholderUpdate,
