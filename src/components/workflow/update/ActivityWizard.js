@@ -2,8 +2,10 @@ import React, { Component,Fragment } from 'react'
 // import {updStkh} from '../../actions/stakehUpdateAction'
 import Select from 'react-select'
 
-import 'rc-checkbox/assets/index.css';
-import { Button } from 'reactstrap';
+import 'rc-checkbox/assets/index.css'
+import { Button } from 'reactstrap'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap.css'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
@@ -58,69 +60,67 @@ class ActivityWizard extends Component {
             accViewVal:[],
             accUpdVal:[],
             accRmvVal:[],
-            accModVal:[], 
-          
+            accModVal:[],             
+            resultTitle:[],
+            resultStatus:[],                    
+
         }        
     }  
 
-    componentDidUpdate(prevProps){
-    if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){
-        console.log('11111')
-        const {
-            default_assignee_name, default_assignee_id, 
-            default_assignor_name,  default_assignor_id,
-            default_manager_name, default_manager_id,
-            prev_task_title, prev_task_id, 
-            default_supervisor_name, default_supervisor_id, 
-            next_task_title, next_task_id,
-            task_id,
-            subject,
-            title,
-            instruction,
-            estimated_duration ,
-             is_important,
-             is_auto_start ,
-             parent_id,
-             is_decision ,
-             task_results ,
-             acl_id ,
-             stakeholder_fields} = this.props.item
-       
-        const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
-        const assignorValue=({value: default_assignor_id, label:default_assignor_name})
-        const managerValue=({value: default_manager_id, label:default_manager_name})
-        const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
-        const nextTitleValue=({value: next_task_id, label:next_task_title})
-        const prevTitleValue=({value: prev_task_id, label:prev_task_title})
-    
-      
+    componentWillMount(){
+        const {task_results} = this.props.item
+        const resultTitle = task_results.map(itm=>({label:itm.task_title, value:itm.task_id}))
+        const resultStatus = task_results.map(itm=>({label:itm.result_id, value:itm.task_id}))          
         this.setState({
-          task_id: task_id,
-          title: title,
-          subject: subject,
-          instruction: instruction,
-          estimated_duration: estimated_duration,
-          is_important: is_important,
-          is_auto_start: is_auto_start,
-          default_assignor_id: assignorValue,
-          default_assignee_id: assigneeValue,
-          default_assignor_name:assignorValue,
-          default_assignee_name: assigneeValue,
-          default_supervisor_id: supervisorValue,
-          default_supervisor_name: supervisorValue,
-          default_manager_id: managerValue,
-          default_manager_name: managerValue,
-          parent_id: parent_id,
-          prev_task_id: prevTitleValue,
-          prev_task_title: prevTitleValue,
-          next_task_id: nextTitleValue,
-          next_task_title: nextTitleValue,
-          is_decision: is_decision,
-          task_results: task_results,
-          acl_id: acl_id,
-          stakeholder_fields: stakeholder_fields,
-        })    
-        }
+            task_results:task_results,            
+            resultTitle:resultTitle,
+            resultStatus:resultStatus,
+        
+        })            
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){        
+
+            const {task_results} = this.state
+            const { default_assignee_name, default_assignee_id, default_assignor_name,  default_assignor_id, default_manager_name, default_manager_id, prev_task_title, prev_task_id, default_supervisor_name, default_supervisor_id, 
+                    next_task_title, next_task_id, task_id, subject, title, instruction, estimated_duration, is_important, is_auto_start, parent_id, is_decision, acl_id , stakeholder_fields 
+                } = this.props.item      
+            
+            const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
+            const assignorValue=({value: default_assignor_id, label:default_assignor_name})
+            const managerValue=({value: default_manager_id, label:default_manager_name})
+            const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
+            const nextTitleValue=({value: next_task_id, label:next_task_title})
+            const prevTitleValue=({value: prev_task_id, label:prev_task_title})
+
+            this.setState({
+                task_id: task_id,
+                title: title,
+                subject: subject,
+                instruction: instruction,
+                estimated_duration: estimated_duration,
+                is_important: is_important,
+                is_auto_start: is_auto_start,
+                default_assignor_id: assignorValue,
+                default_assignee_id: assigneeValue,
+                default_assignor_name:assignorValue,
+                default_assignee_name: assigneeValue,
+                default_supervisor_id: supervisorValue,
+                default_supervisor_name: supervisorValue,
+                default_manager_id: managerValue,
+                default_manager_name: managerValue,
+                parent_id: parent_id,
+                prev_task_id: prevTitleValue,
+                prev_task_title: prevTitleValue,
+                next_task_id: nextTitleValue,
+                next_task_title: nextTitleValue,
+                is_decision: is_decision,
+                task_results: task_results,
+                acl_id: acl_id,
+                stakeholder_fields: stakeholder_fields,           
+            })    
+        }          
     }
 
      
@@ -156,86 +156,68 @@ class ActivityWizard extends Component {
         default_assignor_name:value,
       })
       // console.log(value)
-  }
+    }
 
-  handleAssigneeChange=(value)=>{
-    this.setState({
-      default_assignee_name:value
-    })
-}
+    handleAssigneeChange=(value)=>{
+        this.setState({
+        default_assignee_name:value
+        })
+    }
 
-handleManagerChange=(value)=>{
-  this.setState({
-    default_manager_name:value
-  })
-}
+    handleManagerChange=(value)=>{
+        this.setState({
+        default_manager_name:value
+        })
+    }
 
-handleSupervisorChange=(value)=>{
-  this.setState({
-    default_supervisor_name:value
-  })
-}
+    handleSupervisorChange=(value)=>{
+        this.setState({
+        default_supervisor_name:value
+        })
+    }
 
-handlePrevTaskChange=(value)=>{
+    handlePrevTaskChange=(value)=>{
 
-    {value===null || value === ''? 
-    this.setState({
-        prev_task_title:''
-      }):
-      this.setState({
-        prev_task_title:value
-      })
-}
-    // this.setState({
-    //     prev_task_title:value
-    //   })
-}
+        {value===null || value === ''? 
+        this.setState({
+            prev_task_title:''
+        }):
+        this.setState({
+            prev_task_title:value
+        })
+    }
+        // this.setState({
+        //     prev_task_title:value
+        //   })
+    }
 
-handleNextTaskChange=(value)=>{
-    {value=== null || value === ''?
-    this.setState({
-        next_task_title:''
-      }):
-      this.setState({
-        next_task_title:value
-      })
-}
-    // this.setState({
-    //     next_task_title:value
-    //   })
-}
+    handleNextTaskChange=(value)=>{
+        {value=== null || value === ''?
+        this.setState({
+            next_task_title:''
+        }):
+        this.setState({
+            next_task_title:value
+        })
+    }
+        // this.setState({
+        //     next_task_title:value
+        //   })
+    }
 
-handleTaskResultTitle=(value)=>{
-    const tskRsltTitle = value
-    this.setState({
-        resultTask:value
-      })
+    handleAdditionalTask=(value)=>{
+        const nom = this.state.number
+        const addTask = value
+        this.setState({
+            addTaskTitle:value,
+            addTaskOption:value.label,
+            number:nom+1
+        })
 
-      this.props.setListTaskResultTitle(tskRsltTitle)
-}
+        this.props.setListAddTask(addTask)
+    }    
 
-handleAdditionalTask=(value)=>{
-    const nom = this.state.number
-    const addTask = value
-    this.setState({
-        addTaskTitle:value,
-        addTaskOption:value.label,
-        number:nom+1
-      })
-
-      this.props.setListAddTask(addTask)
-}
-
-handleTaskResultStatus=(value)=>{
-    const tskRsltStatus = value
-    this.setState({
-        taskResStat:value
-      })
-
-      this.props.setListTaskResultStatus(tskRsltStatus)
-}
-
-handleViewChange=(value)=>{
+    handleViewChange=(value)=>{
         this.setState({accViewVal:value})
         console.log(value)
     }
@@ -260,145 +242,112 @@ handleViewChange=(value)=>{
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
     } 
 
-componentDidMount() {
-    console.log('9999')
+    // //Handle Task Result (Title) Change
+    handleTaskResultTitle= idx => selected=>{
+        const {label,value} = selected
+        const {task_results,task_id} = this.state         
+        const resultStatus = ({label:label, value:value})  
+        const new_task_results = [...this.state.task_results]
+        new_task_results[idx] = {
+            task_result_id: task_results[idx].task_result_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: value,//task_results[idx].task_id,
+            task_title: label,//task_results[idx].task_title,
+            result_id: task_results[idx].result_id,
+            sort_order: task_results[idx].sort_order
+        }            
+        this.setState({
+            task_results:new_task_results,
+            resultStatus:resultStatus,  
+        })
 
+        // this.props.setListTaskResultTitle(tskRsltTitle)
+    }
 
-    //aclEntries. When change tab header, remain its value
-    const {acl_entries} = this.props.item
+    //Handle Task Result (Status) Change
+    handleTaskResultStatus= idx => selected =>{             
+        const {label,value}  = selected      
+        const {task_results,task_id} = this.state         
+        const resultStatus = ({label:label, value:value})  
+        const new_task_results = [...this.state.task_results]        
+        new_task_results[idx] = {
+            task_result_id: task_results[idx].task_result_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: task_results[idx].task_id,
+            task_title: task_results[idx].task_title,
+            result_id: label,
+            sort_order: task_results[idx].sort_order
+          }
+        // console.log(new_task_results);
+        this.setState({
+            task_results:new_task_results,
+            resultStatus:resultStatus,             
+                          
+        })
 
-                if(acl_entries!==undefined){
-                function acl_multi(array) {
-    
-                    const res = {
-                        view: [],
-                        update: [],
-                        remove: [],
-                        modify_access: []
-                    }
-                
-                    const keys = Object.keys(array[0])
-                
-                    for (let i = 0; i < array.length; i++) {
-                        keys.forEach(function (key) {
-                            if (key !== 'stakeholder_name' && key !== 'stakeholder_id' && key !== 'stakeholder_type_id') {
-                                if (array[i][key]) {
-                                    res[key].push({
-                                        stakeholder_name: array[i].stakeholder_name,
-                                        stakeholder_id: array[i].stakeholder_id,
-                                        stakeholder_type_id: array[i].stakeholder_type_id                                       
-                                    })
-                                }
-                            }
-                        })
-                    }
-                    return res
-                }   
-    
-                let { view, update, remove, modify_access: aclMod } = acl_multi(acl_entries) // returns object. Push to array if so desired 
-                //  console.log(acl_entries)
-                
-                const accView = view.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
-                //  console.log(view)
-    
-                const accUpd = update.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
-                //  console.log(accView)
-    
-                const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
-                //  console.log(accView)
-    
-                const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
-                //  console.log(accView)
-                
-                this.setState({ 
-                    accViewVal:accView,
-                    accUpdVal:accUpd,
-                    accRmvVal:accRmv,
-                    accModVal:accMod,
-                })       
-            }
+        // this.props.setListTaskResultStatus(tskRsltStatus)
+    }
 
-    //assignee, assignor, supervisor, manager, previous task, next task. When change tab header, remain its value    
-    const {
-        default_assignee_name, default_assignee_id, 
-        default_assignor_name,  default_assignor_id,
-        default_manager_name, default_manager_id,
-        prev_task_title, prev_task_id, 
-        default_supervisor_name, default_supervisor_id, 
-        next_task_title, next_task_id,
-        task_id,subject,title,instruction,estimated_duration,
-        is_important,is_auto_start,parent_id,is_decision,
-        task_results,acl_id,stakeholder_fields} = this.props.item
+    handleAddRow= () => {
+        const {task_results} = this.state
+      
+        const item = {
+            sort_order: task_results.length + 1,        
+            // task_id:itm.task_id                         
+        }
+
+        this.setState({
+            task_results: [...task_results,item]
+        })
        
-        
-    const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
-    const assignorValue=({value: default_assignor_id, label:default_assignor_name})
-    const managerValue=({value: default_manager_id, label:default_manager_name})
-    const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
-    const nextTitleValue=({value: next_task_id, label:next_task_title})
-    const prevTitleValue=({value: prev_task_id, label:prev_task_title})         
-    
-    this.setState({
-            task_id: task_id,
-            title: title,
-            subject: subject,
-            instruction: instruction,
-            estimated_duration: estimated_duration,
-            is_important: is_important,
-            is_auto_start: is_auto_start,
-            is_decision: is_decision,
-            task_results: task_results,
-            acl_id: acl_id,
-            stakeholder_fields: stakeholder_fields,
-            default_assignee_name:assigneeValue,
-            default_assignor_name:assignorValue,
-            default_manager_name:managerValue,
-            default_supervisor_name:supervisorValue,
-            prev_task_title:prevTitleValue,
-            next_task_title:nextTitleValue
-          })    
-          
-  }
+    }
 
-
-
+     //Save Button
   formSubmit=(e)=>{
+    e.preventDefault()
        
     const {user:{bio_access_id:bId}} = this.props.session
     const {wrkflSel} = this.props.listWrkFlw
     // const {activityDet} = this.props.workflowDetail
     const {activityDet} = this.props.workflowDetail
+    // console.log(activityDet)
+     
   
-    const { 
-    
-    default_assignor_name,
-    default_manager_name,
-    default_supervisor_name,
-    title,
-    subject,
-    instruction,
-    estimated_duration,
-    is_important,
-    is_auto_start,
-    is_decision,
-    next_task_title,
-    prev_task_title,
-    default_assignee_name,
-    } = this.state
-    e.preventDefault()
+    const {     
+        default_assignor_name,
+        default_manager_name,
+        default_supervisor_name,
+        title,
+        subject,
+        instruction,
+        estimated_duration,
+        is_important,
+        is_auto_start,
+        is_decision,
+        next_task_title,
+        prev_task_title,
+        default_assignee_name,
+        task_results
+    } = this.state  
 
     const {
-     email_template_id ,
-     recipients ,
-     include_assignee ,
-     include_home ,
-     include_owner ,
-     include_stakeholders,
-     is_enable_auto_scripting ,
-     auto_scripting,
-     acl_id,
-   
+        email_template_id ,
+        recipients ,
+        include_assignee ,
+        include_home ,
+        include_owner ,
+        include_stakeholders,
+        is_enable_auto_scripting ,
+        auto_scripting,
+        acl_id,   
     } = this.props.item
+
+    const taskResultItem =
+        task_results.map(itm=>({
+            sort_order:itm.sort_order,
+            result_id:itm.result_id,
+            task_id:itm.task_id       
+        }))
 
     const updateObj={
       task_id:wrkflSel,
@@ -424,7 +373,7 @@ componentDidMount() {
       next_task_title
       : next_task_title.label,
       is_decision: is_decision,
-      task_results: null,
+      task_results: taskResultItem,
       acl_id: acl_id,
       acl_entries: this.Aclselected(),
 
@@ -442,11 +391,12 @@ componentDidMount() {
       action: "SAVE_TASK" 
 
     }
+    console.log(taskResultItem)
 
     this.props.updateActivity(updateObj)
     this.props.setActivityDetailsUpdate(updateObj)
     console.log(updateObj)
-    alert("Successful Update")
+    // alert("Successful Update")
 
     const selDetails={
         task_id: wrkflSel,
@@ -455,9 +405,115 @@ componentDidMount() {
     }
     this.props.setSelDetails(selDetails)
 
+    
 }
 
- Aclselected=()=>{
+
+    //Get Value Access Control
+    componentDidMount() {
+        // console.log('9999')
+
+
+        //aclEntries. When change tab header, remain its value
+        const {acl_entries} = this.props.item
+
+                    if(acl_entries!==undefined){
+                    function acl_multi(array) {
+        
+                        const res = {
+                            view: [],
+                            update: [],
+                            remove: [],
+                            modify_access: []
+                        }
+                    
+                        const keys = Object.keys(array[0])
+                    
+                        for (let i = 0; i < array.length; i++) {
+                            keys.forEach(function (key) {
+                                if (key !== 'stakeholder_name' && key !== 'stakeholder_id' && key !== 'stakeholder_type_id') {
+                                    if (array[i][key]) {
+                                        res[key].push({
+                                            stakeholder_name: array[i].stakeholder_name,
+                                            stakeholder_id: array[i].stakeholder_id,
+                                            stakeholder_type_id: array[i].stakeholder_type_id                                       
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                        return res
+                    }   
+        
+                    let { view, update, remove, modify_access: aclMod } = acl_multi(acl_entries) // returns object. Push to array if so desired 
+                    //  console.log(acl_entries)
+                    
+                    const accView = view.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
+                    //  console.log(view)
+        
+                    const accUpd = update.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
+                    //  console.log(accView)
+        
+                    const accRmv = remove.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name), type: itm.stakeholder_type_id}))
+                    //  console.log(accView)
+        
+                    const accMod = aclMod.map(itm=>({value: itm.stakeholder_id, label:decodeURIComponent(itm.stakeholder_name),   type: itm.stakeholder_type_id}))
+                    //  console.log(accView)
+                    
+                    this.setState({ 
+                        accViewVal:accView,
+                        accUpdVal:accUpd,
+                        accRmvVal:accRmv,
+                        accModVal:accMod,
+                    })       
+                }
+
+        //assignee, assignor, supervisor, manager, previous task, next task. When change tab header, remain its value    
+        const {
+            default_assignee_name, default_assignee_id, 
+            default_assignor_name,  default_assignor_id,
+            default_manager_name, default_manager_id,
+            prev_task_title, prev_task_id, 
+            default_supervisor_name, default_supervisor_id, 
+            next_task_title, next_task_id,
+            task_id,subject,title,instruction,estimated_duration,
+            is_important,is_auto_start,parent_id,is_decision,
+            task_results,acl_id,stakeholder_fields
+        } = this.props.item
+        
+            
+        const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
+        const assignorValue=({value: default_assignor_id, label:default_assignor_name})
+        const managerValue=({value: default_manager_id, label:default_manager_name})
+        const supervisorValue=({value: default_supervisor_id, label:default_supervisor_name})
+        const nextTitleValue=({value: next_task_id, label:next_task_title})
+        const prevTitleValue=({value: prev_task_id, label:prev_task_title})         
+        
+        this.setState({
+                task_id: task_id,
+                title: title,
+                subject: subject,
+                instruction: instruction,
+                estimated_duration: estimated_duration,
+                is_important: is_important,
+                is_auto_start: is_auto_start,
+                is_decision: is_decision,
+                task_results: task_results,
+                acl_id: acl_id,
+                stakeholder_fields: stakeholder_fields,
+                default_assignee_name:assigneeValue,
+                default_assignor_name:assignorValue,
+                default_manager_name:managerValue,
+                default_supervisor_name:supervisorValue,
+                prev_task_title:prevTitleValue,
+                next_task_title:nextTitleValue
+            })    
+          
+    }
+
+ 
+    //Access Control
+    Aclselected=()=>{
         const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
         // console.log(accViewVal)
         
@@ -581,17 +637,19 @@ componentDidMount() {
     
   render() {
 
-  
+    const {resultTitle,resultStatus,task_results} = this.state         
+    // console.log(task_results)    
     const {stakehList} = this.props.listWrkFlw
     const {itemListSubject, addTask, taskResulStatusObj } = this.props.workflowDetail
     const { default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle, prev_task_title,taskResStat, 
-        accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title} = this.state
+        accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title,rowTaskResult} = this.state
            
     const {subject,title,instruction,estimated_duration,is_important,is_auto_start,is_decision} = this.state
 
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     const optionListItemBySubject = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
-    const optionResultTask= itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.title)})))
+    const optionResultTask = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))      
+    const taskVal = task_results.map(itm=>itm.task_title)  
     const optionTaskResultStatus = taskResulStatusObj.map((itm => ({ label:decodeURIComponent(itm.lovi_value), value:decodeURIComponent(itm.lov_item_id)})))
     
     
@@ -749,54 +807,61 @@ componentDidMount() {
                         )}
                         </div>
                         </div>
+                       
+                       <div className="row">
+                            <div className="col-auto mr-auto form-group ">
+                                <label> <input name="is_decision" type="checkbox" onChange={this.handleChange} checked={is_decision}/> Has Decision</label>
+                            </div>
 
-                        <div className="row form-group">
-                                <div className="col-6 col-md-4 form-group">
-                                    <label> <input name="is_decision" type="checkbox" onChange={this.handleChange} checked={is_decision}/> Has Decision</label>
-                                </div>
-                        </div>
-                                <div className={is_decision===null||is_decision=== false?"d-none":"autoUpdate row"}>
-
-                                    <table className="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Task Result: Title</th>
-                                                <th scope="col">Task Result: Status</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                    <td>
-                                                        <Select 
-                                                        options={optionResultTask}
-                                                        id="taskTitle"
-                                                        onChange={this.handleTaskResultTitle}
-                                                        // isMulti
-                                                        placeholder="Title"
-                                                        />
-                                                    </td>
-
-                                                    <td>
-                                                        <Select 
-                                                        options={optionTaskResultStatus}
-                                                        id="taskStatus"
-                                                        onChange={this.handleTaskResultStatus}
-                                                        value={taskResStat} 
-                                                        // isMulti
-                                                        placeholder="Title"
-                                                        />
-                                                    </td>
-
-                                                    <td>
-                                                    <Button>Add</Button>
-                                                    </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div className={is_decision===null||is_decision=== false?"d-none":"col-auto"}>                        
+                                <span>
+                                    <Tooltip                            
+                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Task</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRow}/>
+                                    </Tooltip>
+                                </span>                         
+                            </div>    
+                        </div>      
+                        
+                        <table className={is_decision===null||is_decision=== false?"d-none":"table table-hover mb-3"}>
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Task Result: Title</th>
+                                    <th scope="col">Task Result: Status</th>                                    
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {task_results.map((itm,idx)=> (  
+                                <tr key={idx}>
+                                    <td>{itm.sort_order}</td>
+                                    <td>
+                                        <Select                                         
+                                        options={optionResultTask.filter(itm=> taskVal.includes(itm.label)< 1)}
+                                        name="taskTitle"
+                                        onChange={this.handleTaskResultTitle(idx)}                                         
+                                        value={resultTitle[idx]}                                        
+                                        placeholder="Title"
+                                        // isDisabled
+                                        />
+                                    </td>
+                                    <td>
+                                        <Select 
+                                        options={optionTaskResultStatus}
+                                        name="taskStatus"
+                                        onChange={this.handleTaskResultStatus(idx)}                                       
+                                        value={resultStatus[idx]}                                          
+                                        placeholder="Status"
+                                        />
+                                    </td>
+                                    <td></td>                                 
+                                                               
+                                </tr>  
+                               ))}                              
+                            </tbody>
+                        </table>                     
 
                         {/* ACL  */}
                         <div className="row form-group">

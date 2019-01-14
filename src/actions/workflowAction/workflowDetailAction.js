@@ -1,18 +1,19 @@
-import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, 
+import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, TASK_RESULT_DETAIL,
     LIST_ADD_TASK, LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS} from '../types'
 
 import {biorisUrl} from '../../appConfig'
 
+//Set Activity Detail
 export const setListActivityDetails=(activityDet)=>dispatch=>{
     const url=`${biorisUrl}/tasks?param=${JSON.stringify(activityDet)}`
     fetch(url)
     .then(res=>res.json())
-    .then(res=>{
+    .then(res=>{  
         dispatch({
             type: LIST_ACTIVITY,
             payload: res.results
-            })
-            })
+        })
+    })
 
 }
 
@@ -128,6 +129,20 @@ export const setTaskResult = (taskResulStatusObj) => dispatch =>{
         .then(res=>{
             dispatch({
                 type:LIST_TASK_RESULT_STATUS,
+                payload:res.results
+            })
+        })
+}
+
+//Task Result Detail
+export const SetTaskResultDetail = (param) => dispatch =>{
+    // console.log(param)
+    const url=`${biorisUrl}/tasks?param=${JSON.stringify(param)}`
+        fetch(url,{method:'GET'})
+        .then(res=>res.json())
+        .then(res=>{
+            dispatch({
+                type:TASK_RESULT_DETAIL,
                 payload:res.results
             })
         })

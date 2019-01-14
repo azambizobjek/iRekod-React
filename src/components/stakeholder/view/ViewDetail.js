@@ -14,7 +14,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Tooltip from 'rc-tooltip'
-import 'rc-tooltip/assets/bootstrap.css';
+import 'rc-tooltip/assets/bootstrap.css'
  
 
 class ViewDetail extends Component {    

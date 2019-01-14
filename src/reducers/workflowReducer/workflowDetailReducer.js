@@ -1,4 +1,4 @@
-import{LIST_ACTIVITY, LIST_EMAIL, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE, LIST_SUBJECT_ITEM, SET_CONTAINER_LINE, 
+import{LIST_ACTIVITY, LIST_EMAIL, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE, LIST_SUBJECT_ITEM, SET_CONTAINER_LINE, TASK_RESULT_DETAIL,
     LIST_ADD_TASK,LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS,LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS} from '../../actions/types'
 
 const initialState={
@@ -13,7 +13,9 @@ const initialState={
     customFieldObj: [],
     taskResulStatusObj:[],
     tskRsltTitle:[],
-    tskRsltStatus:[]
+    tskRsltStatus:[],
+    taskResultDetail:[],
+
   
 }
 
@@ -81,6 +83,11 @@ export default function(state = initialState, action){
         return { 
             ...state,
             tskRsltTitle:action.payload,
+        }
+        case TASK_RESULT_DETAIL:
+        return { 
+            ...state,
+            taskResultDetail:action.payload,
         } 
         default:
         return state

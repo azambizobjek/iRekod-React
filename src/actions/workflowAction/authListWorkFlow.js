@@ -69,12 +69,12 @@ export const setSelDetails=(selDetails)=>dispatch=>{
     const url=`${biorisUrl}/tasks?param=${JSON.stringify(selDetails)}`
     fetch(url)
     .then(res=>res.json())
-    .then(res=>{
+    .then(res=>{ 
         dispatch({
             type: LIST_ACTIVITY_DETAIL,
             payload: res.results
-            })
-            })
+        })
+    })
 
 }
  

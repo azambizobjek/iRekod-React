@@ -55,19 +55,19 @@ class WorkflowDetails extends Component {
 
 render() {
 
-  const {wizardPage, containerLine} = this.props.workflowDetail
-  const {wrkflSel, selDetails}=this.props.listWrkFlw
-// console.log(selDetails[0])
-//   const item = selDetails.find(rec=>rec.task_id===wrkflSel)
-    // console.log(item)
+    const {wizardPage, containerLine} = this.props.workflowDetail
+    const {wrkflSel, selDetails}=this.props.listWrkFlw
+    // console.log(selDetails)
+    //   const item = selDetails.find(rec=>rec.task_id===wrkflSel)
+        // console.log(item)
 
-  
-  this.components={
-    activity:ActivityWizard,
-    email:EmailWizard,        
-    autoscript:AutoScriptWizard,
-  }
-  const DetailsWizard=this.components[wizardPage]
+    
+    this.components={
+        activity:ActivityWizard,
+        email:EmailWizard,        
+        autoscript:AutoScriptWizard,
+    }
+    const DetailsWizard=this.components[wizardPage]
 
   return (
     

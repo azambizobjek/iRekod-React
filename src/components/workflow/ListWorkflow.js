@@ -42,7 +42,7 @@ class ListWorkflow extends Component {
         }          
     }
 
-
+    //Direct Page To WorkFlow Detail
     setActivePage=(FabRec)=>{
         // e.preventDefault()
         // console.log(FabRec)
@@ -61,14 +61,18 @@ class ListWorkflow extends Component {
 
         //Email Detail
         const emailObj={
-        action: "ITEM_LIST",
-        bio_access_id: bId      
+            action: "ITEM_LIST",
+            bio_access_id: bId      
         }
 
         const taskResulStatusObj={
             action: "LIST_TASK_RESULT",
             bio_access_id: bId      
-            }
+        }
+
+        // const taskResultVar={
+
+        // }
 
 
         this.props.setListActivityDetails(activityDet)
