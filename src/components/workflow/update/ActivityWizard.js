@@ -9,7 +9,7 @@ import 'rc-tooltip/assets/bootstrap.css'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
-import {setListAddTask, setListTaskResultTitle, setListTaskResultStatus} from '../../../actions/workflowAction/workflowDetailAction'
+import {setListTaskResultTitle} from '../../../actions/workflowAction/workflowDetailAction'
 import {updateActivity, setActivityDetailsUpdate} from '../../../actions/workflowAction/updateActAction'
 
 import {connect} from 'react-redux'
@@ -62,27 +62,31 @@ class ActivityWizard extends Component {
             accRmvVal:[],
             accModVal:[],             
             resultTitle:[],
-            resultStatus:[],                    
+            resultStatus:[],     
+            addTitle:[],               
 
         }        
     }  
 
     componentWillMount(){
-        const {task_results} = this.props.item
+        const {task_results,additional_tasks} = this.props.item
         const resultTitle = task_results.map(itm=>({label:itm.task_title, value:itm.task_id}))
-        const resultStatus = task_results.map(itm=>({label:itm.result_id, value:itm.task_id}))          
+        const resultStatus = task_results.map(itm=>({label:itm.result_id, value:itm.task_id}))            
+        const addTitle = additional_tasks.map(itm=>({label:itm.task_title, value:itm.task_id}))
+        // console.log(additional_tasks)
         this.setState({
             task_results:task_results,            
             resultTitle:resultTitle,
             resultStatus:resultStatus,
-        
+            additional_tasks:additional_tasks,
+            addTitle:addTitle
         })            
     }
 
     componentDidUpdate(prevProps){
         if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){        
 
-            const {task_results} = this.state
+            const {task_results,additional_tasks} = this.state
             const { default_assignee_name, default_assignee_id, default_assignor_name,  default_assignor_id, default_manager_name, default_manager_id, prev_task_title, prev_task_id, default_supervisor_name, default_supervisor_id, 
                     next_task_title, next_task_id, task_id, subject, title, instruction, estimated_duration, is_important, is_auto_start, parent_id, is_decision, acl_id , stakeholder_fields 
                 } = this.props.item      
@@ -115,6 +119,7 @@ class ActivityWizard extends Component {
                 prev_task_title: prevTitleValue,
                 next_task_id: nextTitleValue,
                 next_task_title: nextTitleValue,
+                additional_tasks:additional_tasks,
                 is_decision: is_decision,
                 task_results: task_results,
                 acl_id: acl_id,
@@ -203,18 +208,6 @@ class ActivityWizard extends Component {
         // this.setState({
         //     next_task_title:value
         //   })
-    }
-
-    handleAdditionalTask=(value)=>{
-        const nom = this.state.number
-        const addTask = value
-        this.setState({
-            addTaskTitle:value,
-            addTaskOption:value.label,
-            number:nom+1
-        })
-
-        this.props.setListAddTask(addTask)
     }    
 
     handleViewChange=(value)=>{
@@ -245,9 +238,10 @@ class ActivityWizard extends Component {
     // //Handle Task Result (Title) Change
     handleTaskResultTitle= idx => selected=>{
         const {label,value} = selected
+        console.log(label)
         const {task_results,task_id} = this.state         
         const resultStatus = ({label:label, value:value})  
-        const new_task_results = [...this.state.task_results]
+        const new_task_results = [...task_results]
         new_task_results[idx] = {
             task_result_id: task_results[idx].task_result_id,  
             parent_id: task_id,//task_results[idx].parent_id,
@@ -259,9 +253,7 @@ class ActivityWizard extends Component {
         this.setState({
             task_results:new_task_results,
             resultStatus:resultStatus,  
-        })
-
-        // this.props.setListTaskResultTitle(tskRsltTitle)
+        })         
     }
 
     //Handle Task Result (Status) Change
@@ -269,7 +261,7 @@ class ActivityWizard extends Component {
         const {label,value}  = selected      
         const {task_results,task_id} = this.state         
         const resultStatus = ({label:label, value:value})  
-        const new_task_results = [...this.state.task_results]        
+        const new_task_results = [...task_results]        
         new_task_results[idx] = {
             task_result_id: task_results[idx].task_result_id,  
             parent_id: task_id,//task_results[idx].parent_id,
@@ -277,18 +269,16 @@ class ActivityWizard extends Component {
             task_title: task_results[idx].task_title,
             result_id: label,
             sort_order: task_results[idx].sort_order
-          }
-        // console.log(new_task_results);
+          }        
         this.setState({
             task_results:new_task_results,
             resultStatus:resultStatus,             
                           
-        })
-
-        // this.props.setListTaskResultStatus(tskRsltStatus)
+        })        
     }
 
-    handleAddRow= () => {
+    //Add Result Task Row
+    handleAddTaskResultRow= () => {
         const {task_results} = this.state
       
         const item = {
@@ -302,111 +292,144 @@ class ActivityWizard extends Component {
        
     }
 
-     //Save Button
-  formSubmit=(e)=>{
-    e.preventDefault()
+    //Add Additional Task Row
+    handleAddRowAddTask= () => { 
+        const {additional_tasks} = this.state
+      
+        const item = {
+            sort_order: additional_tasks.length + 1,        
+            // task_id:itm.task_id                         
+        }
+
+        this.setState({
+            additional_tasks: [...additional_tasks,item]
+        })
        
-    const {user:{bio_access_id:bId}} = this.props.session
-    const {wrkflSel} = this.props.listWrkFlw
-    // const {activityDet} = this.props.workflowDetail
-    const {activityDet} = this.props.workflowDetail
-    // console.log(activityDet)
-     
-  
-    const {     
-        default_assignor_name,
-        default_manager_name,
-        default_supervisor_name,
-        title,
-        subject,
-        instruction,
-        estimated_duration,
-        is_important,
-        is_auto_start,
-        is_decision,
-        next_task_title,
-        prev_task_title,
-        default_assignee_name,
-        task_results
-    } = this.state  
-
-    const {
-        email_template_id ,
-        recipients ,
-        include_assignee ,
-        include_home ,
-        include_owner ,
-        include_stakeholders,
-        is_enable_auto_scripting ,
-        auto_scripting,
-        acl_id,   
-    } = this.props.item
-
-    const taskResultItem =
-        task_results.map(itm=>({
-            sort_order:itm.sort_order,
-            result_id:itm.result_id,
-            task_id:itm.task_id       
-        }))
-
-    const updateObj={
-      task_id:wrkflSel,
-      title: title,
-      subject: subject,
-      instruction: instruction,
-      estimated_duration: parseInt(estimated_duration),
-      is_important: is_important,
-      is_auto_start: is_auto_start,
-      default_assignor_id: default_assignor_name.value,
-      default_assignor_name: default_assignor_name.label,
-      default_assignee_id:default_assignee_name.value,
-      default_assignee_name: default_assignee_name.label,
-      default_supervisor_id: default_supervisor_name.value,
-      default_supervisor_name: default_supervisor_name.label,
-      default_manager_id: default_manager_name.value,
-      default_manager_name: default_manager_name.label,
-      parent_id: null,
-      prev_task_id: prev_task_title.value,
-      prev_task_title: prev_task_title.label,
-      additional_tasks: null,
-      next_task_id: next_task_title.value,
-      next_task_title
-      : next_task_title.label,
-      is_decision: is_decision,
-      task_results: taskResultItem,
-      acl_id: acl_id,
-      acl_entries: this.Aclselected(),
-
-      email_template_id: activityDet[0].email_template_id,
-      recipients: activityDet[0].recipients,
-      include_assignee: activityDet[0].include_assignee,
-      include_home: activityDet[0].include_home,
-      include_owner: activityDet[0].include_owner,
-      include_stakeholders: activityDet[0].include_stakeholders,
-      stakeholder_fields: activityDet[0].stakeholder_fields,
-      is_enable_auto_scripting: activityDet[0].is_enable_auto_scripting,
-      auto_scripting: activityDet[0].auto_scripting,
-
-      bio_access_id: bId,
-      action: "SAVE_TASK" 
-
     }
-    console.log(taskResultItem)
 
-    this.props.updateActivity(updateObj)
-    this.props.setActivityDetailsUpdate(updateObj)
-    console.log(updateObj)
-    // alert("Successful Update")
+    handleAdditionalTask= idx => selected =>{
+        const {label,value}  = selected   
+        const {additional_tasks,task_id} = this.state           
+        const addTitle = ({label:label, value:value})  
+        const new_additional_tasks = [...additional_tasks]   
+        new_additional_tasks[idx]= {
+            additional_task_id: additional_tasks[idx].additional_task_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: value,
+            task_title: label,            
+            sort_order: additional_tasks[idx].sort_order
+          }        
+        this.setState({
+            additional_tasks:new_additional_tasks,
+            addTitle:addTitle,            
+        })                
+    }   
 
-    const selDetails={
-        task_id: wrkflSel,
-        action: "ITEM_DETAIL",
-        bio_access_id: bId       
-    }
-    this.props.setSelDetails(selDetails)
-
+     //Save Button
+    formSubmit=(e)=>{
+        e.preventDefault()
+        
+        const {user:{bio_access_id:bId}} = this.props.session
+        const {wrkflSel} = this.props.listWrkFlw
+        // const {activityDet} = this.props.workflowDetail
+        const {activityDet} = this.props.workflowDetail
+        // console.log(activityDet)
+        
     
-}
+        const {     
+            default_assignor_name,
+            default_manager_name,
+            default_supervisor_name,
+            title,
+            subject,
+            instruction,
+            estimated_duration,
+            is_important,
+            is_auto_start,
+            is_decision,
+            next_task_title,
+            prev_task_title,
+            default_assignee_name,
+            task_results,
+            additional_tasks
+        } = this.state  
+
+        const {
+            email_template_id, recipients, include_assignee, include_home, include_owner, include_stakeholders, is_enable_auto_scripting, auto_scripting, acl_id,   
+        } = this.props.item
+
+        const taskResultItem =
+            task_results.map(itm=>({
+                sort_order:itm.sort_order,
+                result_id:itm.result_id,
+                task_id:itm.task_id       
+            }))
+
+        const additionalTaskItem = 
+            additional_tasks.map(itm=>({
+                sort_order:itm.sort_order,
+                task_id:itm.task_id      
+            }))
+
+        const updateObj={
+        task_id:wrkflSel,
+        title: title,
+        subject: subject,
+        instruction: instruction,
+        estimated_duration: parseInt(estimated_duration),
+        is_important: is_important,
+        is_auto_start: is_auto_start,
+        default_assignor_id: default_assignor_name.value,
+        default_assignor_name: default_assignor_name.label,
+        default_assignee_id:default_assignee_name.value,
+        default_assignee_name: default_assignee_name.label,
+        default_supervisor_id: default_supervisor_name.value,
+        default_supervisor_name: default_supervisor_name.label,
+        default_manager_id: default_manager_name.value,
+        default_manager_name: default_manager_name.label,
+        parent_id: null,
+        prev_task_id: prev_task_title.value,
+        prev_task_title: prev_task_title.label,
+        additional_tasks: additionalTaskItem,
+        next_task_id: next_task_title.value,
+        next_task_title
+        : next_task_title.label,
+        is_decision: is_decision,
+        task_results: taskResultItem,
+        acl_id: acl_id,
+        acl_entries: this.Aclselected(),
+
+        email_template_id: activityDet[0].email_template_id,
+        recipients: activityDet[0].recipients,
+        include_assignee: activityDet[0].include_assignee,
+        include_home: activityDet[0].include_home,
+        include_owner: activityDet[0].include_owner,
+        include_stakeholders: activityDet[0].include_stakeholders,
+        stakeholder_fields: activityDet[0].stakeholder_fields,
+        is_enable_auto_scripting: activityDet[0].is_enable_auto_scripting,
+        auto_scripting: activityDet[0].auto_scripting,
+
+        bio_access_id: bId,
+        action: "SAVE_TASK" 
+
+        }
+        // console.log(additional_tasks)
+        // console.log(task_results)
+
+        this.props.updateActivity(updateObj)
+        this.props.setActivityDetailsUpdate(updateObj)
+        console.log(updateObj)
+        // alert("Successful Update")
+
+        const selDetails={
+            task_id: wrkflSel,
+            action: "ITEM_DETAIL",
+            bio_access_id: bId       
+        }
+        this.props.setSelDetails(selDetails)
+
+        
+    }
 
 
     //Get Value Access Control
@@ -637,10 +660,9 @@ class ActivityWizard extends Component {
     
   render() {
 
-    const {resultTitle,resultStatus,task_results} = this.state         
-    // console.log(task_results)    
+    const {resultTitle,resultStatus,task_results,additional_tasks,addTitle} = this.state           
     const {stakehList} = this.props.listWrkFlw
-    const {itemListSubject, addTask, taskResulStatusObj } = this.props.workflowDetail
+    const {itemListSubject, taskResulStatusObj } = this.props.workflowDetail
     const { default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle, prev_task_title,taskResStat, 
         accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title,rowTaskResult} = this.state
            
@@ -648,6 +670,7 @@ class ActivityWizard extends Component {
 
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     const optionListItemBySubject = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
+    const AddTask = additional_tasks.map(itm=>itm.task_title)
     const optionResultTask = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))      
     const taskVal = task_results.map(itm=>itm.task_title)  
     const optionTaskResultStatus = taskResulStatusObj.map((itm => ({ label:decodeURIComponent(itm.lovi_value), value:decodeURIComponent(itm.lov_item_id)})))
@@ -710,44 +733,60 @@ class ActivityWizard extends Component {
                       
                         {/* stakeholder */}
                         <div className="row form-group">
-                            <div className="col-sm-4 form-group">
+
+                            <div className="col-sm-6 form-group">
+                                <label>Assignor</label>
+                                {/* <input name="default_assignee_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} value={decodeURIComponent(default_assignee_name)}/> */}
+                                <Select
+                                    className="basic-single"
+                                    onChange={this.handleAssignorChange}
+                                    options={optionStakehList}
+                                    value={default_assignor_name}
+                                    isClearable
+                                />
+                            </div>
+
+                            <div className="col-sm-6 form-group">
                                 <label>Assignee</label>
                                 {/* <input name="default_assignee_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} value={decodeURIComponent(default_assignee_name)}/> */}
                                 <Select
-                              className="basic-single"
-                              onChange={this.handleAssigneeChange}
-                              options={optionStakehList}
-                              value={default_assignee_name}
-                              isClearable
+                                    className="basic-single"
+                                    onChange={this.handleAssigneeChange}
+                                    options={optionStakehList}
+                                    value={default_assignee_name}
+                                    isClearable
                             />
                             </div>
 
-                            <div className="col-sm-4 form-group">
+                        </div>
+                        <div className="row form-group">
+
+                            <div className="col-sm-6 form-group">
                                 <label>Supervisor</label>
                                 {/* <input name="default_supervisor_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={decodeURIComponent(default_supervisor_name)}/> */}
                                 <Select
-                              className="basic-single"
-                              onChange={this.handleSupervisorChange}
-                              options={optionStakehList}
-                              value={default_supervisor_name}
-                              isClearable
+                                    className="basic-single"
+                                    onChange={this.handleSupervisorChange}
+                                    options={optionStakehList}
+                                    value={default_supervisor_name}
+                                    isClearable
                             />
                             </div>
 
-                            <div className="col-sm-4 form-group">
+                            <div className="col-sm-6 form-group">
                                 <label>Manager</label>
                                 {/* <input name="default_manager_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange} value={decodeURIComponent(default_manager_name)}/> */}
                                 <Select
-                              className="basic-single"
-                              onChange={this.handleManagerChange}
-                              options={optionStakehList}
-                              value={default_manager_name}
-                              isClearable
+                                    className="basic-single"
+                                    onChange={this.handleManagerChange}
+                                    options={optionStakehList}
+                                    value={default_manager_name}
+                                    isClearable
                             />
                             </div>
-                    </div>
+                        </div>
 
-                    {/* task */}
+                    {/* Additonal Task */}
                         <div className="row form-group">
                             
                             <div className="col form-group">
@@ -775,39 +814,51 @@ class ActivityWizard extends Component {
                             </div>
                         </div>
 
-                        <div className="row form-group">
+                        <div className="row">
+                            <div className="col-auto mr-auto form-group ">
+                                <label>Additional Task (Title)</label>        
+                            </div>
 
-                            <div className="col form-group">
-                                <label>Additional Task: Title</label>
-                                {/* <input name="additional_tasks" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={decodeURIComponent(default_assignor_name)}/> */}
-                                <Select 
-                                    options={optionListItemBySubject}
-                                    onChange={this.handleAdditionalTask}
-                                    value={addTaskTitle} 
-                                    isMulti
-                                    placeholder="Title"
-                                    /> 
+                            <div className="col-auto">                        
+                                <span>
+                                    <Tooltip                            
+                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Additional Task</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRowAddTask}/>
+                                    </Tooltip>
+                                </span>                         
+                            </div>    
+                        </div>    
+
+                        
+                         <table className={additional_tasks.length!==0?"table table-hover mb-3":"d-none"}>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Additional Task: Title</th>                                                                        
+                                        </tr>
+                                    </thead>
                                     
-                            </div>
-                        </div>
-
-                        <div className="row form-group">
-                        <div className="col-12">
-
-                        {addTask.map((itm,idx)=>
-                            <div className="list-group">
-                                <a className="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div className="d-flex w-100 justify-content-between">
-                                        <h5 key={idx} className="mb-1">{itm.value}</h5>
-                                            {/* <h5 className="mb-1 text-muted">{idx}</h5> */}
-                                    </div> 
-                                </a>
-
-                            </div>
-                        )}
-                        </div>
-                        </div>
-                       
+                                    <tbody>
+                                        {additional_tasks.map((itm,idx)=> (  
+                                        <tr key={idx}>
+                                            <td>{itm.sort_order}</td>
+                                            <td>
+                                                <Select                                         
+                                                    options={optionListItemBySubject.filter(itm=> AddTask.includes(itm.label)< 1)}
+                                                    name="addTask"
+                                                    onChange={this.handleAdditionalTask(idx)}                                         
+                                                    value={addTitle[idx]}                                        
+                                                    placeholder="Title"                                                    
+                                                />
+                                            </td>
+                                            <td/>                                                                                 
+                                        </tr>  
+                                    ))}                              
+                                    </tbody>
+                                </table>              
+           
+                        {/* Task Result  */}
                        <div className="row">
                             <div className="col-auto mr-auto form-group ">
                                 <label> <input name="is_decision" type="checkbox" onChange={this.handleChange} checked={is_decision}/> Has Decision</label>
@@ -816,9 +867,9 @@ class ActivityWizard extends Component {
                             <div className={is_decision===null||is_decision=== false?"d-none":"col-auto"}>                        
                                 <span>
                                     <Tooltip                            
-                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Task</div>}
+                                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Task Result</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRow}/>
+                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddTaskResultRow}/>
                                     </Tooltip>
                                 </span>                         
                             </div>    
@@ -835,25 +886,25 @@ class ActivityWizard extends Component {
                             
                             <tbody>
                                 {task_results.map((itm,idx)=> (  
-                                <tr key={idx}>
+                                <tr className={} key={idx}>
                                     <td>{itm.sort_order}</td>
                                     <td>
                                         <Select                                         
-                                        options={optionResultTask.filter(itm=> taskVal.includes(itm.label)< 1)}
-                                        name="taskTitle"
-                                        onChange={this.handleTaskResultTitle(idx)}                                         
-                                        value={resultTitle[idx]}                                        
-                                        placeholder="Title"
-                                        // isDisabled
+                                            options={optionResultTask.filter(itm=> taskVal.includes(itm.label)< 1)}
+                                            name="taskTitle"
+                                            onChange={this.handleTaskResultTitle(idx)}                                         
+                                            value={resultTitle[idx]}                                        
+                                            placeholder="Title"
+                                            // isDisabled
                                         />
                                     </td>
                                     <td>
                                         <Select 
-                                        options={optionTaskResultStatus}
-                                        name="taskStatus"
-                                        onChange={this.handleTaskResultStatus(idx)}                                       
-                                        value={resultStatus[idx]}                                          
-                                        placeholder="Status"
+                                            options={optionTaskResultStatus}
+                                            name="taskStatus"
+                                            onChange={this.handleTaskResultStatus(idx)}                                       
+                                            value={resultStatus[idx]}                                          
+                                            placeholder="Status"
                                         />
                                     </td>
                                     <td></td>                                 
@@ -935,9 +986,8 @@ ActivityWizard.propTypes={
     workflowDetail:PropTypes.object.isRequired,  
     listWrkFlw:PropTypes.object.isRequired,
     stakeholderList: PropTypes.object.isRequired,
-    setListAddTask:PropTypes.func.isRequired,
+    // setListAddTask:PropTypes.func.isRequired,
     setListTaskResultTitle:PropTypes.func.isRequired,
-    setListTaskResultStatus:PropTypes.func.isRequired,
     updateActivity: PropTypes.func.isRequired,
     updActReducer: PropTypes.object.isRequired,
     setActivityDetailsUpdate: PropTypes.func.isRequired,
@@ -954,5 +1004,6 @@ const mapStateToProps= state =>({
         stakeholderList: state.stakeholderList,
 })
     
-export default connect(mapStateToProps, {setListAddTask, setListTaskResultTitle, setListTaskResultStatus, 
-    updateActivity, setActivityDetailsUpdate, setActivePage, setSelDetails})(ActivityWizard)
+export default connect(mapStateToProps, 
+    {setListTaskResultTitle, updateActivity, setActivityDetailsUpdate, setActivePage, setSelDetails
+    })(ActivityWizard)

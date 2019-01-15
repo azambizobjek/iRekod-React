@@ -1,5 +1,6 @@
 import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, TASK_RESULT_DETAIL,
-    LIST_ADD_TASK, LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS} from '../types'
+        LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS
+    } from '../types'
 
 import {biorisUrl} from '../../appConfig'
 
@@ -32,12 +33,12 @@ export const setContinerLine=(param)=>{
     }
 }
 
-export const setListAddTask=(param)=>{
-    return {
-        type:LIST_ADD_TASK,
-        payload:param
-    }
-}
+// export const setListAddTask=(param)=>{
+//     return {
+//         type:LIST_ADD_TASK,
+//         payload:param
+//     }
+// }
 
 export const setListTaskResultTitle=(param)=>{
     return {
