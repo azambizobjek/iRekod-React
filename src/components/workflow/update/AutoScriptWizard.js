@@ -185,7 +185,7 @@ this.props.setSelDetails(selDetails)
                     </div>
                   </div>
           </div> 
-          <div className="">
+          <div className="modal-footer">
                     <button type="submit" className="btn btn-primary">Save</button>
                     <button type="button" className="btn btn-secondary" data-pagename="listOfWorkflow" onClick={this.setActivePage}>Close</button>
                 </div>

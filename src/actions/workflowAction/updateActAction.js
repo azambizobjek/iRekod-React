@@ -24,8 +24,8 @@ export const setActivityDetailsUpdate=(det)=>dispatch=>{
         dispatch({
             type: LIST_UPDATE_ACTIVITY,
             payload: det
-            })
-            })
+        })
+    })
 
 }
 

@@ -9,7 +9,7 @@ import 'rc-tooltip/assets/bootstrap.css'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {setSelDetails} from '../../../actions/workflowAction/authListWorkFlow'
-import {setListTaskResultTitle} from '../../../actions/workflowAction/workflowDetailAction'
+import {setListTaskResultTitle,setListActivityDetails,setTaskResult} from '../../../actions/workflowAction/workflowDetailAction'
 import {updateActivity, setActivityDetailsUpdate} from '../../../actions/workflowAction/updateActAction'
 
 import {connect} from 'react-redux'
@@ -86,11 +86,13 @@ class ActivityWizard extends Component {
     componentDidUpdate(prevProps){
         if(prevProps.listWrkFlw.selDetails!==this.props.listWrkFlw.selDetails){        
 
-            const {task_results,additional_tasks} = this.state
-            const { default_assignee_name, default_assignee_id, default_assignor_name,  default_assignor_id, default_manager_name, default_manager_id, prev_task_title, prev_task_id, default_supervisor_name, default_supervisor_id, 
+            const {task_results,additional_tasks} = this.state   
+            const resultTitle = task_results.map(itm=>({label:itm.task_title, value:itm.task_id}))
+            const resultStatus = task_results.map(itm=>({label:itm.result_id, value:itm.task_id}))      
+            const addTitle = additional_tasks.map(itm=>({label:itm.task_title, value:itm.task_id}))      
+            const {default_assignee_name, default_assignee_id, default_assignor_name,  default_assignor_id, default_manager_name, default_manager_id, prev_task_title, prev_task_id, default_supervisor_name, default_supervisor_id, 
                     next_task_title, next_task_id, task_id, subject, title, instruction, estimated_duration, is_important, is_auto_start, parent_id, is_decision, acl_id , stakeholder_fields 
                 } = this.props.item      
-            
             const assigneeValue = ({value: default_assignee_id, label:default_assignee_name})
             const assignorValue=({value: default_assignor_id, label:default_assignor_name})
             const managerValue=({value: default_manager_id, label:default_manager_name})
@@ -107,8 +109,8 @@ class ActivityWizard extends Component {
                 is_important: is_important,
                 is_auto_start: is_auto_start,
                 default_assignor_id: assignorValue,
-                default_assignee_id: assigneeValue,
-                default_assignor_name:assignorValue,
+                default_assignor_name:assignorValue ,
+                default_assignee_id: assigneeValue,             
                 default_assignee_name: assigneeValue,
                 default_supervisor_id: supervisorValue,
                 default_supervisor_name: supervisorValue,
@@ -123,12 +125,15 @@ class ActivityWizard extends Component {
                 is_decision: is_decision,
                 task_results: task_results,
                 acl_id: acl_id,
-                stakeholder_fields: stakeholder_fields,           
+                stakeholder_fields: stakeholder_fields,  
+                resultTitle:resultTitle,
+                resultStatus:resultStatus, 
+                addTitle:addTitle        
             })    
-        }          
+        }                
     }
 
-     
+    //Basic 
     handleChange=(event)=>{
         const target = event.target
         const inputVal =  target.type==="checkbox"?target.checked:target.value 
@@ -137,8 +142,8 @@ class ActivityWizard extends Component {
       this.setState({
           [input]:inputVal,
         }) 
-        console.log(inputVal)
-        console.log(input)
+        // console.log(inputVal)
+        // console.log(input)
     } 
 
     handleTextChange=(e)=>{
@@ -155,12 +160,12 @@ class ActivityWizard extends Component {
     }
     
 
-
+    //Stakeholder
     handleAssignorChange=(value)=>{
       this.setState({
         default_assignor_name:value,
       })
-      // console.log(value)
+    //   console.log(value)
     }
 
     handleAssigneeChange=(value)=>{
@@ -181,6 +186,7 @@ class ActivityWizard extends Component {
         })
     }
 
+    //Task 
     handlePrevTaskChange=(value)=>{
 
         {value===null || value === ''? 
@@ -210,6 +216,111 @@ class ActivityWizard extends Component {
         //   })
     }    
 
+     //Handle Additional Task 
+     handleAdditionalTask= idx => selected =>{
+        const {label,value}  = selected   
+        const {additional_tasks,task_id} = this.state           
+        const addTitle = ({label:label, value:value})  
+        const new_additional_tasks = [...additional_tasks]   
+        new_additional_tasks[idx]= {
+            additional_task_id: additional_tasks[idx].additional_task_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: value,
+            task_title: label,            
+            sort_order: additional_tasks[idx].sort_order
+          }        
+        this.setState({
+            additional_tasks:new_additional_tasks,
+            addTitle:addTitle,            
+        })                
+    }   
+    
+    //Add Additional Task Row
+    handleAddRowAdditionalTask= () => { 
+        const {additional_tasks} = this.state
+      
+        const item = {
+            sort_order: additional_tasks.length + 1,        
+            // task_id:itm.task_id                         
+        }
+
+        this.setState({
+            additional_tasks: [...additional_tasks,item]
+        })
+    }
+
+    //Remove Additional Task 
+    handleRemoveSpecificAddtionalTaskRow = idx => () => {
+        const additional_tasks = [...this.state.additional_tasks]    
+        console.log(additional_tasks)
+        additional_tasks.splice(idx, 1)
+        this.setState({ additional_tasks })        
+    }
+
+    //Handle Task Result (Title) Change
+    handleTaskResultTitle= idx => selected=>{
+        const {label,value} = selected       
+        const {task_results,task_id} = this.state         
+        const resultStatus = ({label:label, value:value})  
+        const new_task_results = [...task_results]
+        new_task_results[idx] = {
+            task_result_id: task_results[idx].task_result_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: value,//task_results[idx].task_id,
+            task_title: label,//task_results[idx].task_title,
+            result_id: task_results[idx].result_id,
+            sort_order: task_results[idx].sort_order
+        }            
+        this.setState({
+            task_results:new_task_results,
+            resultStatus:resultStatus,  
+        })         
+    }
+
+     //Handle Task Result (Status) Change
+     handleTaskResultStatus= idx => selected =>{             
+        const {label,value}  = selected      
+        const {task_results,task_id} = this.state         
+        const resultStatus = ({label:label, value:value})  
+        const new_task_results = [...task_results]        
+        new_task_results[idx] = {
+            task_result_id: task_results[idx].task_result_id,  
+            parent_id: task_id,//task_results[idx].parent_id,
+            task_id: task_results[idx].task_id,
+            task_title: task_results[idx].task_title,
+            result_id: label,
+            sort_order: task_results[idx].sort_order
+          }        
+        this.setState({
+            task_results:new_task_results,
+            resultStatus:resultStatus,             
+                          
+        })        
+    }
+
+    //Add Task Result Row
+    handleAddTaskResultRow= () => {
+        const {task_results} = this.state
+      
+        const item = {
+            sort_order: task_results.length + 1,        
+            // task_id:itm.task_id                         
+        }
+
+        this.setState({
+            task_results: [...task_results,item]
+        })       
+    }
+
+    //Remove Task Result
+    handleRemoveSpecificRow = idx => () => {
+        const task_results = [...this.state.task_results]    
+        console.log(task_results)
+        task_results.splice(idx, 1)
+        this.setState({ task_results })       
+    }
+
+    //Access Control
     handleViewChange=(value)=>{
         this.setState({accViewVal:value})
         console.log(value)
@@ -233,99 +344,9 @@ class ActivityWizard extends Component {
     setActivePage=(e)=>{
         e.preventDefault()       
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
-    } 
-
-    // //Handle Task Result (Title) Change
-    handleTaskResultTitle= idx => selected=>{
-        const {label,value} = selected
-        console.log(label)
-        const {task_results,task_id} = this.state         
-        const resultStatus = ({label:label, value:value})  
-        const new_task_results = [...task_results]
-        new_task_results[idx] = {
-            task_result_id: task_results[idx].task_result_id,  
-            parent_id: task_id,//task_results[idx].parent_id,
-            task_id: value,//task_results[idx].task_id,
-            task_title: label,//task_results[idx].task_title,
-            result_id: task_results[idx].result_id,
-            sort_order: task_results[idx].sort_order
-        }            
-        this.setState({
-            task_results:new_task_results,
-            resultStatus:resultStatus,  
-        })         
-    }
-
-    //Handle Task Result (Status) Change
-    handleTaskResultStatus= idx => selected =>{             
-        const {label,value}  = selected      
-        const {task_results,task_id} = this.state         
-        const resultStatus = ({label:label, value:value})  
-        const new_task_results = [...task_results]        
-        new_task_results[idx] = {
-            task_result_id: task_results[idx].task_result_id,  
-            parent_id: task_id,//task_results[idx].parent_id,
-            task_id: task_results[idx].task_id,
-            task_title: task_results[idx].task_title,
-            result_id: label,
-            sort_order: task_results[idx].sort_order
-          }        
-        this.setState({
-            task_results:new_task_results,
-            resultStatus:resultStatus,             
-                          
-        })        
-    }
-
-    //Add Result Task Row
-    handleAddTaskResultRow= () => {
-        const {task_results} = this.state
-      
-        const item = {
-            sort_order: task_results.length + 1,        
-            // task_id:itm.task_id                         
-        }
-
-        this.setState({
-            task_results: [...task_results,item]
-        })
-       
-    }
-
-    //Add Additional Task Row
-    handleAddRowAddTask= () => { 
-        const {additional_tasks} = this.state
-      
-        const item = {
-            sort_order: additional_tasks.length + 1,        
-            // task_id:itm.task_id                         
-        }
-
-        this.setState({
-            additional_tasks: [...additional_tasks,item]
-        })
-       
-    }
-
-    handleAdditionalTask= idx => selected =>{
-        const {label,value}  = selected   
-        const {additional_tasks,task_id} = this.state           
-        const addTitle = ({label:label, value:value})  
-        const new_additional_tasks = [...additional_tasks]   
-        new_additional_tasks[idx]= {
-            additional_task_id: additional_tasks[idx].additional_task_id,  
-            parent_id: task_id,//task_results[idx].parent_id,
-            task_id: value,
-            task_title: label,            
-            sort_order: additional_tasks[idx].sort_order
-          }        
-        this.setState({
-            additional_tasks:new_additional_tasks,
-            addTitle:addTitle,            
-        })                
     }   
 
-     //Save Button
+    //Save Button
     formSubmit=(e)=>{
         e.preventDefault()
         
@@ -337,97 +358,94 @@ class ActivityWizard extends Component {
         
     
         const {     
-            default_assignor_name,
-            default_manager_name,
-            default_supervisor_name,
-            title,
-            subject,
-            instruction,
-            estimated_duration,
-            is_important,
-            is_auto_start,
-            is_decision,
-            next_task_title,
-            prev_task_title,
-            default_assignee_name,
-            task_results,
-            additional_tasks
+            default_assignor_name, default_manager_name, default_supervisor_name, title, subject, instruction, estimated_duration,is_important,
+            is_auto_start, is_decision, next_task_title, prev_task_title, default_assignee_name, task_results, additional_tasks
         } = this.state  
 
         const {
-            email_template_id, recipients, include_assignee, include_home, include_owner, include_stakeholders, is_enable_auto_scripting, auto_scripting, acl_id,   
+            email_template_id, recipients, include_assignee, include_home, include_owner,
+            include_stakeholders, is_enable_auto_scripting, auto_scripting, acl_id, stakeholder_fields  
         } = this.props.item
 
-        const taskResultItem =
-            task_results.map(itm=>({
+        const taskResultItem = task_results.map(itm=>({
                 sort_order:itm.sort_order,
                 result_id:itm.result_id,
                 task_id:itm.task_id       
             }))
 
-        const additionalTaskItem = 
-            additional_tasks.map(itm=>({
+        const additionalTaskItem = additional_tasks.map(itm=>({
                 sort_order:itm.sort_order,
                 task_id:itm.task_id      
             }))
 
         const updateObj={
-        task_id:wrkflSel,
-        title: title,
-        subject: subject,
-        instruction: instruction,
-        estimated_duration: parseInt(estimated_duration),
-        is_important: is_important,
-        is_auto_start: is_auto_start,
-        default_assignor_id: default_assignor_name.value,
-        default_assignor_name: default_assignor_name.label,
-        default_assignee_id:default_assignee_name.value,
-        default_assignee_name: default_assignee_name.label,
-        default_supervisor_id: default_supervisor_name.value,
-        default_supervisor_name: default_supervisor_name.label,
-        default_manager_id: default_manager_name.value,
-        default_manager_name: default_manager_name.label,
-        parent_id: null,
-        prev_task_id: prev_task_title.value,
-        prev_task_title: prev_task_title.label,
-        additional_tasks: additionalTaskItem,
-        next_task_id: next_task_title.value,
-        next_task_title
-        : next_task_title.label,
-        is_decision: is_decision,
-        task_results: taskResultItem,
-        acl_id: acl_id,
-        acl_entries: this.Aclselected(),
+            task_id:wrkflSel,
+            title: title,
+            subject: subject,
+            instruction: instruction,
+            estimated_duration: parseInt(estimated_duration),
+            is_important: is_important,
+            is_auto_start: is_auto_start,
+            default_assignor_id: default_assignor_name===null?null:default_assignor_name.value,
+            default_assignor_name: default_assignor_name===null?null:default_assignor_name.label,
+            default_assignee_id:default_assignee_name===null?null:default_assignee_name.value,
+            default_assignee_name: default_assignee_name===null?null:default_assignee_name.label,
+            default_supervisor_id: default_supervisor_name===null?null:default_supervisor_name.value,
+            default_supervisor_name: default_supervisor_name===null?null:default_supervisor_name.label,
+            default_manager_id: default_manager_name===null?null:default_manager_name.value,
+            default_manager_name: default_manager_name===null?null:default_manager_name.label,
+            parent_id: null,
+            prev_task_id: prev_task_title.value,
+            prev_task_title: prev_task_title.label,
+            additional_tasks: additionalTaskItem,
+            next_task_id: next_task_title.value,
+            next_task_title: next_task_title.label,
+            is_decision: is_decision,
+            task_results: taskResultItem,
+            acl_id: acl_id,
+            acl_entries: this.Aclselected(),
 
-        email_template_id: activityDet[0].email_template_id,
-        recipients: activityDet[0].recipients,
-        include_assignee: activityDet[0].include_assignee,
-        include_home: activityDet[0].include_home,
-        include_owner: activityDet[0].include_owner,
-        include_stakeholders: activityDet[0].include_stakeholders,
-        stakeholder_fields: activityDet[0].stakeholder_fields,
-        is_enable_auto_scripting: activityDet[0].is_enable_auto_scripting,
-        auto_scripting: activityDet[0].auto_scripting,
+            // email_template_id: activityDet[0].email_template_id,
 
-        bio_access_id: bId,
-        action: "SAVE_TASK" 
+            email_template_id:  email_template_id,
+            recipients:  recipients,
+            include_assignee:  include_assignee,
+            include_home: include_home,
+            include_owner:  include_owner,
+            include_stakeholders:  include_stakeholders,
+            stakeholder_fields:  stakeholder_fields,
+            is_enable_auto_scripting: is_enable_auto_scripting,
+            auto_scripting:  auto_scripting,
 
+            bio_access_id: bId,
+            action: "SAVE_TASK" 
         }
-        // console.log(additional_tasks)
-        // console.log(task_results)
-
+        
         this.props.updateActivity(updateObj)
         this.props.setActivityDetailsUpdate(updateObj)
+        
         console.log(updateObj)
-        // alert("Successful Update")
-
+       
         const selDetails={
             task_id: wrkflSel,
             action: "ITEM_DETAIL",
             bio_access_id: bId       
         }
-        this.props.setSelDetails(selDetails)
+        // this.props.setSelDetails(selDetails)
 
+        ///
+        // const activityDetItem = {
+        //     task_id:wrkflSel,
+        //     bio_access_id:bId,
+        //     action:'ITEM_DETAIL',            
+        // }     
+        // this.props.setListActivityDetails(activityDetItem)
+
+        // const taskResulStatusObj={
+        //     action: "LIST_TASK_RESULT",
+        //     bio_access_id: bId      
+        // }
+        // this.props.setTaskResult(taskResulStatusObj)   
         
     }
 
@@ -659,15 +677,15 @@ class ActivityWizard extends Component {
 
     
   render() {
-
-    const {resultTitle,resultStatus,task_results,additional_tasks,addTitle} = this.state           
+     
     const {stakehList} = this.props.listWrkFlw
+    const {resultTitle,resultStatus,task_results,additional_tasks,addTitle} = this.state 
     const {itemListSubject, taskResulStatusObj } = this.props.workflowDetail
-    const { default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle, prev_task_title,taskResStat, 
-        accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title,rowTaskResult} = this.state
-           
     const {subject,title,instruction,estimated_duration,is_important,is_auto_start,is_decision} = this.state
-
+    const {default_assignee_name, default_assignor_name, default_manager_name, default_supervisor_name, addTaskTitle,
+        prev_task_title,taskResStat, accViewVal, accUpdVal, accRmvVal, accModVal, next_task_title,rowTaskResult
+    } = this.state   
+    
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     const optionListItemBySubject = itemListSubject.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
     const AddTask = additional_tasks.map(itm=>itm.task_title)
@@ -755,7 +773,7 @@ class ActivityWizard extends Component {
                                     options={optionStakehList}
                                     value={default_assignee_name}
                                     isClearable
-                            />
+                                />
                             </div>
 
                         </div>
@@ -770,7 +788,7 @@ class ActivityWizard extends Component {
                                     options={optionStakehList}
                                     value={default_supervisor_name}
                                     isClearable
-                            />
+                                />
                             </div>
 
                             <div className="col-sm-6 form-group">
@@ -782,7 +800,7 @@ class ActivityWizard extends Component {
                                     options={optionStakehList}
                                     value={default_manager_name}
                                     isClearable
-                            />
+                                />
                             </div>
                         </div>
 
@@ -824,7 +842,7 @@ class ActivityWizard extends Component {
                                     <Tooltip                            
                                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Additional Task</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRowAddTask}/>
+                                        <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRowAdditionalTask}/>
                                     </Tooltip>
                                 </span>                         
                             </div>    
@@ -852,7 +870,14 @@ class ActivityWizard extends Component {
                                                     placeholder="Title"                                                    
                                                 />
                                             </td>
-                                            <td/>                                                                                 
+                                            <td>
+                                                <button
+                                                className="btn btn-outline-danger btn-sm"
+                                                onClick={this.handleRemoveSpecificAddtionalTaskRow(idx)}
+                                            >
+                                            Remove                        
+                                            </button>
+                                        </td>                                                                                 
                                         </tr>  
                                     ))}                              
                                     </tbody>
@@ -886,7 +911,7 @@ class ActivityWizard extends Component {
                             
                             <tbody>
                                 {task_results.map((itm,idx)=> (  
-                                <tr className={} key={idx}>
+                                <tr key={idx}>
                                     <td>{itm.sort_order}</td>
                                     <td>
                                         <Select                                         
@@ -907,8 +932,14 @@ class ActivityWizard extends Component {
                                             placeholder="Status"
                                         />
                                     </td>
-                                    <td></td>                                 
-                                                               
+                                    <td> 
+                                        <button
+                                            className="btn btn-outline-danger btn-sm"
+                                            onClick={this.handleRemoveSpecificRow(idx)}
+                                        >
+                                        Remove                        
+                                        </button>
+                                    </td>                                                                                             
                                 </tr>  
                                ))}                              
                             </tbody>
@@ -970,7 +1001,7 @@ class ActivityWizard extends Component {
                         </div>
 
                       </div>
-                <div className="">
+                <div className="modal-footer">
                     <button type="submit" className="btn btn-primary">Save</button>
                     <button type="button" className="btn btn-secondary" onClick={this.setActivePage} data-pagename="listOfWorkflow">Close</button>
                 </div>
@@ -993,6 +1024,8 @@ ActivityWizard.propTypes={
     setActivityDetailsUpdate: PropTypes.func.isRequired,
     setActivePage: PropTypes.func.isRequired,
     setSelDetails: PropTypes.func.isRequired,
+    setListActivityDetails: PropTypes.func.isRequired,
+    setTaskResult:  PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -1005,5 +1038,13 @@ const mapStateToProps= state =>({
 })
     
 export default connect(mapStateToProps, 
-    {setListTaskResultTitle, updateActivity, setActivityDetailsUpdate, setActivePage, setSelDetails
+    {
+        setListTaskResultTitle,
+        updateActivity, 
+        setActivityDetailsUpdate, 
+        setActivePage, 
+        setSelDetails, 
+        setListActivityDetails,
+        setTaskResult
+
     })(ActivityWizard)

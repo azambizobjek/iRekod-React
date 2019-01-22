@@ -17,7 +17,7 @@ export default function(state = initialState, action){
             updAct:action.payload,
         }
 
-         case LIST_UPDATE_ACTIVITY:
+        case LIST_UPDATE_ACTIVITY:
         return {
             ...state,
             det:action.payload,

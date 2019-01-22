@@ -43,7 +43,7 @@ class securityWizard extends Component {
     componentWillMount(){
         const {stakeh_type,stakeh_type_name,initials,first_name,last_name,full_name,email,date_of_birth,active,internal,is_blocked,can_login,login_username,password,security_level_id,security_level_value,role_id,role_value,date_active_from,date_active_to} = this.props.item
         const security =({value: security_level_id, label:security_level_value})
-        const roleValue = ({value: role_id, label:role_value})
+        const roleValue = ({value:role_id, label:role_value})
         this.setState({
             stakeh_type_name: stakeh_type_name,            
             initials: initials,
@@ -68,9 +68,9 @@ class securityWizard extends Component {
     
     handleChange=(event)=>{
         // e.preventDefault()
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;     
+        const target = event.target
+        const value = target.type === 'checkbox' ? target.checked : target.value
+        const name = target.name    
                 
         this.setState({
             [name]:value
@@ -168,7 +168,7 @@ class securityWizard extends Component {
         e.preventDefault()
         const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType  
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal:{value:role_id,label:role_value},password,secVal:{value:security_level_id,label:security_level_value}}=this.state
+        const {startDate,endDate,login_username,internal,is_blocked,can_login,active,roleVal,password,secVal}=this.state
         const {stakeh_type_name,stakeh_type,initials,first_name,last_name,full_name,email,date_of_birth,acl_id,acl_entries} = this.props.item
         // console.log(startDate)
 
@@ -187,10 +187,10 @@ class securityWizard extends Component {
             can_login: can_login,
             login_username: login_username,
             password: password,
-            role_value: role_value,
-            role_id: role_id,
-            security_level_value: security_level_value,
-            security_level_id: security_level_id,
+            role_value: roleVal===null?null:roleVal.label,
+            role_id: roleVal===null?null:roleVal.value,
+            security_level_value: secVal===null?null:secVal.label,
+            security_level_id: secVal===null?null:secVal.value,
             active: active,
             date_active_from: moment(startDate).format("DD/MM/YYYY"),
             date_active_to: moment(endDate).format("DD/MM/YYYY"),  
@@ -203,7 +203,7 @@ class securityWizard extends Component {
             // custom_field:custom_field,          
         }
         this.props.updStkh(formObj)
-        // console.log(formObj)
+        console.log(formObj)
 
         alert("Succesful")
     }
@@ -214,8 +214,8 @@ class securityWizard extends Component {
     // const item = this.props.item    
     const {stakeh_type_name} = this.props.item    
     const active1 = this.props.active    
-    const {role_list,roleVal,secList,secVal,startDate,endDate,login_username,internal,is_blocked,can_login,active}=this.state   
-    // console.log(roleVal,secVal)
+    const {role_list,roleVal,secList,secVal,startDate,endDate,login_username,internal,is_blocked,can_login,active}=this.state 
+    // console.log(roleVal)
     return (
       <Fragment>
         <h1 className="h3 display text-primary text-center">Security</h1>
@@ -233,16 +233,19 @@ class securityWizard extends Component {
                                 <Select 
                                     options={role_list}
                                     onChange={this.handleRoleChange}
-                                    value={roleVal.value===""?null:roleVal} 
-                                    placeholder="Role"/> 
+                                    value={roleVal===""?null:roleVal} 
+                                    placeholder="Role"
+                                    isClearable
+                                /> 
                             </div>
                             <div className="form-group col-sm-6">
                                 <label>Security Level</label>
                                 <Select 
                                     options={secList}
                                     onChange={this.handleSecLevelChange}
-                                    value={secVal.value===""?null:secVal} 
-                                    placeholder="Security Level"/> 
+                                    value={secVal===""?null:secVal} 
+                                    placeholder="Security Level"
+                                    isClearable/> 
                             </div>                                                 
                         </div>
                       <div className="form-group">                           

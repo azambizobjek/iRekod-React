@@ -65,6 +65,7 @@ class ListWorkflow extends Component {
             bio_access_id: bId      
         }
 
+        //Task Detail
         const taskResulStatusObj={
             action: "LIST_TASK_RESULT",
             bio_access_id: bId      
@@ -188,12 +189,12 @@ class ListWorkflow extends Component {
     
     const rec = workList.map(itm=>cardView?
         <CardView
-        key={itm.task_id}
-        title={itm.title}
-        taskId={itm.task_id}
-        markOnSel={this.markOnSel}
-        subject={itm.subject}
-        isSel={itm.isSel}
+            key={itm.task_id}
+            title={itm.title}
+            taskId={itm.task_id}
+            markOnSel={this.markOnSel}
+            subject={itm.subject}
+            isSel={itm.isSel}
         /> :
         <ListView
             key={itm.task_id}
