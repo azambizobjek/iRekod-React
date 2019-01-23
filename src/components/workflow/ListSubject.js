@@ -86,11 +86,10 @@ class ListSubject extends Component {
       return (
  
         <Select
-        className="basic-single"
-            onChange={this.handleSelectChangerecType}
-            options={optionSubject}
-            value={selectedOption}
-            isClearable
+          className="basic-single"
+          onChange={this.handleSelectChangerecType}
+          options={optionSubject}
+          value={selectedOption}
         />
 
     )

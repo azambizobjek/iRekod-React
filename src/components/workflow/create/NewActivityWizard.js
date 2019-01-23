@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-
+import Tooltip from 'rc-tooltip'
 
 import {setActivePage} from '../../../actions/layoutInitAction'
 import {setItemListSubject, setListAddTask, addNewActivity} from '../../../actions/workflowAction/createNewActAction'
@@ -49,7 +49,7 @@ class NewActivityWizard extends Component {
         next_task_id: null,
         next_task_title: null,
         is_decision: false,
-        task_results: [],
+        task_results: null,
         acl_id: null,
         acl_entries: null,
 
@@ -63,20 +63,104 @@ class NewActivityWizard extends Component {
         is_enable_auto_scripting: false,
         auto_scripting: null,
 
-        hasError: false
+        hasError: false,
+
+        resultTitle:[],
+        resultStatus:[],     
+        addTitle:[],  
 
     }        
   }  
 
+  componentWillMount(){   
+    const {subject, title, task_results, additional_tasks} = this.state          
+    
+
+    this.setState({
+      subject: subject,
+      title:title,               
+     
+    })  
+  }   
+
+  //Basic
+  handleChange=(event)=>{
+    // const hd = this.state.hasDecision
+    //   this.setState({
+    //   hasDecision:!hd
+    //     })
+
+  const target = event.target
+  const inputVal =  target.type==="checkbox"?target.checked:target.value 
+  const input = target.name   
+
+  this.setState({
+      [input]:inputVal,
+    }) 
+  }
+
+  handleSubjectChange=(value)=>{
+    const {user:{bio_access_id:bId}}=this.props.session
+  
+    this.setState({
+      subject:value,
+      hasError: false
+    })
+    
+    const listWorflowbySub={
+      action: "ITEM_LIST_BY_SUBJECT",
+      bio_access_id: bId,
+      subject: value.label   
+    }
+  
+    this.props.setItemListSubject(listWorflowbySub)
+  }
+
+
+  handleTextChange=(e)=>{
+    const inputName = e.target.getAttribute('name')
+    const inputVal =  e.target.value===""?e.target.value=null:e.target.value  
+
+  this.setState({
+      [inputName]:inputVal
+    })  
+  }  
+
+  //Stakeholder
+  handleAssignorChange=(value)=>{
+    this.setState({
+      stakehValAssignorNew:value,
+   })
+  }
+
+  handleAssigneeChange=(value)=>{
+    this.setState({
+      stakehValAssigneeNew:value
+     })
+  }
+
+  handleManagerChange=(value)=>{
+    this.setState({
+      stakehValManagerNew:value
+   })
+  } 
+
+ handleSupervisorChange=(value)=>{
+    this.setState({
+      stakehValSupervisorNew:value
+     })
+  }
+
+  //Task
   handlePrevTaskChange=(value)=>{
   const pt = this.state.prev_task_title
     pt==="" || null?
     this.setState({
       prevTaskNew:""
-          }):this.setState({
-            prevTaskNew:value
-                })
-      
+    }):
+    this.setState({
+      prevTaskNew:value
+    })      
   }
 
   handleNextTaskChange=(value)=>{
@@ -84,145 +168,89 @@ class NewActivityWizard extends Component {
     nt ===""||null?
     this.setState({
       nextTaskNew:"",
-                }):
-                this.setState({
-                  nextTaskNew:value,
-                            })
-      
-  }
-  
-  handleChangeS = (idx) => {
-    const rows = [...this.state.rows]
-    rows[idx] = {
-      title:idx
-    }
+    }):
     this.setState({
-      rows
+      nextTaskNew:value,
+    })  
+  }    
+  
+   
+  //Handle Additional Task
+  handleAdditionalTask= idx => selected =>{
+    const {label,value}  = selected   
+    const {additional_tasks,task_id} = this.state           
+    const addTitle = ({label:label, value:value})  
+    const new_additional_tasks = [...additional_tasks]   
+    new_additional_tasks[idx]= {
+        additional_task_id: additional_tasks[idx].additional_task_id,  
+        parent_id: task_id,//task_results[idx].parent_id,
+        task_id: value,
+        task_title: label,            
+        sort_order: additional_tasks[idx].sort_order
+      }        
+    this.setState({
+        additional_tasks:new_additional_tasks,
+        addTitle:addTitle,            
+    })                
+  } 
+
+  //Add Additional Task Row 
+  handleAddRowAdditionalTask= () => { 
+    const {additional_tasks} = this.state
+  
+    const item = {
+        sort_order: additional_tasks.length + 1,        
+        // task_id:itm.task_id                         
+    }
+
+    this.setState({
+        additional_tasks: [...additional_tasks,item]
     })
   }
 
-  
-  handleSubjectChange=(value)=>{
-    const {user:{bio_access_id:bId}}=this.props.session
-
-    this.setState({
-      subject:value,
-      hasError: false
-      })
-
-  
-    const listWorflowbySub={
-        action: "ITEM_LIST_BY_SUBJECT",
-        bio_access_id: bId,
-        subject: value.label   
-    }
-    this.props.setItemListSubject(listWorflowbySub)
-    }
-
-    handleAssignorChange=(value)=>{
-      this.setState({
-        stakehValAssignorNew:value,
-      })
-    }
-
-    handleAssigneeChange=(value)=>{
-    this.setState({
-      stakehValAssigneeNew:value
-      })
-    }
-
-    handleManagerChange=(value)=>{
-    this.setState({
-      stakehValManagerNew:value
-      })
-    }
-
-    handleChange=(event)=>{
-    // const hd = this.state.hasDecision
-    //   this.setState({
-    //   hasDecision:!hd
-    //     })
-
-    const target = event.target
-    const inputVal =  target.type==="checkbox"?target.checked:target.value 
-    const input = target.name   
-
-  this.setState({
-      [input]:inputVal,
-    }) 
-    }
-
-    handleSupervisorChange=(value)=>{
-    this.setState({
-      stakehValSupervisorNew:value
-      })
-    }
-
-    handleViewChange=(value)=>{
-      this.setState({
-        accViewVal:value
-        })
-    }
-
-    handleUpdateChange=(value)=>{
-      this.setState({
-        accUpdVal:value
-        })
-    }
-
-    handleRemoveChange=(value)=>{
-      this.setState({
-        accRmvVal:value,
-        })
-    }
-
-    handleMAChange=(value)=>{
-      this.setState({
-        accModVal:value
-        })
-    }
-
-    handleAddRow=()=>{
-      const item = {
-        title: "",
-        no: ""
-      };
-      this.setState({
-        rows: [...this.state.rows,item]
-      });
-    }
-
-    handleTextChange=(e)=>{
-      const inputName = e.target.getAttribute('name')
-      const inputVal =  e.target.value===""?e.target.value=null:e.target.value  
-  
-    this.setState({
-        [inputName]:inputVal
-      })  
-  }    
-
-  handleDeleteRow=()=>{
-      this.setState({
-        rows: this.state.rows.slice(0, -1)
-      })
-    
+  //Remove Additional Task 
+  handleRemoveSpecificAddtionalTaskRow = idx => () => {
+    const additional_tasks = [...this.state.additional_tasks]   
+    additional_tasks.splice(idx, 1)
+    this.setState({ additional_tasks })        
   }
 
-  componentWillMount(){
-   
-    const {subject, title} = this.state
-      this.setState({
-        subject: subject,
-        title:title
-      })  
-  }   
-  
+
+ 
+
+  //Acl
+  handleViewChange=(value)=>{
+    this.setState({
+      accViewVal:value
+    })
+  }
+
+  handleUpdateChange=(value)=>{
+    this.setState({
+      accUpdVal:value
+    })
+  }
+
+  handleRemoveChange=(value)=>{
+    this.setState({
+      accRmvVal:value,
+    })
+  }
+
+  handleMAChange=(value)=>{
+    this.setState({
+      accModVal:value
+    })
+  }
+
+  //Set Page
   setActivePage=(e)=>{
     e.preventDefault()       
     this.props.setActivePage(e.target.getAttribute('data-pagename'))
-}
+  }
 
-    formSubmit=(e)=>{
+  //Save Button
+  formSubmit=(e)=>{
       e.preventDefault()  
       const sb = this.state.subject
       if (sb === null){
@@ -233,6 +261,7 @@ class NewActivityWizard extends Component {
       else{
 
       const {user:{bio_access_id:bId}} = this.props.session
+      const {additional_tasks} = this.state
       const { 
         stakehValAssignorNew,
         stakehValAssigneeNew,
@@ -276,7 +305,7 @@ class NewActivityWizard extends Component {
         parent_id: null,
         prev_task_id: prevTaskNew.value,
         prev_task_title: prevTaskNew.label,
-        additional_tasks: [],
+        additional_tasks: additional_tasks,
         next_task_id: nextTaskNew.value,
         next_task_title: nextTaskNew.label,
         is_decision: hasDecision,
@@ -303,6 +332,7 @@ class NewActivityWizard extends Component {
     }
   }
 
+  //ACL
   Aclselected=()=>{
     const {accViewVal, accUpdVal, accRmvVal, accModVal} = this.state    
     
@@ -429,12 +459,17 @@ acl_builder=(selData,aclEntries,type)=>{
     const {listWorflowbySub, addTask} = this.props.crtNewReducer
     const optionStakehList = stakehList.map((itm => ({ value: itm.stakeholder_id, label:decodeURIComponent(itm.full_name)})))
     
-    const {subject, stakehValAssigneeNew, stakehValAssignorNew, stakehValManagerNew, stakehValSupervisorNew, hasDecision, 
-      accViewVal,accUpdVal,accRmvVal,accModVal, prevTaskNew, hasError, nextTaskNew} = this.state
-    const {listofSubjectObj} = this.props.listWrkFlw
+    const {subject, stakehValAssigneeNew, stakehValAssignorNew, stakehValManagerNew, stakehValSupervisorNew, hasDecision, accViewVal,accUpdVal,accRmvVal,
+      accModVal, prevTaskNew, hasError, nextTaskNew, resultTitle, resultStatus, task_results, additional_tasks, addTitle
+    } = this.state
+     
+    console.log(additional_tasks)
+    const {listofSubjectObj,listSub} = this.props.listWrkFlw   
     const optionListItemBySubject = listofSubjectObj.map((itm => ({ value: decodeURIComponent(itm.subject), label:decodeURIComponent(itm.subject)})))
+    const optionListItemByTitle = listSub.map((itm => ({ label:decodeURIComponent(itm.title), value:decodeURIComponent(itm.task_id)})))
     const listbySubject = listWorflowbySub.map((itm => ({ value: decodeURIComponent(itm.task_id), label:decodeURIComponent(itm.title)})))
     const addSubject = listWorflowbySub.map((itm => ({ value: decodeURIComponent(itm.task_id), label:decodeURIComponent(itm.title)})))
+    const AddTask = additional_tasks.map(itm=>itm.task_title)
 
     return (
       <Fragment>
@@ -500,42 +535,56 @@ acl_builder=(selData,aclEntries,type)=>{
                         </div>
 
                       
-                        {/* stakeholder */}
-                        <div className="row">
+                      {/* stakeholder */}
+                      <div className="row form-group">
 
-                            <div className="col-sm-4 form-group">
-                                <label>Assignee</label>
-                                <Select
+                        <div className="col-sm-6 form-group">
+                          <label>Assignee</label>
+                            <Select
+                              className="basic-single"
+                              onChange={this.handleAssignorChange}
+                              options={optionStakehList}
+                              value={stakehValAssignorNew}
+                              isClearable
+                            />
+                        </div>
+
+                        <div className="col-sm-6 form-group">
+                          <label>Assignee</label>
+                            <Select
                               className="basic-single"
                               onChange={this.handleAssigneeChange}
                               options={optionStakehList}
                               value={stakehValAssigneeNew}
                               isClearable
                             />
-                            </div>
+                        </div>
+                      </div>
 
-                            <div className="col-sm-4 form-group">
-                                <label>Supervisor</label>
-                                <Select
+                      <div className="row form-group">
+
+                        <div className="col-sm-6 form-group">
+                          <label>Supervisor</label>
+                            <Select
                               className="basic-single"
                               onChange={this.handleSupervisorChange}
                               options={optionStakehList}
                               value={stakehValSupervisorNew}
                               isClearable
                             />
-                            </div>
+                        </div>
 
-                            <div className="col-sm-4 form-group">
-                                <label>Manager</label>
-                                <Select
+                        <div className="col-sm-6 form-group">
+                          <label>Manager</label>
+                            <Select
                               className="basic-single"
                               onChange={this.handleManagerChange}
                               options={optionStakehList}
                               value={stakehValManagerNew}
                               isClearable
                             />
-                            </div>
-                    </div>
+                          </div>
+                      </div>
 
                     {/* task */}
                         <div className="row form-group">
@@ -563,47 +612,59 @@ acl_builder=(selData,aclEntries,type)=>{
                             </div>
                         </div>
 
-                             <div className="row form-group">
-                                <div className="col form-group">
-                                  <label>Additional Task: Title</label>
+                    {/* Additional Task */}
+                    <div className="row">
+                      <div className="col-auto mr-auto form-group ">
+                          <label>Additional Task (Title)</label>        
+                      </div>
 
-                                  <button className="btn btn-sm btn-primary float-right" onClick={this.handleDeleteRow}>
-                                  <i className="fa fa-minus-square"></i>
-                                  </button>
+                      <div className="col-auto">                        
+                          <span>
+                              <Tooltip                            
+                                  overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Add Additional Task</div>}
+                                  arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                                  <img src={require('../../../img/addTask.svg')} alt="addTask"  className='btn btn-link' onClick={this.handleAddRowAdditionalTask}/>
+                              </Tooltip>
+                          </span>                         
+                      </div>    
+                    </div>    
 
-                                  <button className="btn btn-sm btn-primary float-right" onClick={this.handleAddRow}>
-                                  <i className="fa fa-plus-square"></i>
-                                  </button>
-
-                                <table className="table table-bordered table-hover" id="tab_logic">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col-md-4"> # </th>
-                                      <th scope="col-md-7"> Title </th>
-                                    </tr>
-                                  </thead>
-                                  
-                                  <tbody>
-                                    {this.state.rows.map((item, idx) => (
-                                       <tr id="addr0" key={idx}>
-                                          <td>{idx}</td>
-                                          <td className="col-12">
-                                            <Select 
-                                              className="basic-single"
-                                              options={addSubject}
-                                              onChange={this.handleChangeS}
-                                              value={this.state.rows[idx].value}
-                                              placeholder="Title"
-                                              />
-                                          </td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                  </table>  
-                              </div>
-                              </div>
+                        
+                    <table className={additional_tasks.length!==0?"table table-hover mb-3":"d-none"}>
+                      <thead>
+                          <tr>
+                              <th scope="col">No.</th>
+                              <th scope="col">Additional Task: Title</th>                                                                        
+                          </tr>
+                      </thead>
+                              
+                      <tbody>
+                          {additional_tasks.map((itm,idx)=> (  
+                          <tr key={idx}>
+                              <td>{itm.sort_order}</td>
+                              <td>
+                                  <Select                                         
+                                      options={optionListItemByTitle.filter(itm=> AddTask.includes(itm.label)< 1)}
+                                      name="addTask"
+                                      onChange={this.handleAdditionalTask(idx)}                                         
+                                      value={addTitle[idx]}                                        
+                                      placeholder="Title"                                                    
+                                  />
+                              </td>
+                              <td>
+                                  <button
+                                  className="btn btn-outline-danger btn-sm"
+                                  onClick={this.handleRemoveSpecificAddtionalTaskRow(idx)}
+                              >
+                              Remove                        
+                              </button>
+                          </td>                                                                                 
+                          </tr>  
+                      ))}                              
+                      </tbody>
+                    </table>
           
-
+                        {/* Task Result */}
                         <div className="row form-group">
                                 <div className="col-6 col-md-4 form-group">
                                     <label> <input name="is_decision" type="checkbox" onChange={this.handleChange} checked={hasDecision}/> Has Decision</label>

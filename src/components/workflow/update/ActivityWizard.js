@@ -850,38 +850,38 @@ class ActivityWizard extends Component {
 
                         
                          <table className={additional_tasks.length!==0?"table table-hover mb-3":"d-none"}>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No.</th>
-                                            <th scope="col">Additional Task: Title</th>                                                                        
-                                        </tr>
-                                    </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Additional Task: Title</th>                                                                        
+                                </tr>
+                            </thead>
                                     
-                                    <tbody>
-                                        {additional_tasks.map((itm,idx)=> (  
-                                        <tr key={idx}>
-                                            <td>{itm.sort_order}</td>
-                                            <td>
-                                                <Select                                         
-                                                    options={optionListItemBySubject.filter(itm=> AddTask.includes(itm.label)< 1)}
-                                                    name="addTask"
-                                                    onChange={this.handleAdditionalTask(idx)}                                         
-                                                    value={addTitle[idx]}                                        
-                                                    placeholder="Title"                                                    
-                                                />
-                                            </td>
-                                            <td>
-                                                <button
-                                                className="btn btn-outline-danger btn-sm"
-                                                onClick={this.handleRemoveSpecificAddtionalTaskRow(idx)}
-                                            >
-                                            Remove                        
-                                            </button>
-                                        </td>                                                                                 
-                                        </tr>  
-                                    ))}                              
-                                    </tbody>
-                                </table>              
+                            <tbody>
+                                {additional_tasks.map((itm,idx)=> (  
+                                <tr key={idx}>
+                                    <td>{itm.sort_order}</td>
+                                    <td>
+                                        <Select                                         
+                                            options={optionListItemBySubject.filter(itm=> AddTask.includes(itm.label)< 1)}
+                                            name="addTask"
+                                            onChange={this.handleAdditionalTask(idx)}                                         
+                                            value={addTitle[idx]}                                        
+                                            placeholder="Title"                                                    
+                                        />
+                                    </td>
+                                    <td>
+                                        <button
+                                        className="btn btn-outline-danger btn-sm"
+                                        onClick={this.handleRemoveSpecificAddtionalTaskRow(idx)}
+                                    >
+                                    Remove                        
+                                    </button>
+                                </td>                                                                                 
+                                </tr>  
+                            ))}                              
+                            </tbody>
+                        </table>              
            
                         {/* Task Result  */}
                        <div className="row">
