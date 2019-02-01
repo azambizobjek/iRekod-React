@@ -85,10 +85,10 @@ class SideNav extends React.Component {
 
       ///////////////////////////////workflow////////////////////////////////////
 
-      const listWrkFlwObj ={
-        action: 'ITEM_LIST',
-        bio_access_id: idAccess
-      }
+      // const listWrkFlwObj ={
+      //   action: 'ITEM_LIST',
+      //   bio_access_id: idAccess
+      // }
       const listofSubjectObj ={
         action: 'LIST_ITEM_SUBJECT',
         bio_access_id: idAccess
@@ -107,7 +107,7 @@ class SideNav extends React.Component {
    
       const pageSubject= ""
       this.props.setStakehList(stakehList)
-      this.props.setListWorkFlow(listWrkFlwObj)
+      // this.props.setListWorkFlow(listWrkFlwObj)
       this.props.setListofSubject(listofSubjectObj)
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setCustomField(customFieldObj)
