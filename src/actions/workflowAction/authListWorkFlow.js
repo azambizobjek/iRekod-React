@@ -13,12 +13,12 @@ export const setListWorkFlow=(listWrkFlwObj)=>dispatch=>{
     const url=`${biorisUrl}/tasks?param=${JSON.stringify(listWrkFlwObj)}`    
     fetch(url)
     .then(res=>res.json())
-    .then(res=>{ 
+    .then(res=>{ console.log(res)
         dispatch({           
             type: LIST_WORKFLOW,
             payload: res.results
-            })
-            })
+        })
+    })
 
 }
 
