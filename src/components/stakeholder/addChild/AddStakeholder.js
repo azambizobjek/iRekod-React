@@ -64,7 +64,7 @@ class NewStakeholder extends Component {
             action: "ITEM_LIST",
             bio_access_id: idAccess      
         }
-        this.props.setSecLevel(SecurityObj)
+        this.props.set(SecurityObj)
 
     }     
 

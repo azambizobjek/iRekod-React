@@ -14,10 +14,10 @@ import NewActivity from './workflow/create/NewActivity'
 import WorkflowDetails from './workflow/update/WorkflowDetails'
 import Log from './auditTrail/auditLog/index'
 import PrintPage from './auditTrail/auditLog/PrintPage'
+import AuditSearch from './auditTrail/modal/AuditSearch'
 import PrintReport from './auditTrail/modal/PrintReport'
 import PrintUsage from './auditTrail/modal/PrintUsage'
 import PrintStatistic from './auditTrail/modal/PrintStatistic';
-
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -80,9 +80,11 @@ class Home extends Component {
         //auditTrail
         'log':Log,        
         'print' : PrintPage,
+        'auditSearch' : AuditSearch,
         'printReport': PrintReport,
         'printUsage': PrintUsage,
         'printStat' : PrintStatistic,
+
         
         
     }
@@ -96,11 +98,11 @@ class Home extends Component {
             <SideNav/>
                 <div className={pageClass}>
                     <TopNav/>
-                        {/* <PoseGroup>
-                            <RouteContainer key={pName}> */}
+                        <PoseGroup>
+                            <RouteContainer key={pName}>
                                 <Page/>
-                            {/* </RouteContainer>
-                        </PoseGroup> */}
+                            </RouteContainer>
+                        </PoseGroup>
                     <Footer/>
                 </div>
     </Fragment>

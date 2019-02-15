@@ -1,102 +1,169 @@
 import React, { Component, Fragment } from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import AuditSearch from '../modal/AuditSearch'
-import 'react-datepicker/dist/react-datepicker.css'
-import Tooltip from 'rc-tooltip'
+import Select from 'react-select'
+import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker.css'
+
+import { connect } from 'react-redux'
+import { toggleErr } from '../../../actions/auditTrailAction/modalAction'
+import { getStakehList } from '../../../actions/auditTrailAction/stakehAction'
+import { getRecordList } from '../../../actions/auditTrailAction/recAction'
+import { getActionTypes } from '../../../actions/auditTrailAction/eventAction'
+import {getFilterList} from '../../../actions/auditTrailAction/filterListAction'
 import {getListAudit} from '../../../actions/auditTrailAction/auditAction'
+import {setActivePage} from '../../../actions/layoutInitAction'
 
-import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component'
-import 'react-vertical-timeline-component/style.min.css'
-
+import { Button,Form, FormGroup  } from 'reactstrap'
 
 
 class index extends Component {
+    constructor(){
+        super()
+        this.state={
+            startDate:null,
+            endDate: null,
+            stakehVal:[],
+            recordVal:[],
+            actionVal:[],
+            filterVal:[],
+            // stakeh:[],
 
-  constructor(){
-    super()
+
+        }
+    }
+    componentDidMount(){
+        const {user:{bio_access_id:bId}}=this.props.session
+        const {stakehList}=this.props.stakeh
+        if(stakehList.length === 0){this.props.getStakehList({bio_access_id:bId,action:'ITEM_LIST'})}
+        else {
+            const stakeholder = stakehList.map(itm => ({ value: itm.stakeholder_id, label: itm.full_name, stakehType:itm.stakeh_type, stakehTypeName:itm.stakeh_type_name.toLowerCase()}))
+            this.setState({stakeh: stakeholder})
+            
+        }
+        const {recordList}=this.props.record
+        if(recordList.length === 0){this.props.getRecordList({bio_access_id:bId,action:'ITEM_LIST'})}
+        else {
+            const record = recordList.map(itm => ({ value: itm.record_id, label: itm.title, recordNo:itm.record_no, recordType: itm.record_type}))
+            this.setState({record: record})
+        }
+
+        const {actionTypes}=this.props.actionTy
+        if(actionTypes.length === 0){this.props.getActionTypes({bio_access_id:bId,action:'ACTION_TYPES'})}
+        else {
+            const actionTy = actionTypes.map(itm => ({ value: itm.id, label:itm.name}))
+             this.setState({actionTy: actionTy})
+        }
+
+        const {filterList}=this.props.filter
+        if(filterList.length === 0){this.props.getFilterList({bio_access_id:bId,action:'AUDIT_TYPE_LIST'})}
+        else {
+            const filter = filterList.map(itm => ({ value: itm.lov_item_id, label:itm.value, code : itm.code, displayValue : itm.display_value} ))
+            this.setState({filter: filter})
+        }
+    }
+
     
-    this.state={
-        
-        startdate : moment().startOf( 'months'),
-        endate : moment().endOf('months'),
-        lastevent : moment().subtract(20, 'days').calendar()
-    }
-}
+    
+    componentDidUpdate(prevProps){
 
-
-  searchLogByToday =()=>{
-    const {user:{bio_access_id:bId}}=this.props.session
-    const param = {
-        action: "SEARCH_AUDIT_LOG",
-        bio_access_id: bId,
-        action_types:[],
-        date_from: moment().format('DD/MM/YYYY'),
-        date_to: moment().format('DD/MM/YYYY'),
-        stakeholder_id:null,
-        record_id:null
-    }
-    this.props.getListAudit(param)
-    // console.log('Today Search')
-    // console.log(param)
-  }
-
+        if (prevProps.stakeh.stakehList !== this.props.stakeh.stakehList) {
+            // console.log('update')
+            const {stakehList}=this.props.stakeh
+            // console.log(stakehList)
+            const stakeholder = stakehList.map(itm => ({ value: itm.stakeholder_id, label: itm.full_name, stakehType:itm.stakeh_type, stakehTypeName:itm.stakeh_type_name.toLowerCase()}))
+            this.setState({stakeh: stakeholder})
   
-  searchLast20Events =()=>{
-    const {lastevent}=this.state
-    const {user:{bio_access_id:bId}}=this.props.session
-    const param = {
-        action: "SEARCH_AUDIT_LOG",
-        bio_access_id: bId,
-        action_types:[],
-        date_from:moment(lastevent).format('DD/MM/YYYY'),
-        date_to: moment().format('DD/MM/YYYY'),
-        stakeholder_id:null,
-        record_id:null
-    }
-    this.props.getListAudit(param)
-    // console.log('Last 20 Events')
-    // console.log(param)
-  }
+          }
 
-  searchLogThisMonth =()=>{
-    const {startdate, endate}=this.state
-    const {user:{bio_access_id:bId}}=this.props.session
-    const param = {
-        action: "SEARCH_AUDIT_LOG",
-        bio_access_id: bId,
-        action_types:[],
-        date_from: moment(startdate).format('DD/MM/YYYY'),
-        date_to:moment(endate).format('DD/MM/YYYY'),
-        stakeholder_id:null,
-        record_id:null
-    }
-    this.props.getListAudit(param)
-    // console.log('This Month')
-    // console.log(param)
-  }
+   
 
-  searchLogAll =()=>{
-    const {user:{bio_access_id:bId}}=this.props.session
-    const param = {
-        action: "SEARCH_AUDIT_LOG",
-        bio_access_id: bId,
-        action_types:[],
-        date_from: moment('2018-01-01').format('DD/MM/YYYY'),
-        date_to: moment().format('DD/MM/YYYY'),
-        stakeholder_id:null,
-        record_id:null
+        if (prevProps.record.recordList !== this.props.record.recordList) {
+            console.log('update')
+            const {recordList}=this.props.record
+            const record = recordList.map(itm => ({ value: itm.record_id, label: itm.title, recordNo:itm.record_no, recordType: itm.record_type}))
+            this.setState({record: record})
+  
+          }
+
+           if (prevProps.actionTy.actionTypes !== this.props.actionTy.actionTypes) {
+             console.log('update')
+
+             const {actionTypes}=this.props.actionTy
+             const actionTy = actionTypes.map(itm => ({ value: itm.id, label:itm.name}))
+             this.setState({actionTy: actionTy})
+  
+          }  
+          
+          if (prevProps.filter.filterList !== this.props.filter.filterList) {
+            console.log('update')
+
+            const {filterList}=this.props.filter
+            const filter = filterList.map(itm => ({ value: itm.lov_item_id, label:itm.value, code : itm.code, displayValue : itm.display_value} ))
+            this.setState({filter: filter})
+  
+          }  
+
+          
+
     }
-    this.props.getListAudit(param)
-    // console.log('Today Search')
-    // console.log(param)
-  }
+
+
+    handleChange = ({ startDate, endDate }) => {
+        startDate = startDate || this.state.startDate
+        endDate = endDate || this.state.endDate
+
+        if (startDate.isAfter(endDate)) {
+          endDate = startDate
+        }
+
+        this.setState({ startDate, endDate })
+    }
+
+
+
+    handleChangeStart = (startDate) => this.handleChange({ startDate })
+
+    handleChangeEnd = (endDate) => this.handleChange({ endDate })
+
+
+    handleSelectChangeStakeh = (value)=> this.setState({ stakehVal:value})
+
+    handleSelectChangeRecord = (value)=> this.setState({ recordVal:value})
+
+    handleSelectChangeAction = (value)=> this.setState({ actionVal:value})
+
+    handleSelectChangeFilter = (value)=> this.setState({ filterVal:value})
+
+
+
+    formSubmit=(e)=>{
+        e.preventDefault()
+        const { filterVal, actionVal, startDate, endDate, stakehVal, recordVal}=this.state
+        const selAction=actionVal.map((itm )=> itm.value)
+        const {user:{bio_access_id}}=this.props.session
+        const param = {
+            action: "SEARCH_AUDIT_LOG",
+            bio_access_id,
+            action_types:selAction,
+            date_from:startDate===null?'': moment(startDate).format('DD/MM/YYYY'),
+            date_to:endDate===null?'': moment(endDate).format('DD/MM/YYYY'),
+            stakeholder_id:stakehVal.value,
+            record_id:recordVal.value,
+            audit_types: filterVal,
+            record_type_id:""
+        }
+        this.props.getListAudit(param)
+        this.props.setActivePage('auditSearch')
+
+
+    }
 
 
   render() {
-    const {audit}=this.props.auditlog
-    //console.log(audit)
+
+      
+      
 
     return (
         <Fragment>
@@ -105,114 +172,188 @@ class index extends Component {
             </div>
         </div>
 
+        
 
         <section>
             <div className="container-fluid">
-                <header>
+
+            <header>
                 <div className="d-flex align-items-center justify-content-between">
+                <h1 className="h3 display">Audit Trail Search</h1>    
+                </div>
+            </header>
 
-                    <h1 className="h3 display">Audit Log Search</h1>
-                    <div className="d-flex align-items-center">
+            <div className="col-lg-12">
+            <div className="card">
+            <div className=" card-header ">
+            <center>
+            <img width="100%" src={require('../../../img/auditTrail/searchau.svg')}  alt="doc" className="img-list" />
+            </center>
+            </div>
+            <div className="card-body">
+            <h1 className="h3 display text-primary text-center">Search</h1>
 
-                    <Tooltip
-                    placement="top"overlay={<div style={{ height: 20, width: '100%' }}>Search By Today</div>}
-                    arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                    >
-                    <button className="btn btn-sm btn-primary" onClick={this.searchLogByToday} >
-                    <i className="fa fa-calendar"></i>
-                    </button>
-                    </Tooltip>
-                    
-                    <Tooltip
-                    placement="top"
-                    overlay={<div style={{ height: 20, width: '100%' }}>Last 20 Events</div>}
-                    arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                    >
-                    <button className="btn btn-sm btn-primary ml-2" onClick={this.searchLast20Events} >
-                    <i className="fa fa-calendar-check-o "></i>
-                    </button>
-                    </Tooltip>
-                    
-                    <Tooltip
-                    placement="top"
-                    overlay={<div style={{ height: 20, width: '100%' }}>Search This Month</div>}
-                    arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                    >
-                    <button className="btn btn-sm btn-primary ml-2" onClick={this.searchLogThisMonth} >
-                    <i className="fa fa-calendar-minus-o"></i>
-                    </button>
-                    </Tooltip>
-                    
-                    <Tooltip
-                    placement="top"
-                    overlay={<div style={{ height: 20, width: '100%' }}>Search All</div>}
-                    arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                    >
-                    <button className="btn btn-sm btn-primary ml-2" onClick={this.searchLogAll} >
-                    <i className="fa fa-sort-amount-asc"></i>
-                    </button>
-                    </Tooltip>
-                    
-                    </div>
-                    </div>
-                    </header>
+             <Form onSubmit={this.formSubmit}
+            >
+
+            
+            <div className="row">
+            <div className="col-md-4">
+
+                <FormGroup>
+                    <label>Event Types</label>
+                    <Select
+                    name="actionTy"
+                    placeholder="Select types"
+                    loadingPlaceholder="Loading.."
+                    value={this.state.actionVal}
+                    onChange={this.handleSelectChangeAction}
+                    options={this.state.actionTy}
+                    isClearable={true}
+                    isMulti
+                    />
+                </FormGroup>
+                </div>
+
+            
+
+                <div className="col-md-6">
+                <FormGroup>
+                    <label>Filter List</label>
+                    <Select
+                    name="filter"
+                    placeholder="Filter List"
+                    loadingPlaceholder="Loading.."
+                    value={this.state.filterValVal}
+                    onChange={this.handleSelectChangeFilter}
+                    options={this.state.filter}
+                    isClearable={true}
+                    />
+                </FormGroup>
+                </div>
+
+
+
+
+              
+
+               <div className="col-md-4">
+                <FormGroup>
+                <label>Date Start</label>
+                <DatePicker
+                    placeholder="Date Start"
+                    selected={this.state.startDate}
+                    selectsStart
+                    startDate={this.state.startDate}
+                    endDate={this.state.endDate}
+                    onChange={this.handleChangeStart}
+                    className="form-control"
+                    dateFormat="DD/MM/YYYY"
+                />
+                </FormGroup>
+                </div>
+
+                <div className="col-md-6">
+                <FormGroup>
+                    <label>Stakeholder</label>
+                    <Select
+                    name="stakeh"
+                    placeholder="Select stakeholder"
+                    loadingPlaceholder="Loading.."
+                    value={this.state.stakehVal}
+                    onChange={this.handleSelectChangeStakeh}
+                    options={this.state.stakeh}
+                    isClearable={true}
+                    />
+                </FormGroup>
+                </div>
 
                 
-       
-                <div className="row">
-              
-                <VerticalTimeline>{audit.map((itm,idx)=>
-                <VerticalTimelineElement key={idx}
-                className="vertical-timeline-element--work"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={ <img src={require('../../../img/auditTrail/'+ itm.action_type +'.svg')} alt={itm.action_type}/> }
-                >
+                
 
-            <h5 className="vertical-timeline-element-title">{itm.audit_type}</h5>
 
-                <div className="d-flex mt-2">
-                      <p className="userIcon"><img src={require('../../../img/auditTrail/clock.svg')} alt='' className="img-fluid pr-1"/></p>
-                      <p className="vertical-timeline-element-title">{new Date(itm.date_updated).toLocaleString("en-my")}</p>
-                    </div>
-
-                    {/* <div className="d-flex mt-2">
-                      <small className="userIcon"><img src={require(`../../img/user.svg`)} alt='' className="img-fluid pr-1"/></small>
-                      <small className="vertical-timeline-element-title">{decodeURIComponent(itm.details)}</small>
-                    </div> */}
-
-            <small>{decodeURIComponent(itm.details)}</small>
-
-                </VerticalTimelineElement> 
-                )}
-                </VerticalTimeline>
+                <div className="col-md-4">
+                <FormGroup>
+                <label>Date End</label>
+                <DatePicker
+                    placeholder="Date End"
+                    selected={this.state.endDate}
+                    selectsEnd
+                    startDate={this.state.startDate}
+                    endDate={this.state.endDate}
+                    onChange={this.handleChangeEnd}
+                    className="form-control"
+                    dateFormat="DD/MM/YYYY"
+                />
+                </FormGroup>
                 </div>
+
+                <div className="col-md-6">
+                  <FormGroup>
+                    <label>Record No.</label>
+                    <Select
+                    name="record"
+                    placeholder="Select record no."
+                    loadingPlaceholder="Loading.."
+                    value={this.state.recordVal}
+                    onChange={this.handleSelectChangeRecord}
+                    options={this.state.record}
+                    isClearable={true}
+                    />
+                </FormGroup>
+                </div>
+
+
+
+                </div>
+                
+                <div className="modal-footer">
+                <Button  type="submit" color="primary" >Search</Button>{' '}
+                </div>
+            </Form>
             </div>
-        </section>
-        
-        <AuditSearch/>
-    </Fragment>
+            </div>
+            </div>
+
+            </div>
+            </section>
+     </Fragment>
+
     )
   }
 }
 index.propTypes={
-    auditlog: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired,
+    modal:PropTypes.object.isRequired,
+    toggleErr:PropTypes.func.isRequired,
+    getStakehList:PropTypes.func.isRequired,
     getListAudit:PropTypes.func.isRequired,
+    getRecordList : PropTypes.func.isRequired,
+    getActionTypes : PropTypes.func.isRequired,
+    getFilterList : PropTypes.func.isRequired,
+    setActivePage: PropTypes.func.isRequired,
+    layout:PropTypes.object.isRequired,
 
 
   }
-  const mapStateToProps= state =>({
-    auditlog:state.auditlog,
-    session:state.session,
+const mapStateToProps = (state) => ({
+  modal:state.modalConf,
+  session:state.session,
+  stakeh:state.stakeholder,
+  record:state.record,
+  actionTy:state.actionTy,
+  filter:state.filter,
+  layout:state.layout
 
-  })
-export default connect(mapStateToProps, {getListAudit})(index)
-
-
-
-
-
-
-
+})
+export default connect(mapStateToProps,
+    {setActivePage,
+    toggleErr,
+    getStakehList,
+    getRecordList,
+    getActionTypes,
+    getFilterList,
+    getListAudit,
+    })
+    (index)
 
 

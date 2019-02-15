@@ -21,6 +21,7 @@ export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
 export const SET_SEL_ALL = 'SET_SEL_ALL'
 export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 
+
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
 //Stakeholder BreadCrumb
@@ -158,6 +159,9 @@ export const SET_LOADER_TEXT = 'SET_LOADER_TEXT'
 // export const STAKEH_LIST = 'STAKEH_LIST'
 export const RECORD_LIST = 'RECORD_LIST'
 export const ACTION_TYPES = 'ACTION_TYPES'
+export const AUDIT_TYPES = 'AUDIT_TYPES'
+export const FILTER_LIST = 'FILTER_LIST'
+export const DATE_CREATED = 'DATE_CREATED'
 
 
 

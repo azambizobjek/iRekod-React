@@ -27,6 +27,7 @@ import stakehReducer from './auditTrailReducer/stakehReducer'
 import eventReducer from './auditTrailReducer/eventReducer' 
 import recReducer from './auditTrailReducer/recReducer'
 import auditReducer from './auditTrailReducer/auditReducer'
+import filterListReducer from './auditTrailReducer/filterListReducer';
 // import childRecReducer from './childRecReducer'
 // import editorReducer from './editorReducer'
 // import recordReducer from './recordReducer'
@@ -61,6 +62,9 @@ const appReducer = combineReducers({
     record:recReducer,    
     actionTy:eventReducer,     
     auditlog:auditReducer,
+    filter:filterListReducer
+    // auditTypes:auditTypeReducer
+    // filterLi:filterReducer
     // batchErrLog:logReducer,
     // batchLoad:batchLoadReducer,
     // records:recordReducer,
