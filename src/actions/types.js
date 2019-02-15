@@ -17,6 +17,7 @@ export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
 
 
+
 /////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
 //Stakeholder BreadCrumb
@@ -154,6 +155,9 @@ export const SET_LOADER_TEXT = 'SET_LOADER_TEXT'
 // export const STAKEH_LIST = 'STAKEH_LIST'
 export const RECORD_LIST = 'RECORD_LIST'
 export const ACTION_TYPES = 'ACTION_TYPES'
+export const AUDIT_TYPES = 'AUDIT_TYPES'
+export const FILTER_LIST = 'FILTER_LIST'
+export const DATE_CREATED = 'DATE_CREATED'
 
 
 

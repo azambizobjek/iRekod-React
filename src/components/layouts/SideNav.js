@@ -107,7 +107,7 @@ class SideNav extends React.Component {
    
       const pageSubject= ""
       this.props.setStakehList(stakehList)
-      this.props.setListWorkFlow(listWrkFlwObj)
+      // this.props.setListWorkFlow(listWrkFlwObj)
       this.props.setListofSubject(listofSubjectObj)
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setCustomField(customFieldObj)
@@ -249,24 +249,25 @@ class SideNav extends React.Component {
 
                 <li>
                   <a href="/" aria-expanded={this.state.auditTrailToggle} data-toggle="collapse" name="auditTrail" className={this.state.auditTrailToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
-                  <div className="userIcon"><img src={require('../../img/folder.svg')} alt="audit" className="img-fluid p-1"/></div>Audit Log </a>
+                  <div className="userIcon"><img src={require('../../img/fill.svg')} alt="audit" className="img-fluid p-1"/></div>Audit Log </a>
                   <ul id="chartsDropdown" className={this.state.auditTrailToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                     <li>
                         <a href="/" data-pagename="log" onClick={this.setActivePage}>
                         <div className="userIcon" data-pagename="log">
-                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="log"/>
+                        <img src={require('../../img/search99.svg')} alt="doc"  data-pagename="log"/>
                         </div>Search
                         </a>
                     </li>
                     <li>
                         <a href="/" data-pagename="print" onClick={this.setActivePage}>
                         <div className="userIcon" data-pagename="print">
-                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="print"/>
+                        <img src={require('../../img/print.svg')} alt="doc"  data-pagename="print"/>
                         </div>Print Report
                         </a>
                     </li>
                   </ul>
                 </li>
+
 
 
 

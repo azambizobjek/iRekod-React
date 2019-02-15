@@ -10,22 +10,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
     // setStakehNumb(e.target.getAttribute('id')) 
 }
    
-  const Card = posed.div({
-    hoverable: true,
-    pressable: false,
-      init: {
-        scale: 1,
-        boxShadow: '0px 0px 0px rgba(0,0,0,0)'
-      },
-      hover: {
-        scale: 1.2,
-        boxShadow: '0px 5px 10px rgba(0,0,0,0.2)'
-      },
-      press: {
-        scale: 1.2,
-        boxShadow: '0px 2px 5px rgba(0,0,0,0.1)'         
-      }
-  });
+  
   
    
   return (         
@@ -35,7 +20,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
         <div className="row d-flex">
         
         <div className="col-lg-4 col-md-4 col-sm-4">   
-        <Card>   
+        {/* <Card>    */}
             <div className="card data-usage" onClick={page} data-pagename='index' data-pagetitle='Group' data-id='0'>             
                 <h2 className="display h4 ">Group</h2>                
                 <div className="row d-flex align-items-center">
@@ -45,11 +30,11 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                     <div className="col-sm-6"><h3 className="h4 display">Total</h3><strong className="text-primary">7</strong><span></span></div>
                 </div>            
             </div>
-            </Card>
+            {/* </Card> */}
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-4">   
-        <Card> 
+        {/* <Card>  */}
             <div className="card data-usage"  >
                 <h2 className="display h4">Organization</h2>
                 <div className="row d-flex align-items-center">
@@ -59,11 +44,11 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                     <div className="col-sm-6"><h3 className="h4 display">Total</h3><strong className="text-primary">21</strong><span></span></div>
                 </div>
             </div>
-            </Card>  
+            {/* </Card>   */}
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-4"> 
-        <Card>    
+        {/* <Card>     */}
             <div className="card data-usage">
                 <h2 className="display h4">Branch</h2>
                 <div className="row d-flex align-items-center">
@@ -76,7 +61,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                 </div>
 
             </div>
-            </Card> 
+            {/* </Card>  */}
         </div>
 
 
@@ -91,7 +76,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
 
                 
         <div className="col-lg-4 col-md-4 col-sm-4">  
-        <Card>     
+        {/* <Card>      */}
             <div className="card data-usage">
                 <h2 className="display h4">Department</h2>
                 <div className="row d-flex align-items-center">
@@ -104,11 +89,11 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                 </div>
 
             </div>
-            </Card>
+            {/* </Card> */}
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-4">   
-        <Card>    
+        {/* <Card>     */}
             <div className="card data-usage">
                 <h2 className="display h4">Designation</h2>
                 <div className="row d-flex align-items-center">
@@ -119,11 +104,11 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                 </div>
 
             </div>
-            </Card> 
+            {/* </Card>  */}
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-4">   
-        <Card>    
+        {/* <Card>     */}
             <div className="card data-usage">
                 <h2 className="display h4">User</h2>
                 <div className="row d-flex align-items-center">
@@ -134,7 +119,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
                 </div>
 
             </div>
-            </Card>            
+            {/* </Card>             */}
         </div>
                 
         </div>

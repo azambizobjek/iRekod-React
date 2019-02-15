@@ -28,8 +28,10 @@ class PrintPage extends Component {
             action_types:[],
             date_from: moment('2018-01-01').format('DD/MM/YYYY'),
             date_to: moment().format('DD/MM/YYYY'),
-            stakeholder_id:null,
-            record_id:null,
+            stakeholder_id:"",
+            record_id:"",
+            audit_types: [],
+            record_type_id:""
         }
         this.props.getListAudit(param)
     
@@ -81,7 +83,7 @@ class PrintPage extends Component {
 
 
                   <div className="row">
-                  <div className="col-6 col-md-4 col-lg-2 col-xl-2">
+                  <div className="col-6 col-md-4 col-lg-2 col-xl-3">
                   <Card  data-pagename="printReport" onClick={this.setActivePage}>
                   <div className="text-center">
                   <img data-pagename="printReport" width="100%" src={require('../../../img/auditTrail/letter.svg')}  alt="doc" className="img-card mt-2"/>
@@ -98,7 +100,7 @@ class PrintPage extends Component {
                   {/* <ReportCard/> */}
            
                   
-                  <div className="col-6 col-md-4 col-lg-2 col-xl-2">
+                  <div className="col-6 col-md-4 col-lg-2 col-xl-3">
                   <Card  data-pagename="printStat" onClick={this.setActivePage}>
                   <div className="text-center">
                   <img data-pagename="printStat" width="100%" src={require('../../../img/auditTrail/graph.svg')}  alt="doc" className="img-card mt-2" />
@@ -110,7 +112,7 @@ class PrintPage extends Component {
                   </Card>
                   </div>
                   
-                  <div className="col-6 col-md-4 col-lg-2 col-xl-2">
+                  <div className="col-6 col-md-4 col-lg-2 col-xl-3">
                   <Card  data-pagename="printUsage" onClick={this.setActivePage}>
                   <div className="text-center">
                   <img data-pagename="printUsage" width="100%" src={require('../../../img/auditTrail/system.svg')}  alt="doc" className="img-card mt-2" />
@@ -144,5 +146,3 @@ PrintPage.propTypes={
   
   })
   export default connect(mapStateToProps, {setActivePage, toggleAdv, getListAudit  })(PrintPage)
-
-  

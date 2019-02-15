@@ -11,8 +11,8 @@ export const getListAudit=(searchParam)=>dispatch=>{
        results.sort((a,b)=>{
             const keyA = new Date(a.date_updated)
             const keyB = new Date(b.date_updated)
-            if(keyA < keyB) return -1
-            if(keyA > keyB) return 1
+            if(keyA < keyB) return 1
+            if(keyA > keyB) return -1
             return 0
         })
        dispatch({
@@ -22,3 +22,4 @@ export const getListAudit=(searchParam)=>dispatch=>{
    })
 
 }
+
